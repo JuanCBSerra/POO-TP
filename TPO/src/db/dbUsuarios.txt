@@ -1,0 +1,5 @@
+Juan Perez,juan.perez@example.com,1234,Administrador
+Maria Lopez,maria.lopez@example.com,abcd,Laboratorista
+Carlos Garcia,carlos.garcia@example.com,pass123,Recepcionista
+Ana Martinez,ana.martinez@example.com,qwerty,Administrador
+Luis Fernandez,luis.fernandez@example.com,zxcvb,Laboratorista
