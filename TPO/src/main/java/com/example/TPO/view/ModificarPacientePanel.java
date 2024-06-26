@@ -1,21 +1,28 @@
 package com.example.TPO.view;
 
+import com.example.TPO.controller.PacienteController;
+import com.example.TPO.model.Paciente;
+
 import javax.swing.*;
+import javax.swing.text.NumberFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.NumberFormat;
+import java.util.Optional;
 
 public class ModificarPacientePanel extends JPanel {
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private JTextField dniBuscarField;
-    private JTextField nombreField;
-    private JTextField apellidoField;
-    private JTextField dniField;
-    private JButton btnBuscar;
-    private JButton btnGuardar;
+    private static final long serialVersionUID = 1L;
+
+    private final JTextField dniBuscarField;
+    private final JTextField nombreField;
+    private final JTextField domicilioField;
+    private final JTextField emailField;
+    private final JTextField sexoField;
+    private final JFormattedTextField edadField;
+    private final JButton btnGuardar;
+
+    private final PacienteController pacienteController = PacienteController.getInstance();
 
     public ModificarPacientePanel() {
         setLayout(new BorderLayout());
@@ -28,98 +35,108 @@ public class ModificarPacientePanel extends JPanel {
         buscarPanel.add(new JLabel("DNI:"));
         dniBuscarField = new JTextField();
         buscarPanel.add(dniBuscarField);
-        btnBuscar = new JButton("Buscar");
+        JButton btnBuscar = new JButton("Buscar");
         buscarPanel.add(btnBuscar);
 
         add(buscarPanel, BorderLayout.NORTH);
 
-        JPanel formPanel = new JPanel(new GridLayout(4, 2, 10, 10));
+        JPanel formPanel = new JPanel(new GridLayout(6, 2, 10, 10));
 
         formPanel.add(new JLabel("Nombre:"));
         nombreField = new JTextField();
         formPanel.add(nombreField);
 
-        formPanel.add(new JLabel("Apellido:"));
-        apellidoField = new JTextField();
-        formPanel.add(apellidoField);
+        formPanel.add(new JLabel("Domicilio:"));
+        domicilioField = new JTextField();
+        formPanel.add(domicilioField);
 
-        formPanel.add(new JLabel("DNI:"));
-        dniField = new JTextField();
-        formPanel.add(dniField);
+        formPanel.add(new JLabel("Email:"));
+        emailField = new JTextField();
+        formPanel.add(emailField);
+
+        formPanel.add(new JLabel("Sexo:"));
+        sexoField = new JTextField();
+        formPanel.add(sexoField);
+
+        formPanel.add(new JLabel("Edad:"));
+        edadField = createFormattedTextField();
+        formPanel.add(edadField);
 
         btnGuardar = new JButton("Guardar");
         formPanel.add(btnGuardar);
 
         add(formPanel, BorderLayout.CENTER);
 
-        // Deshabilitar el panel de formulario hasta que se busque un paciente
         habilitarFormulario(false);
 
-        // Agregar ActionListeners
-        btnBuscar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                buscarPaciente();
-            }
-        });
-
-        btnGuardar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                guardarPaciente();
-            }
-        });
+        btnBuscar.addActionListener(e -> buscarPaciente());
+        btnGuardar.addActionListener(e -> guardarPaciente());
     }
 
     private void habilitarFormulario(boolean habilitar) {
         nombreField.setEnabled(habilitar);
-        apellidoField.setEnabled(habilitar);
-        dniField.setEnabled(habilitar);
+        domicilioField.setEnabled(habilitar);
+        emailField.setEnabled(habilitar);
+        sexoField.setEnabled(habilitar);
+        edadField.setEnabled(habilitar);
+
         btnGuardar.setEnabled(habilitar);
     }
 
     private void buscarPaciente() {
         String dni = dniBuscarField.getText();
+        Optional<Paciente> paciente = pacienteController.buscarPacientePorDni(dni);
 
-        // Aquí deberías buscar el paciente por su DNI y cargar los datos en los campos
-        // Por ejemplo: Paciente paciente = pacienteService.buscarPorDni(dni);
-        // if (paciente != null) {
-        //     nombreField.setText(paciente.getNombre());
-        //     apellidoField.setText(paciente.getApellido());
-        //     dniField.setText(paciente.getDni());
-        //     habilitarFormulario(true);
-        // } else {
-        //     JOptionPane.showMessageDialog(this, "Paciente no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
-        //     habilitarFormulario(false);
-        // }
+        if (paciente.isPresent()) {
+            Paciente p = paciente.get();
+            nombreField.setText(p.getNombre());
+            domicilioField.setText(p.getDomicilio());
+            emailField.setText(p.getEmail());
+            sexoField.setText(p.getSexo());
+            edadField.setValue(p.getEdad());
 
-        // Simulación para el ejemplo:
-        if (dni.equals("12345678")) {
-            nombreField.setText("Juan");
-            apellidoField.setText("Pérez");
-            dniField.setText("12345678");
             habilitarFormulario(true);
         } else {
             JOptionPane.showMessageDialog(this, "Paciente no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
+            limpiarCampos();
             habilitarFormulario(false);
         }
     }
 
     private void guardarPaciente() {
         String nombre = nombreField.getText();
-        String apellido = apellidoField.getText();
-        String dni = dniField.getText();
+        String domicilio = domicilioField.getText();
+        String email = emailField.getText();
+        String sexo = sexoField.getText();
+        int edad = (int) edadField.getValue();
+        String dni = dniBuscarField.getText();
 
-        // Validaciones básicas
-        if (nombre.isEmpty() || apellido.isEmpty() || dni.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
+        if (nombre.isEmpty() || domicilio.isEmpty() || email.isEmpty() || sexo.isEmpty() || edad <= 0) {
+            JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos correctamente.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        // Aquí puedes llamar a los métodos correspondientes para modificar el paciente
-        // Por ejemplo: Paciente paciente = new Paciente(nombre, apellido, dni);
-        // pacienteService.modificarPaciente(paciente);
+        pacienteController.modificarPaciente(dni, nombre, domicilio, email, sexo, edad);
 
         JOptionPane.showMessageDialog(this, "Paciente modificado con éxito.");
+        limpiarCampos();
+        habilitarFormulario(false);
+    }
+
+    private JFormattedTextField createFormattedTextField() {
+        NumberFormat format = NumberFormat.getIntegerInstance();
+        NumberFormatter formatter = new NumberFormatter(format);
+        formatter.setValueClass(Integer.class);
+        formatter.setAllowsInvalid(false);
+        formatter.setMinimum(0);
+        return new JFormattedTextField(formatter);
+    }
+
+    private void limpiarCampos() {
+        nombreField.setText("");
+        domicilioField.setText("");
+        emailField.setText("");
+        sexoField.setText("");
+        edadField.setValue(null);
     }
 }

@@ -1,20 +1,25 @@
 package com.example.TPO.view;
 
+import com.example.TPO.controller.PacienteController;
+import com.example.TPO.model.Paciente;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Optional;
 
 public class EliminarPacientePanel extends JPanel {
     /**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JTextField dniBuscarField;
+	private final JTextField dniBuscarField;
     private JButton btnBuscar;
-    private JButton btnEliminar;
-    private JLabel nombreLabel;
-    private JLabel apellidoLabel;
+    private final JButton btnEliminar;
+    private final JLabel nombreLabel;
+
+    private final PacienteController pacienteController = PacienteController.getInstance();
 
     public EliminarPacientePanel() {
         setLayout(new BorderLayout());
@@ -36,10 +41,6 @@ public class EliminarPacientePanel extends JPanel {
         infoPanel.add(new JLabel("Nombre:"));
         nombreLabel = new JLabel();
         infoPanel.add(nombreLabel);
-
-        infoPanel.add(new JLabel("Apellido:"));
-        apellidoLabel = new JLabel();
-        infoPanel.add(apellidoLabel);
 
         btnEliminar = new JButton("Eliminar");
         infoPanel.add(btnEliminar);
@@ -68,37 +69,30 @@ public class EliminarPacientePanel extends JPanel {
     private void buscarPaciente() {
         String dni = dniBuscarField.getText();
 
-        // Aquí deberías buscar el paciente por su DNI y cargar los datos en los labels
-        // Por ejemplo: Paciente paciente = pacienteService.buscarPorDni(dni);
-        // if (paciente != null) {
-        //     nombreLabel.setText(paciente.getNombre());
-        //     apellidoLabel.setText(paciente.getApellido());
-        //     btnEliminar.setEnabled(true);
-        // } else {
-        //     JOptionPane.showMessageDialog(this, "Paciente no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
-        //     btnEliminar.setEnabled(false);
-        // }
+        Optional<Paciente> paciente = pacienteController.buscarPacientePorDni(dni);
 
-        // Simulación para el ejemplo:
-        if (dni.equals("12345678")) {
-            nombreLabel.setText("Juan");
-            apellidoLabel.setText("Pérez");
-            btnEliminar.setEnabled(true);
-        } else {
-            JOptionPane.showMessageDialog(this, "Paciente no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
-            btnEliminar.setEnabled(false);
-        }
+         if (paciente.isPresent()) {
+             nombreLabel.setText(paciente.get().getNombre());
+             btnEliminar.setEnabled(true);
+         } else {
+             JOptionPane.showMessageDialog(this, "Paciente no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
+             btnEliminar.setEnabled(false);
+         }
+
     }
 
     private void eliminarPaciente() {
         String dni = dniBuscarField.getText();
 
-        // Aquí puedes llamar a los métodos correspondientes para eliminar el paciente
-        // Por ejemplo: pacienteService.eliminarPaciente(dni);
+        boolean pacienteEliminado = pacienteController.eliminarPaciente(dni);
 
-        JOptionPane.showMessageDialog(this, "Paciente eliminado con éxito.");
+        if(pacienteEliminado) {
+            JOptionPane.showMessageDialog(this, "Paciente eliminado con éxito.");
+        }else{
+            JOptionPane.showMessageDialog(this, "No se pudo eliminar al paciente");
+        }
+
         nombreLabel.setText("");
-        apellidoLabel.setText("");
         dniBuscarField.setText("");
         btnEliminar.setEnabled(false);
     }

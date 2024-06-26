@@ -47,25 +47,33 @@ public class PacienteController {
 
     public boolean eliminarPaciente(String dni) {
         Optional<Paciente> paciente = buscarPacientePorDni(dni);
-        //            if (!sePuedeEliminarPaciente(paciente.get())) {
-        //                return false;
-        //            }else{
-        //                pacientes.remove(paciente.get());
-        //                return true;
-        //            }
-        paciente.ifPresent(pacientes::remove);
-        return false;
+        if (paciente.isPresent()) {
+            pacientes.remove(paciente.get());
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    public boolean modificarPaciente(Paciente pacienteActualizado) {
-        Optional<Paciente> pacienteExistente = buscarPacientePorDni(pacienteActualizado.getDni());
-        if (pacienteExistente.isPresent()) {
-            Paciente paciente = pacienteExistente.get();
-            paciente.setNombre(pacienteActualizado.getNombre());
-            paciente.setDomicilio(pacienteActualizado.getDomicilio());
-            paciente.setEmail(pacienteActualizado.getEmail());
-            paciente.setSexo(pacienteActualizado.getSexo());
-            paciente.setEdad(pacienteActualizado.getEdad());
+    public boolean modificarPaciente(String dni, String nombre, String domicilio, String email, String sexo, int edad) {
+        Optional<Paciente> pacienteOpt = buscarPacientePorDni(dni);
+        if (pacienteOpt.isPresent()) {
+            Paciente paciente = pacienteOpt.get();
+            if (nombre != null) {
+                paciente.setNombre(nombre);
+            }
+            if (domicilio != null) {
+                paciente.setDomicilio(domicilio);
+            }
+            if (email != null) {
+                paciente.setEmail(email);
+            }
+            if (sexo != null) {
+                paciente.setSexo(sexo);
+            }
+            if (edad >= 0) {
+                paciente.setEdad(edad);
+            }
             return true;
         }
         return false;
