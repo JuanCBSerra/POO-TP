@@ -1,21 +1,27 @@
 package com.example.TPO.view;
 
+import com.example.TPO.Utils;
+import com.example.TPO.controller.SucursalController;
+import com.example.TPO.model.Sucursal;
+
 import javax.swing.*;
+import javax.swing.text.NumberFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.NumberFormat;
+import java.util.Optional;
 
 public class ModificarSucursalPanel extends JPanel {
-    /**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
-	private JTextField numeroBuscarField;
-    private JTextField numeroField;
-    private JTextField direccionField;
-    private JTextField respTecnicoField;
-    private JButton btnBuscar;
-    private JButton btnGuardar;
+	private final JFormattedTextField numeroBuscarField;
+    private JFormattedTextField numeroField;
+    private final JTextField direccionField;
+    private final JTextField respTecnicoField;
+    private final JButton btnGuardar;
+
+    private final SucursalController sucursalController = SucursalController.getInstance();
 
     public ModificarSucursalPanel() {
         setLayout(new BorderLayout());
@@ -26,18 +32,14 @@ public class ModificarSucursalPanel extends JPanel {
 
         JPanel buscarPanel = new JPanel(new GridLayout(1, 3, 10, 10));
         buscarPanel.add(new JLabel("Numero:"));
-        numeroBuscarField = new JTextField();
+        numeroBuscarField = Utils.createFormattedTextField();
         buscarPanel.add(numeroBuscarField);
-        btnBuscar = new JButton("Buscar");
+        JButton btnBuscar = new JButton("Buscar");
         buscarPanel.add(btnBuscar);
 
         add(buscarPanel, BorderLayout.NORTH);
 
-        JPanel formPanel = new JPanel(new GridLayout(4, 2, 10, 10));
-
-        formPanel.add(new JLabel("Numero:"));
-        numeroField = new JTextField();
-        formPanel.add(numeroField);
+        JPanel formPanel = new JPanel(new GridLayout(3, 2, 10, 10));
 
         formPanel.add(new JLabel("Direccion:"));
         direccionField = new JTextField();
@@ -52,54 +54,58 @@ public class ModificarSucursalPanel extends JPanel {
 
         add(formPanel, BorderLayout.CENTER);
 
-        // Deshabilitar el panel de formulario hasta que se busque un paciente
         habilitarFormulario(false);
 
-        // Agregar ActionListeners
-        btnBuscar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                buscarPaciente();
-            }
-        });
+        btnBuscar.addActionListener(e -> buscarSucursal());
 
-        btnGuardar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                guardarPaciente();
-            }
-        });
+        btnGuardar.addActionListener(e -> guardarSucursal());
     }
 
     private void habilitarFormulario(boolean habilitar) {
-        
+        direccionField.setEnabled(habilitar);
+        respTecnicoField.setEnabled(habilitar);
         btnGuardar.setEnabled(habilitar);
     }
 
-    private void buscarPaciente() {
+    private void buscarSucursal() {
+        int numero  = Integer.parseInt(numeroBuscarField.getText());
+        Optional<Sucursal> sucursal = sucursalController.buscarSucursalPorNumero(numero);
 
-        // Aquí deberías buscar el paciente por su DNI y cargar los datos en los campos
-        // Por ejemplo: Paciente paciente = pacienteService.buscarPorDni(dni);
-        // if (paciente != null) {
-        //     nombreField.setText(paciente.getNombre());
-        //     apellidoField.setText(paciente.getApellido());
-        //     dniField.setText(paciente.getDni());
-        //     habilitarFormulario(true);
-        // } else {
-        //     JOptionPane.showMessageDialog(this, "Paciente no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
-        //     habilitarFormulario(false);
-        // }
+         if (sucursal.isPresent()) {
+             direccionField.setText(sucursal.get().getDireccion());
+             respTecnicoField.setText(sucursal.get().getResponsableTecnico());
+             habilitarFormulario(true);
+         } else {
+             JOptionPane.showMessageDialog(this, "Paciente no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
+             limpiarCampos();
+             habilitarFormulario(false);
+         }
 
-      
     }
 
-    private void guardarPaciente() {
-        
+    private void guardarSucursal() {
+        int numero = Integer.parseInt(numeroBuscarField.getText());
+        String direccion = direccionField.getText();
+        String responsableTecnico = respTecnicoField.getText();
 
-        // Aquí puedes llamar a los métodos correspondientes para modificar el paciente
-        // Por ejemplo: Paciente paciente = new Paciente(nombre, apellido, dni);
-        // pacienteService.modificarPaciente(paciente);
+        if(direccion.isEmpty() || responsableTecnico.isEmpty()){
+            JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos correctamente.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        sucursalController.modificarSucursal(
+                numero,
+                direccion,
+                responsableTecnico
+        );
 
         JOptionPane.showMessageDialog(this, "Paciente modificado con éxito.");
+        limpiarCampos();
+        habilitarFormulario(false);
+    }
+
+    private void limpiarCampos() {
+        direccionField.setText("");
+        respTecnicoField.setText("");
     }
 }

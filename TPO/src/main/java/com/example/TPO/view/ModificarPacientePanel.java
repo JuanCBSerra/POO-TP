@@ -1,5 +1,6 @@
 package com.example.TPO.view;
 
+import com.example.TPO.Utils;
 import com.example.TPO.controller.PacienteController;
 import com.example.TPO.model.Paciente;
 
@@ -59,7 +60,7 @@ public class ModificarPacientePanel extends JPanel {
         formPanel.add(sexoField);
 
         formPanel.add(new JLabel("Edad:"));
-        edadField = createFormattedTextField();
+        edadField = Utils.createFormattedTextField();
         formPanel.add(edadField);
 
         btnGuardar = new JButton("Guardar");
@@ -121,15 +122,6 @@ public class ModificarPacientePanel extends JPanel {
         JOptionPane.showMessageDialog(this, "Paciente modificado con éxito.");
         limpiarCampos();
         habilitarFormulario(false);
-    }
-
-    private JFormattedTextField createFormattedTextField() {
-        NumberFormat format = NumberFormat.getIntegerInstance();
-        NumberFormatter formatter = new NumberFormatter(format);
-        formatter.setValueClass(Integer.class);
-        formatter.setAllowsInvalid(false);
-        formatter.setMinimum(0);
-        return new JFormattedTextField(formatter);
     }
 
     private void limpiarCampos() {

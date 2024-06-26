@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -13,8 +14,8 @@ public class Sucursal {
 
     private int numero;
     private String direccion;
-    private Usuario responsableTecnico;
-    private List<String> peticiones;
+    private String responsableTecnico;
+    private List<String> peticiones = new ArrayList<>();
 
     public int getNumero() {
         return numero;
@@ -32,11 +33,11 @@ public class Sucursal {
         this.direccion = direccion;
     }
 
-    public Usuario getResponsableTecnico() {
+    public String getResponsableTecnico() {
         return responsableTecnico;
     }
 
-    public void setResponsableTecnico(Usuario responsableTecnico) {
+    public void setResponsableTecnico(String responsableTecnico) {
         this.responsableTecnico = responsableTecnico;
     }
 

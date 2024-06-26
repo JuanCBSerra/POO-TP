@@ -16,24 +16,21 @@ public class LaboratorioClinicoApp extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	public LaboratorioClinicoApp() {
-		// Configuración de la ventana principal
         setTitle("Administración del Laboratorio Clínico");
         setSize(600, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        // Crear un panel principal
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(7, 1, 10, 10));
+        panel.setLayout(new GridLayout(6, 1, 10, 10));
 
-        // Crear y agregar botones al panel
         JButton btnAdministrarPacientes = new JButton("Administrar Pacientes");
         JButton btnAdministrarSucursales = new JButton("Administrar Sucursales");
         JButton btnAdministrarPracticas = new JButton("Administrar Prácticas");
         JButton btnAdministrarPeticiones = new JButton("Administrar Peticiones");
         JButton btnAdministrarResultados = new JButton("Administrar Resultados");
         JButton btnAdministrarUsuarios = new JButton("Administrar Usuarios");
-        JButton btnRolesSeguridad = new JButton("Roles y Seguridad");
+//        JButton btnRolesSeguridad = new JButton("Roles y Seguridad");
 
         panel.add(btnAdministrarPacientes);
         panel.add(btnAdministrarSucursales);
@@ -41,12 +38,10 @@ public class LaboratorioClinicoApp extends JFrame {
         panel.add(btnAdministrarPeticiones);
         panel.add(btnAdministrarResultados);
         panel.add(btnAdministrarUsuarios);
-        panel.add(btnRolesSeguridad);
+//        panel.add(btnRolesSeguridad);
 
-        // Añadir panel al frame
         add(panel);
 
-        // Agregar ActionListeners a los botones
         btnAdministrarPacientes.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -157,7 +152,8 @@ public class LaboratorioClinicoApp extends JFrame {
 //            }
 //        });
     }
-	private void mostrarPanel(JPanel nuevoPanel) {
+
+	public void mostrarPanel(JPanel nuevoPanel) {
         setContentPane(nuevoPanel);
         revalidate();
         repaint();

@@ -1,18 +1,23 @@
 package com.example.TPO.view;
 
+import com.example.TPO.Utils;
+import com.example.TPO.controller.SucursalController;
+
 import javax.swing.*;
+import javax.swing.text.NumberFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.NumberFormat;
 
 public class CrearSucursalPanel extends JPanel {
-    /**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
-	private JTextField numeroField;
-	private JTextField direccionField;
-	private JTextField respTecnicoField;
+	private final JFormattedTextField numeroField;
+	private final JTextField direccionField;
+	private final JTextField respTecnicoField;
+
+	private final SucursalController sucursalController = SucursalController.getInstance();
 
     public CrearSucursalPanel() {
         setLayout(new BorderLayout());
@@ -24,7 +29,7 @@ public class CrearSucursalPanel extends JPanel {
         JPanel formPanel = new JPanel(new GridLayout(4, 2, 10, 10));
 
         formPanel.add(new JLabel("Numero:"));
-        numeroField = new JTextField();
+        numeroField = Utils.createFormattedTextField();
         formPanel.add(numeroField);
 
         formPanel.add(new JLabel("Direccion:"));
@@ -40,7 +45,6 @@ public class CrearSucursalPanel extends JPanel {
 
         add(formPanel, BorderLayout.CENTER);
 
-        // Agregar ActionListener al botón Guardar
         btnGuardar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -50,11 +54,31 @@ public class CrearSucursalPanel extends JPanel {
     }
 
     private void guardarPaciente() {
-       
-        // Aquí puedes llamar a los métodos correspondientes para crear el paciente
-        // Por ejemplo: Paciente nuevoPaciente = new Paciente(nombre, apellido, dni);
-        // pacienteService.crearPaciente(nuevoPaciente);
+        String numeroString = numeroField.getText();
+        String direccion = direccionField.getText();
+        String responsableTecnico = respTecnicoField.getText();
+
+        if (numeroString.isEmpty() || direccion.isEmpty() || responsableTecnico.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        int numero = Integer.parseInt(numeroString);
+
+        sucursalController.agregarSucursal(
+                numero,
+                direccion,
+                responsableTecnico
+        );
 
         JOptionPane.showMessageDialog(this, "Paciente creado con éxito.");
+        clearFields();
     }
+
+    private void clearFields() {
+        numeroField.setValue(null);
+        direccionField.setText("");
+        respTecnicoField.setText("");
+    }
+
 }

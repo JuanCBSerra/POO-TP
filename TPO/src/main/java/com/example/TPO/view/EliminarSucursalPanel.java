@@ -1,20 +1,25 @@
 package com.example.TPO.view;
 
+import com.example.TPO.Utils;
+import com.example.TPO.controller.SucursalController;
+import com.example.TPO.model.Sucursal;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Optional;
 
 public class EliminarSucursalPanel extends JPanel {
-    /**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
-	private JTextField numeroBuscarField;
+	private JFormattedTextField numeroBuscarField;
     private JButton btnBuscar;
     private JButton btnEliminar;
-    private JLabel direcLabel;
-    private JLabel respLabel;
+    private JLabel direccionLabel;
+    private JLabel responsableTecnicoLabel;
+
+    private final SucursalController sucursalController = SucursalController.getInstance();
 
     public EliminarSucursalPanel() {
         setLayout(new BorderLayout());
@@ -24,8 +29,8 @@ public class EliminarSucursalPanel extends JPanel {
         add(titulo, BorderLayout.NORTH);
 
         JPanel buscarPanel = new JPanel(new GridLayout(1, 3, 10, 10));
-        buscarPanel.add(new JLabel("Numero :"));
-        numeroBuscarField = new JTextField();
+        buscarPanel.add(new JLabel("Numero:"));
+        numeroBuscarField = Utils.createFormattedTextField();
         buscarPanel.add(numeroBuscarField);
         btnBuscar = new JButton("Buscar");
         buscarPanel.add(btnBuscar);
@@ -34,53 +39,53 @@ public class EliminarSucursalPanel extends JPanel {
 
         JPanel infoPanel = new JPanel(new GridLayout(3, 2, 10, 10));
         infoPanel.add(new JLabel("Direccion:"));
-        direcLabel = new JLabel();
-        infoPanel.add(direcLabel);
+        direccionLabel = new JLabel();
+        infoPanel.add(direccionLabel);
 
         infoPanel.add(new JLabel("Responsable Tecnico:"));
-        respLabel = new JLabel();
-        infoPanel.add(respLabel);
+        responsableTecnicoLabel = new JLabel();
+        infoPanel.add(responsableTecnicoLabel);
 
         btnEliminar = new JButton("Eliminar");
         infoPanel.add(btnEliminar);
 
         add(infoPanel, BorderLayout.CENTER);
 
-        // Deshabilitar botón Eliminar hasta que se busque un paciente
         btnEliminar.setEnabled(false);
 
-        // Agregar ActionListeners
-        btnBuscar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                buscarPaciente();
-            }
-        });
+        btnBuscar.addActionListener(e -> buscarSucursal());
 
-        btnEliminar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                eliminarPaciente();
-            }
-        });
+        btnEliminar.addActionListener(e -> eliminarSucursal());
     }
 
-    private void buscarPaciente() {
+    private void buscarSucursal() {
+        int numero = Integer.parseInt(numeroBuscarField.getText());
+        Optional<Sucursal> sucursal = sucursalController.buscarSucursalPorNumero(numero);
 
-        // Aquí deberías buscar el paciente por su DNI y cargar los datos en los labels
-        // Por ejemplo: Paciente paciente = pacienteService.buscarPorDni(dni);
-        // if (paciente != null) {
-        //     nombreLabel.setText(paciente.getNombre());
-        //     apellidoLabel.setText(paciente.getApellido());
-        //     btnEliminar.setEnabled(true);
-        // } else {
-        //     JOptionPane.showMessageDialog(this, "Paciente no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
-        //     btnEliminar.setEnabled(false);
-        // }
+        if (sucursal.isPresent()) {
+            direccionLabel.setText(sucursal.get().getDireccion());
+            responsableTecnicoLabel.setText(sucursal.get().getResponsableTecnico());
+            btnEliminar.setEnabled(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "Sucursal no encontrada.", "Error", JOptionPane.ERROR_MESSAGE);
+            btnEliminar.setEnabled(false);
+        }
 
        
     }
 
-    private void eliminarPaciente() {
+    private void eliminarSucursal() {
+        int numero = Integer.parseInt(numeroBuscarField.getText());
+        boolean sucursalEliminada = sucursalController.eliminarSucursal(numero);
+
+        if(sucursalEliminada) {
+            JOptionPane.showMessageDialog(this, "Sucursal eliminada con éxito.");
+        }else{
+            JOptionPane.showMessageDialog(this, "No se pudo eliminar a la sucursal");
+        }
+
+        direccionLabel.setText("");
+        responsableTecnicoLabel.setText("");
+        btnEliminar.setEnabled(false);
     }
 }

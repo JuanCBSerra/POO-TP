@@ -47,10 +47,8 @@ public class EliminarPacientePanel extends JPanel {
 
         add(infoPanel, BorderLayout.CENTER);
 
-        // Deshabilitar botón Eliminar hasta que se busque un paciente
         btnEliminar.setEnabled(false);
 
-        // Agregar ActionListeners
         btnBuscar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

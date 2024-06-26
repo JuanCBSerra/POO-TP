@@ -1,5 +1,6 @@
 package com.example.TPO.view;
 
+import com.example.TPO.Utils;
 import com.example.TPO.controller.PacienteController;
 
 import javax.swing.*;
@@ -48,7 +49,7 @@ public class CrearPacientePanel extends JPanel {
         formPanel.add(sexoField);
 
         formPanel.add(new JLabel("Edad:"));
-        edadField = createFormattedTextField();
+        edadField = Utils.createFormattedTextField();
         formPanel.add(edadField);
 
         add(formPanel, BorderLayout.CENTER);
@@ -59,15 +60,6 @@ public class CrearPacientePanel extends JPanel {
         add(buttonPanel, BorderLayout.SOUTH);
 
         btnGuardar.addActionListener(e -> guardarPaciente());
-    }
-
-    private JFormattedTextField createFormattedTextField() {
-        NumberFormat format = NumberFormat.getIntegerInstance();
-        NumberFormatter formatter = new NumberFormatter(format);
-        formatter.setValueClass(Integer.class);
-        formatter.setAllowsInvalid(false);
-        formatter.setMinimum(0);
-        return new JFormattedTextField(formatter);
     }
 
     private void guardarPaciente() {
