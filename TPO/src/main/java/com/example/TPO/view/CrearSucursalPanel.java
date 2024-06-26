@@ -71,7 +71,7 @@ public class CrearSucursalPanel extends JPanel {
                 responsableTecnico
         );
 
-        JOptionPane.showMessageDialog(this, "Paciente creado con éxito.");
+        JOptionPane.showMessageDialog(this, "Sucursal creada con éxito.");
         clearFields();
     }
 

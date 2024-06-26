@@ -16,7 +16,6 @@ public class ModificarSucursalPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private final JFormattedTextField numeroBuscarField;
-    private JFormattedTextField numeroField;
     private final JTextField direccionField;
     private final JTextField respTecnicoField;
     private final JButton btnGuardar;
@@ -76,7 +75,7 @@ public class ModificarSucursalPanel extends JPanel {
              respTecnicoField.setText(sucursal.get().getResponsableTecnico());
              habilitarFormulario(true);
          } else {
-             JOptionPane.showMessageDialog(this, "Paciente no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
+             JOptionPane.showMessageDialog(this, "Sucursal no encontrada.", "Error", JOptionPane.ERROR_MESSAGE);
              limpiarCampos();
              habilitarFormulario(false);
          }
@@ -99,7 +98,7 @@ public class ModificarSucursalPanel extends JPanel {
                 responsableTecnico
         );
 
-        JOptionPane.showMessageDialog(this, "Paciente modificado con éxito.");
+        JOptionPane.showMessageDialog(this, "Sucursal modificada con éxito.");
         limpiarCampos();
         habilitarFormulario(false);
     }
