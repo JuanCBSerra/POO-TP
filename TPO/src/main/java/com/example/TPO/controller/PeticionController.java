@@ -1,7 +1,7 @@
 package com.example.TPO.controller;
 
-import com.example.TPO.Paciente;
-import com.example.TPO.Peticion;
+import com.example.TPO.model.Paciente;
+import com.example.TPO.model.Peticion;
 
 import java.util.ArrayList;
 import java.util.List;

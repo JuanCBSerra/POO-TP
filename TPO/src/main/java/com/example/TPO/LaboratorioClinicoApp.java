@@ -1,4 +1,6 @@
 package com.example.TPO;
+import com.example.TPO.view.*;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -148,25 +150,16 @@ public class LaboratorioClinicoApp extends JFrame {
             }
         });
 
-        btnRolesSeguridad.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                mostrarPanel(new RolesSeguridadPanel());
-            }
-        });
+//        btnRolesSeguridad.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                mostrarPanel(new RolesSeguridadPanel());
+//            }
+//        });
     }
 	private void mostrarPanel(JPanel nuevoPanel) {
         setContentPane(nuevoPanel);
         revalidate();
         repaint();
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new LaboratorioClinicoApp().setVisible(true);
-            }
-        });
     }
 }

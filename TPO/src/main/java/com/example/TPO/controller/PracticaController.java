@@ -1,6 +1,6 @@
 package com.example.TPO.controller;
 
-import com.example.TPO.Practica;
+import com.example.TPO.model.Practica;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,8 +31,8 @@ public class PracticaController {
             Practica practica = practicaExistente.get();
             practica.setNombre(practicaActualizada.getNombre());
             practica.setGrupo(practicaActualizada.getGrupo());
-            practica.setValoresCriticos(practicaActualizada.getValoresCriticos());
-            practica.setValoresReservados(practicaActualizada.getValoresReservados());
+            practica.setValorCritico(practicaActualizada.getValorCritico());
+            practica.setValorReservado(practicaActualizada.getValorReservado());
             practica.setCantidadHoras(practicaActualizada.getCantidadHoras());
             practica.setEstaHabilitada(practicaActualizada.isEstaHabilitada());
             return true;

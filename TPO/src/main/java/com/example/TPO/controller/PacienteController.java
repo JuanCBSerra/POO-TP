@@ -1,19 +1,17 @@
 package com.example.TPO.controller;
 
-import com.example.TPO.Paciente;
+import com.example.TPO.model.Paciente;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class PacienteController {
+
     private static PacienteController instance;
     private final List<Paciente> pacientes = new ArrayList<>();
-    private final PeticionController peticionController;
 
     private PacienteController() {
-        // Constructor privado para Singleton
-        peticionController = PeticionController.getInstance();
     }
 
     public static PacienteController getInstance() {
@@ -23,8 +21,18 @@ public class PacienteController {
         return instance;
     }
 
-    public void agregarPaciente(Paciente paciente) {
-        pacientes.add(paciente);
+    public void agregarPaciente(String dni, String nombre, String domicilio, String email, String sexo, int edad) {
+        Paciente nuevoPaciente = new Paciente(
+                dni,
+                nombre,
+                domicilio,
+                email,
+                sexo,
+                new ArrayList<String>(),
+                edad
+        );
+
+        pacientes.add(nuevoPaciente);
     }
 
     public Optional<Paciente> buscarPacientePorDni(String dni) {
@@ -33,20 +41,19 @@ public class PacienteController {
                 .findFirst();
     }
 
-    public boolean sePuedeEliminarPaciente(Paciente paciente) {
-        return peticionController.obtenerPeticionesPorPaciente(paciente).isEmpty();
-    }
+//    public boolean sePuedeEliminarPaciente(Paciente paciente) {
+//        return peticionController.obtenerPeticionesPorPaciente(paciente).isEmpty();
+//    }
 
     public boolean eliminarPaciente(String dni) {
         Optional<Paciente> paciente = buscarPacientePorDni(dni);
-        if (paciente.isPresent()) {
-            if (!sePuedeEliminarPaciente(paciente.get())) {
-                return false;
-            }else{
-                pacientes.remove(paciente.get());
-                return true;
-            }
-        }
+        //            if (!sePuedeEliminarPaciente(paciente.get())) {
+        //                return false;
+        //            }else{
+        //                pacientes.remove(paciente.get());
+        //                return true;
+        //            }
+        paciente.ifPresent(pacientes::remove);
         return false;
     }
 
@@ -65,6 +72,6 @@ public class PacienteController {
     }
 
     public List<Paciente> obtenerTodosLosPacientes() {
-        return new ArrayList<>(pacientes);
+        return pacientes;
     }
 }

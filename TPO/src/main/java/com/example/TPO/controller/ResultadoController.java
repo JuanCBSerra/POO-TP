@@ -1,6 +1,6 @@
 package com.example.TPO.controller;
 
-import com.example.TPO.Resultado;
+import com.example.TPO.model.Resultado;
 
 import java.util.ArrayList;
 import java.util.List;
