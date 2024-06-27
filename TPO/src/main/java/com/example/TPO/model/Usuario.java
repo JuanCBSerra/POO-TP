@@ -13,9 +13,9 @@ import java.time.LocalDate;
 public class Usuario {
 
     private String username;
+    private String nombre;
     private String email;
     private String password;
-    private String nombre;
     private String domicilio;
     private String dni;
     private LocalDate fechaNacimiento;

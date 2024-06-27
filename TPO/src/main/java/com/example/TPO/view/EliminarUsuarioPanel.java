@@ -1,9 +1,13 @@
 package com.example.TPO.view;
 
+import com.example.TPO.controller.UsuarioController;
+import com.example.TPO.model.Usuario;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Optional;
 
 public class EliminarUsuarioPanel extends JPanel {
     /**
@@ -14,7 +18,7 @@ public class EliminarUsuarioPanel extends JPanel {
     private JButton btnBuscar;
     private JButton btnEliminar;
     private JLabel nombreLabel;
-    private JLabel apellidoLabel;
+    private JLabel rolLabel;
 
     public EliminarUsuarioPanel() {
         setLayout(new BorderLayout());
@@ -24,7 +28,7 @@ public class EliminarUsuarioPanel extends JPanel {
         add(titulo, BorderLayout.NORTH);
 
         JPanel buscarPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
-        buscarPanel.add(new JLabel("Nombre de usuario:"));
+        buscarPanel.add(new JLabel("DNI de usuario:"));
         dniBuscarField = new JTextField(20);
         buscarPanel.add(dniBuscarField);
         btnBuscar = new JButton("Buscar");
@@ -40,9 +44,9 @@ public class EliminarUsuarioPanel extends JPanel {
         nombreLabel = new JLabel();
         infoPanel.add(nombreLabel);
 
-        infoPanel.add(new JLabel("Apellido:"));
-        apellidoLabel = new JLabel();
-        infoPanel.add(apellidoLabel);
+        infoPanel.add(new JLabel("Rol:"));
+        rolLabel = new JLabel();
+        infoPanel.add(rolLabel);
 
         btnEliminar = new JButton("Eliminar");
         btnEliminar.setBackground(new Color(255, 102, 102)); // Rojo claro
@@ -68,37 +72,33 @@ public class EliminarUsuarioPanel extends JPanel {
     }
 
     private void buscarUsuario() {
-        String nombreUsuario = dniBuscarField.getText();
+        String dni = dniBuscarField.getText();
 
-        // Aquí deberías buscar el usuario por su nombre de usuario y cargar los datos en los labels
-        // Por ejemplo: Usuario usuario = usuarioService.buscarPorNombreUsuario(nombreUsuario);
-        // if (usuario != null) {
-        //     nombreLabel.setText(usuario.getNombre());
-        //     apellidoLabel.setText(usuario.getApellido());
-        //     btnEliminar.setEnabled(true);
-        // } else {
-        //     JOptionPane.showMessageDialog(this, "Usuario no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
-        //     btnEliminar.setEnabled(false);
-        // }
+        Optional<Usuario> usuario = UsuarioController.getInstance().buscarUsuarioPorDni(dni);
 
-        // Simulación para el ejemplo:
-        if (nombreUsuario.equals("juanito123")) {
-            nombreLabel.setText("Juan");
-            apellidoLabel.setText("Pérez");
+        if (usuario.isPresent()) {
+            nombreLabel.setText(usuario.get().getNombre());
+            rolLabel.setText(String.valueOf(usuario.get().getRol()).toUpperCase());
             btnEliminar.setEnabled(true);
         } else {
             JOptionPane.showMessageDialog(this, "Usuario no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
+            nombreLabel.setText("");
             btnEliminar.setEnabled(false);
         }
     }
 
     private void eliminarUsuario() {
-        // Aquí puedes implementar la lógica para eliminar el usuario según el nombre de usuario ingresado
-        // Por ejemplo: usuarioService.eliminarUsuario(nombreUsuario);
+        String dni = dniBuscarField.getText();
 
-        JOptionPane.showMessageDialog(this, "Usuario eliminado con éxito.");
+        boolean usuarioEliminado = UsuarioController.getInstance().eliminarUsuario(dni);
+
+        if (usuarioEliminado) {
+            JOptionPane.showMessageDialog(this, "Usuario eliminado con éxito.");
+        } else {
+            JOptionPane.showMessageDialog(this, "No se pudo eliminar al usuario", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
         nombreLabel.setText("");
-        apellidoLabel.setText("");
         dniBuscarField.setText("");
         btnEliminar.setEnabled(false);
     }
