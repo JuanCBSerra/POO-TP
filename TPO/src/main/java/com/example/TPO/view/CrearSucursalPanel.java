@@ -12,12 +12,12 @@ import java.text.NumberFormat;
 
 public class CrearSucursalPanel extends JPanel {
 
-	private static final long serialVersionUID = 1L;
-	private final JFormattedTextField numeroField;
-	private final JTextField direccionField;
-	private final JTextField respTecnicoField;
+    private static final long serialVersionUID = 1L;
+    private final JFormattedTextField numeroField;
+    private final JTextField direccionField;
+    private final JTextField respTecnicoField;
 
-	private final SucursalController sucursalController = SucursalController.getInstance();
+    private final SucursalController sucursalController = SucursalController.getInstance();
 
     public CrearSucursalPanel() {
         setLayout(new BorderLayout());
@@ -26,21 +26,17 @@ public class CrearSucursalPanel extends JPanel {
         titulo.setFont(new Font("Arial", Font.BOLD, 24));
         add(titulo, BorderLayout.NORTH);
 
-        JPanel formPanel = new JPanel(new GridLayout(4, 2, 10, 10));
+        JPanel formPanel = new JPanel();
+        formPanel.setLayout(new BoxLayout(formPanel, BoxLayout.Y_AXIS));
+        formPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        formPanel.add(new JLabel("Numero:"));
-        numeroField = Utils.createFormattedTextField();
-        formPanel.add(numeroField);
-
-        formPanel.add(new JLabel("Direccion:"));
-        direccionField = new JTextField();
-        formPanel.add(direccionField);
-
-        formPanel.add(new JLabel("Responsable Tecnico:"));
-        respTecnicoField = new JTextField();
-        formPanel.add(respTecnicoField);
+        addFormRow(formPanel, "Numero:", numeroField = Utils.createFormattedTextField());
+        addFormRow(formPanel, "Direccion:", direccionField = new JTextField(20));
+        addFormRow(formPanel, "Responsable Tecnico:", respTecnicoField = new JTextField(20));
 
         JButton btnGuardar = new JButton("Guardar");
+        btnGuardar.setAlignmentX(Component.CENTER_ALIGNMENT);
+        btnGuardar.setBackground(new Color(144, 238, 144));
         formPanel.add(btnGuardar);
 
         add(formPanel, BorderLayout.CENTER);
@@ -51,6 +47,17 @@ public class CrearSucursalPanel extends JPanel {
                 guardarPaciente();
             }
         });
+    }
+
+    private void addFormRow(JPanel panel, String labelText, JComponent textField) {
+        JPanel row = new JPanel(new BorderLayout(20, 20));
+        row.setMaximumSize(new Dimension(Integer.MAX_VALUE, textField.getPreferredSize().height));
+        JLabel label = new JLabel(labelText);
+        label.setPreferredSize(new Dimension(160, textField.getPreferredSize().height));
+        row.add(label, BorderLayout.WEST);
+        row.add(textField, BorderLayout.CENTER);
+        panel.add(row);
+        panel.add(Box.createVerticalStrut(20)); // Añade un espacio vertical entre las filas
     }
 
     private void guardarPaciente() {

@@ -6,11 +6,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class CrearPracticasPanel extends JPanel {
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private JTextField codigoField;
+
+    private static final long serialVersionUID = 1L;
+    private JTextField codigoField;
     private JTextField nombreField;
     private JTextField grupoField;
     private JTextField valoresCriticosField;
@@ -24,51 +22,49 @@ public class CrearPracticasPanel extends JPanel {
         titulo.setFont(new Font("Arial", Font.BOLD, 24));
         add(titulo, BorderLayout.NORTH);
 
-        JPanel formPanel = new JPanel(new GridLayout(4, 2, 10, 10));
+        JPanel formPanel = new JPanel();
+        formPanel.setLayout(new BoxLayout(formPanel, BoxLayout.Y_AXIS));
+        formPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-    	formPanel.add(new JLabel("Codigo:"));
-        codigoField = new JTextField();
-        formPanel.add(codigoField);
-
-        formPanel.add(new JLabel("Nombre :"));
-        nombreField = new JTextField();
-        formPanel.add(nombreField);
-
-        formPanel.add(new JLabel("Grupo:"));
-        grupoField = new JTextField();
-        formPanel.add(grupoField);
-        
-        formPanel.add(new JLabel("Valores Criticos:"));
-        valoresCriticosField = new JTextField();
-        formPanel.add(valoresCriticosField);
-
-        formPanel.add(new JLabel("Valores Reservados:"));
-        valoresReservadosField = new JTextField();
-        formPanel.add(valoresReservadosField);
-
-        formPanel.add(new JLabel("Horas Resultado:"));
-        horasResultadoField = new JTextField();
-        formPanel.add(horasResultadoField);
+        addFormRow(formPanel, "Codigo:", codigoField = new JTextField(20));
+        addFormRow(formPanel, "Nombre:", nombreField = new JTextField(20));
+        addFormRow(formPanel, "Grupo:", grupoField = new JTextField(20));
+        addFormRow(formPanel, "Valores Criticos:", valoresCriticosField = new JTextField(20));
+        addFormRow(formPanel, "Valores Reservados:", valoresReservadosField = new JTextField(20));
+        addFormRow(formPanel, "Horas Resultado:", horasResultadoField = new JTextField(20));
 
         JButton btnGuardar = new JButton("Guardar");
-        formPanel.add(btnGuardar);
-
-        add(formPanel, BorderLayout.CENTER);
-
-        // Agregar ActionListener al botón Guardar
+        btnGuardar.setBackground(new Color(144, 238, 144)); // Verde claro
+        btnGuardar.setAlignmentX(Component.CENTER_ALIGNMENT);
         btnGuardar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                guardarPaciente();
+                guardarPractica();
             }
         });
+
+        formPanel.add(Box.createVerticalStrut(10)); // Añade un espacio vertical antes del botón
+        formPanel.add(btnGuardar);
+
+        add(formPanel, BorderLayout.CENTER);
     }
 
-    private void guardarPaciente() {
-        // Aquí puedes llamar a los métodos correspondientes para crear el paciente
-        // Por ejemplo: Paciente nuevoPaciente = new Paciente(nombre, apellido, dni);
-        // pacienteService.crearPaciente(nuevoPaciente);
+    private void addFormRow(JPanel panel, String labelText, JTextField textField) {
+        JPanel row = new JPanel(new BorderLayout(10, 10));
+        row.setMaximumSize(new Dimension(Integer.MAX_VALUE, textField.getPreferredSize().height));
+        JLabel label = new JLabel(labelText);
+        label.setPreferredSize(new Dimension(150, textField.getPreferredSize().height));
+        row.add(label, BorderLayout.WEST);
+        row.add(textField, BorderLayout.CENTER);
+        panel.add(row);
+        panel.add(Box.createVerticalStrut(10)); // Añade un espacio vertical entre las filas
+    }
 
-        JOptionPane.showMessageDialog(this, "Paciente creado con éxito.");
+    private void guardarPractica() {
+        // Aquí puedes llamar a los métodos correspondientes para crear la práctica
+        // Por ejemplo: Practica nuevaPractica = new Practica(...);
+        // practicaService.crearPractica(nuevaPractica);
+
+        JOptionPane.showMessageDialog(this, "Práctica creada con éxito.");
     }
 }

@@ -6,50 +6,54 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class CrearResultadoPanel extends JPanel {
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private JTextField nombreField;
+    private static final long serialVersionUID = 1L;
+    private JTextField nombreField;
     private JTextField apellidoField;
     private JTextField dniField;
 
     public CrearResultadoPanel() {
         setLayout(new BorderLayout());
 
-        JLabel titulo = new JLabel("Crear Paciente", SwingConstants.CENTER);
+        JLabel titulo = new JLabel("Crear Resultado", SwingConstants.CENTER);
         titulo.setFont(new Font("Arial", Font.BOLD, 24));
         add(titulo, BorderLayout.NORTH);
 
-        JPanel formPanel = new JPanel(new GridLayout(4, 2, 10, 10));
+        JPanel formPanel = new JPanel();
+        formPanel.setLayout(new BoxLayout(formPanel, BoxLayout.Y_AXIS));
+        formPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        formPanel.add(new JLabel("Nombre:"));
-        nombreField = new JTextField();
-        formPanel.add(nombreField);
-
-        formPanel.add(new JLabel("Apellido:"));
-        apellidoField = new JTextField();
-        formPanel.add(apellidoField);
-
-        formPanel.add(new JLabel("DNI:"));
-        dniField = new JTextField();
-        formPanel.add(dniField);
+        addFormRow(formPanel, "Nombre:", nombreField = new JTextField(20));
+        addFormRow(formPanel, "Apellido:", apellidoField = new JTextField(20));
+        addFormRow(formPanel, "DNI:", dniField = new JTextField(20));
 
         JButton btnGuardar = new JButton("Guardar");
-        formPanel.add(btnGuardar);
-
-        add(formPanel, BorderLayout.CENTER);
-
-        // Agregar ActionListener al botón Guardar
+        btnGuardar.setBackground(new Color(144, 238, 144)); // Verde claro
+        btnGuardar.setAlignmentX(Component.CENTER_ALIGNMENT);
         btnGuardar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                guardarPaciente();
+                guardarResultado();
             }
         });
+
+        formPanel.add(Box.createVerticalStrut(20)); // Añade un espacio vertical antes del botón
+        formPanel.add(btnGuardar);
+
+        add(formPanel, BorderLayout.CENTER);
     }
 
-    private void guardarPaciente() {
+    private void addFormRow(JPanel panel, String labelText, JTextField textField) {
+        JPanel row = new JPanel(new BorderLayout(20, 20));
+        row.setMaximumSize(new Dimension(Integer.MAX_VALUE, textField.getPreferredSize().height));
+        JLabel label = new JLabel(labelText);
+        label.setPreferredSize(new Dimension(120, textField.getPreferredSize().height));
+        row.add(label, BorderLayout.WEST);
+        row.add(textField, BorderLayout.CENTER);
+        panel.add(row);
+        panel.add(Box.createVerticalStrut(20)); // Añade un espacio vertical entre las filas
+    }
+
+    private void guardarResultado() {
         String nombre = nombreField.getText();
         String apellido = apellidoField.getText();
         String dni = dniField.getText();
@@ -60,10 +64,16 @@ public class CrearResultadoPanel extends JPanel {
             return;
         }
 
-        // Aquí puedes llamar a los métodos correspondientes para crear el paciente
-        // Por ejemplo: Paciente nuevoPaciente = new Paciente(nombre, apellido, dni);
-        // pacienteService.crearPaciente(nuevoPaciente);
+        // Aquí puedes implementar la lógica para guardar el resultado
+        // Por ejemplo: resultadoService.guardarResultado(nombre, apellido, dni);
 
-        JOptionPane.showMessageDialog(this, "Paciente creado con éxito.");
+        JOptionPane.showMessageDialog(this, "Resultado creado con éxito.");
+        clearFields();
+    }
+
+    private void clearFields() {
+        nombreField.setText("");
+        apellidoField.setText("");
+        dniField.setText("");
     }
 }

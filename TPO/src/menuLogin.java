@@ -1,9 +1,14 @@
+import com.example.TPO.LaboratorioClinicoApp;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+import java.awt.*;
 
 public class menuLogin extends JFrame {
 
@@ -27,6 +32,22 @@ public class menuLogin extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
 
+        // Aplicar borde redondeado a los campos de texto
+        textFieldMail.setBorder(BorderFactory.createCompoundBorder(
+                new LineBorder(Color.GRAY, 1, true),
+                new EmptyBorder(5, 15, 5, 15)));
+        textFieldPassword.setBorder(BorderFactory.createCompoundBorder(
+                new LineBorder(Color.GRAY, 1, true),
+                new EmptyBorder(5, 15, 5, 15)));
+        textFieldName.setBorder(BorderFactory.createCompoundBorder(
+                new LineBorder(Color.GRAY, 1, true),
+                new EmptyBorder(5, 15, 5, 15)));
+
+        // Opcional: Cambiar el fondo de los campos de texto
+        textFieldMail.setBackground(new Color(240, 240, 240));
+        textFieldPassword.setBackground(new Color(240, 240, 240));
+        textFieldName.setBackground(new Color(240, 240, 240));
+
         usersDatabase = new HashMap<>();
         loadDatabase();
 
@@ -45,6 +66,7 @@ public class menuLogin extends JFrame {
                 String password = textFieldPassword.getText(); //
                 if (authenticateUser(name, mail, password)) { // Verificar nombre, correo electrónico y contraseña
                     redirectUser(usersDatabase.get(mail)[2]); // El rango está en la posición 2
+                    dispose(); // Cerrar la pantalla de login
                 } else {
                     JOptionPane.showMessageDialog(null, "Correo, nombre o contraseña incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -78,7 +100,7 @@ public class menuLogin extends JFrame {
         switch (rank) {
             case "Administrador":
                 // Redirigir a la sección de administrador
-                JOptionPane.showMessageDialog(null, "Bienvenido Administrador", "Login", JOptionPane.INFORMATION_MESSAGE);
+                new LaboratorioClinicoApp().setVisible(true);
                 break;
             case "Laboratorista":
                 // Redirigir a la sección de laboratorista

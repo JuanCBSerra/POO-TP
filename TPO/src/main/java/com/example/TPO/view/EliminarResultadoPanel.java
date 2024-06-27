@@ -6,11 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class EliminarResultadoPanel extends JPanel {
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private JTextField dniBuscarField;
+    private static final long serialVersionUID = 1L;
+    private JTextField dniBuscarField;
     private JButton btnBuscar;
     private JButton btnEliminar;
     private JLabel nombreLabel;
@@ -23,16 +20,19 @@ public class EliminarResultadoPanel extends JPanel {
         titulo.setFont(new Font("Arial", Font.BOLD, 24));
         add(titulo, BorderLayout.NORTH);
 
-        JPanel buscarPanel = new JPanel(new GridLayout(1, 3, 10, 10));
+        JPanel buscarPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
         buscarPanel.add(new JLabel("DNI:"));
-        dniBuscarField = new JTextField();
+        dniBuscarField = new JTextField(20);
         buscarPanel.add(dniBuscarField);
         btnBuscar = new JButton("Buscar");
+        btnBuscar.setBackground(new Color(144, 202, 249));
         buscarPanel.add(btnBuscar);
 
-        add(buscarPanel, BorderLayout.NORTH);
+        add(buscarPanel, BorderLayout.CENTER);
 
         JPanel infoPanel = new JPanel(new GridLayout(3, 2, 10, 10));
+        infoPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // Añadir espacio alrededor del panel
+
         infoPanel.add(new JLabel("Nombre:"));
         nombreLabel = new JLabel();
         infoPanel.add(nombreLabel);
@@ -42,9 +42,10 @@ public class EliminarResultadoPanel extends JPanel {
         infoPanel.add(apellidoLabel);
 
         btnEliminar = new JButton("Eliminar");
+        btnEliminar.setBackground(new Color(255, 102, 102)); // Rojo claro
         infoPanel.add(btnEliminar);
 
-        add(infoPanel, BorderLayout.CENTER);
+        add(infoPanel, BorderLayout.SOUTH);
 
         // Deshabilitar botón Eliminar hasta que se busque un paciente
         btnEliminar.setEnabled(false);
@@ -68,8 +69,11 @@ public class EliminarResultadoPanel extends JPanel {
     private void buscarPaciente() {
         String dni = dniBuscarField.getText();
 
-        // Aquí deberías buscar el paciente por su DNI y cargar los datos en los labels
-        // Por ejemplo: Paciente paciente = pacienteService.buscarPorDni(dni);
+        // Simulación de búsqueda de paciente por DNI
+        // Aquí deberías implementar la lógica real para buscar el paciente por su DNI
+        // y cargar los datos en los labels correspondientes.
+        // Por ejemplo:
+        // Paciente paciente = pacienteService.buscarPorDni(dni);
         // if (paciente != null) {
         //     nombreLabel.setText(paciente.getNombre());
         //     apellidoLabel.setText(paciente.getApellido());

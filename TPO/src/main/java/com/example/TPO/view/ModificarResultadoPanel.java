@@ -6,11 +6,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ModificarResultadoPanel extends JPanel {
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private JTextField dniBuscarField;
+    private static final long serialVersionUID = 1L;
+
+    private JTextField dniBuscarField;
     private JTextField nombreField;
     private JTextField apellidoField;
     private JTextField dniField;
@@ -24,16 +22,18 @@ public class ModificarResultadoPanel extends JPanel {
         titulo.setFont(new Font("Arial", Font.BOLD, 24));
         add(titulo, BorderLayout.NORTH);
 
-        JPanel buscarPanel = new JPanel(new GridLayout(1, 3, 10, 10));
+        JPanel buscarPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
         buscarPanel.add(new JLabel("DNI:"));
-        dniBuscarField = new JTextField();
+        dniBuscarField = new JTextField(20);
         buscarPanel.add(dniBuscarField);
         btnBuscar = new JButton("Buscar");
+        btnBuscar.setBackground(new Color(144, 202, 249)); // Color celeste
         buscarPanel.add(btnBuscar);
 
-        add(buscarPanel, BorderLayout.NORTH);
+        add(buscarPanel, BorderLayout.CENTER);
 
         JPanel formPanel = new JPanel(new GridLayout(4, 2, 10, 10));
+        formPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // Espacios alrededor del panel
 
         formPanel.add(new JLabel("Nombre:"));
         nombreField = new JTextField();
@@ -48,27 +48,17 @@ public class ModificarResultadoPanel extends JPanel {
         formPanel.add(dniField);
 
         btnGuardar = new JButton("Guardar");
+        btnGuardar.setBackground(new Color(144, 238, 144)); // Color verde claro
         formPanel.add(btnGuardar);
 
-        add(formPanel, BorderLayout.CENTER);
+        add(formPanel, BorderLayout.SOUTH);
 
         // Deshabilitar el panel de formulario hasta que se busque un paciente
         habilitarFormulario(false);
 
         // Agregar ActionListeners
-        btnBuscar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                buscarPaciente();
-            }
-        });
-
-        btnGuardar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                guardarPaciente();
-            }
-        });
+        btnBuscar.addActionListener(e -> buscarPaciente());
+        btnGuardar.addActionListener(e -> guardarPaciente());
     }
 
     private void habilitarFormulario(boolean habilitar) {
@@ -81,19 +71,7 @@ public class ModificarResultadoPanel extends JPanel {
     private void buscarPaciente() {
         String dni = dniBuscarField.getText();
 
-        // Aquí deberías buscar el paciente por su DNI y cargar los datos en los campos
-        // Por ejemplo: Paciente paciente = pacienteService.buscarPorDni(dni);
-        // if (paciente != null) {
-        //     nombreField.setText(paciente.getNombre());
-        //     apellidoField.setText(paciente.getApellido());
-        //     dniField.setText(paciente.getDni());
-        //     habilitarFormulario(true);
-        // } else {
-        //     JOptionPane.showMessageDialog(this, "Paciente no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
-        //     habilitarFormulario(false);
-        // }
-
-        // Simulación para el ejemplo:
+        // Implementación simulada para buscar el paciente y cargar datos estáticos
         if (dni.equals("12345678")) {
             nombreField.setText("Juan");
             apellidoField.setText("Pérez");
@@ -116,9 +94,8 @@ public class ModificarResultadoPanel extends JPanel {
             return;
         }
 
-        // Aquí puedes llamar a los métodos correspondientes para modificar el paciente
-        // Por ejemplo: Paciente paciente = new Paciente(nombre, apellido, dni);
-        // pacienteService.modificarPaciente(paciente);
+        // Implementación simulada para guardar el paciente modificado
+        // Aquí iría la lógica para guardar los datos modificados del paciente
 
         JOptionPane.showMessageDialog(this, "Paciente modificado con éxito.");
     }

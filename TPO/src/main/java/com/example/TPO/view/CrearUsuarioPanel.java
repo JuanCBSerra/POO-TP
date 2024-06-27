@@ -7,10 +7,10 @@ import java.awt.event.ActionListener;
 
 public class CrearUsuarioPanel extends JPanel {
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private JTextField nombreField;
+     *
+     */
+    private static final long serialVersionUID = 1L;
+    private JTextField nombreField;
     private JTextField apellidoField;
     private JTextField dniField;
     private JTextField fecNacField;
@@ -24,33 +24,20 @@ public class CrearUsuarioPanel extends JPanel {
         titulo.setFont(new Font("Arial", Font.BOLD, 24));
         add(titulo, BorderLayout.NORTH);
 
-        JPanel formPanel = new JPanel(new GridLayout(4, 2, 10, 10));
-        
-        formPanel.add(new JLabel("Usuario:"));
-        usuarioField = new JTextField();
-        formPanel.add(usuarioField);
-        
-        formPanel.add(new JLabel("Nombre:"));
-        nombreField = new JTextField();
-        formPanel.add(nombreField);
-        
-        formPanel.add(new JLabel("Apellido:"));
-        apellidoField = new JTextField();
-        formPanel.add(apellidoField);
-        
-        formPanel.add(new JLabel("Correo:"));
-        correoField = new JTextField();
-        formPanel.add(correoField);
+        JPanel formPanel = new JPanel();
+        formPanel.setLayout(new BoxLayout(formPanel, BoxLayout.Y_AXIS));
+        formPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        formPanel.add(new JLabel("DNI:"));
-        dniField = new JTextField();
-        formPanel.add(dniField);
-        
-        formPanel.add(new JLabel("Fecha Nacimiento:"));
-        fecNacField = new JTextField();
-        formPanel.add(fecNacField);
+        addFormRow(formPanel, "Usuario:", usuarioField = new JTextField(20));
+        addFormRow(formPanel, "Nombre:", nombreField = new JTextField(20));
+        addFormRow(formPanel, "Apellido:", apellidoField = new JTextField(20));
+        addFormRow(formPanel, "Correo:", correoField = new JTextField(20));
+        addFormRow(formPanel, "DNI:", dniField = new JTextField(20));
+        addFormRow(formPanel, "Fecha Nacimiento:", fecNacField = new JTextField(20));
 
         JButton btnGuardar = new JButton("Guardar");
+        btnGuardar.setAlignmentX(Component.CENTER_ALIGNMENT);
+        btnGuardar.setBackground(new Color(144, 238, 144));
         formPanel.add(btnGuardar);
 
         add(formPanel, BorderLayout.CENTER);
@@ -62,6 +49,17 @@ public class CrearUsuarioPanel extends JPanel {
                 guardarPaciente();
             }
         });
+    }
+
+    private void addFormRow(JPanel panel, String labelText, JTextField textField) {
+        JPanel row = new JPanel(new BorderLayout(20, 20));
+        row.setMaximumSize(new Dimension(Integer.MAX_VALUE, textField.getPreferredSize().height));
+        JLabel label = new JLabel(labelText);
+        label.setPreferredSize(new Dimension(120, textField.getPreferredSize().height));
+        row.add(label, BorderLayout.WEST);
+        row.add(textField, BorderLayout.CENTER);
+        panel.add(row);
+        panel.add(Box.createVerticalStrut(20)); // Añade un espacio vertical entre las filas
     }
 
     private void guardarPaciente() {

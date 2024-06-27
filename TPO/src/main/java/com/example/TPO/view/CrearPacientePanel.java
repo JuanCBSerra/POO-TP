@@ -4,9 +4,9 @@ import com.example.TPO.Utils;
 import com.example.TPO.controller.PacienteController;
 
 import javax.swing.*;
-import javax.swing.text.NumberFormatter;
 import java.awt.*;
-import java.text.NumberFormat;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class CrearPacientePanel extends JPanel {
     private static final long serialVersionUID = 1L;
@@ -20,46 +20,49 @@ public class CrearPacientePanel extends JPanel {
     private final PacienteController pacienteController = PacienteController.getInstance();
 
     public CrearPacientePanel() {
-        setLayout(new BorderLayout(10, 10));
+        setLayout(new BorderLayout());
 
         JLabel titulo = new JLabel("Crear Paciente", SwingConstants.CENTER);
         titulo.setFont(new Font("Arial", Font.BOLD, 24));
         add(titulo, BorderLayout.NORTH);
 
-        JPanel formPanel = new JPanel(new GridLayout(6, 2, 10, 10));
+        JPanel formPanel = new JPanel();
+        formPanel.setLayout(new BoxLayout(formPanel, BoxLayout.Y_AXIS));
+        formPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        formPanel.add(new JLabel("DNI:"));
-        dniField = new JTextField();
-        formPanel.add(dniField);
+        addFormRow(formPanel, "DNI:", dniField = new JTextField(20));
+        addFormRow(formPanel, "Nombre:", nombreField = new JTextField(20));
+        addFormRow(formPanel, "Domicilio:", domicilioField = new JTextField(20));
+        addFormRow(formPanel, "Email:", emailField = new JTextField(20));
+        addFormRow(formPanel, "Sexo:", sexoField = new JTextField(20));
+        addFormRow(formPanel, "Edad:", edadField = Utils.createFormattedTextField());
 
-        formPanel.add(new JLabel("Nombre:"));
-        nombreField = new JTextField();
-        formPanel.add(nombreField);
+        formPanel.add(Box.createVerticalGlue()); // Añade espacio flexible antes del botón
 
-        formPanel.add(new JLabel("Domicilio:"));
-        domicilioField = new JTextField();
-        formPanel.add(domicilioField);
+        JButton btnGuardar = new JButton("Guardar");
+        btnGuardar.setBackground(new Color(144, 238, 144)); // Verde claro
+        btnGuardar.setAlignmentX(Component.CENTER_ALIGNMENT);
+        btnGuardar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                guardarPaciente();
+            }
+        });
 
-        formPanel.add(new JLabel("Email:"));
-        emailField = new JTextField();
-        formPanel.add(emailField);
-
-        formPanel.add(new JLabel("Sexo:"));
-        sexoField = new JTextField();
-        formPanel.add(sexoField);
-
-        formPanel.add(new JLabel("Edad:"));
-        edadField = Utils.createFormattedTextField();
-        formPanel.add(edadField);
+        formPanel.add(btnGuardar);
 
         add(formPanel, BorderLayout.CENTER);
+    }
 
-        JPanel buttonPanel = new JPanel();
-        JButton btnGuardar = new JButton("Guardar");
-        buttonPanel.add(btnGuardar);
-        add(buttonPanel, BorderLayout.SOUTH);
-
-        btnGuardar.addActionListener(e -> guardarPaciente());
+    private void addFormRow(JPanel panel, String labelText, JTextField textField) {
+        JPanel row = new JPanel(new BorderLayout(20, 20));
+        row.setMaximumSize(new Dimension(Integer.MAX_VALUE, textField.getPreferredSize().height));
+        JLabel label = new JLabel(labelText);
+        label.setPreferredSize(new Dimension(200, textField.getPreferredSize().height));
+        row.add(label, BorderLayout.WEST);
+        row.add(textField, BorderLayout.CENTER);
+        panel.add(row);
+        panel.add(Box.createVerticalStrut(15)); // Añade un espacio vertical entre las filas
     }
 
     private void guardarPaciente() {

@@ -5,11 +5,7 @@ import com.example.TPO.controller.PacienteController;
 import com.example.TPO.model.Paciente;
 
 import javax.swing.*;
-import javax.swing.text.NumberFormatter;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.text.NumberFormat;
 import java.util.Optional;
 
 public class ModificarPacientePanel extends JPanel {
@@ -32,16 +28,18 @@ public class ModificarPacientePanel extends JPanel {
         titulo.setFont(new Font("Arial", Font.BOLD, 24));
         add(titulo, BorderLayout.NORTH);
 
-        JPanel buscarPanel = new JPanel(new GridLayout(1, 3, 10, 10));
+        JPanel buscarPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
         buscarPanel.add(new JLabel("DNI:"));
-        dniBuscarField = new JTextField();
+        dniBuscarField = new JTextField(20);
         buscarPanel.add(dniBuscarField);
         JButton btnBuscar = new JButton("Buscar");
+        btnBuscar.setBackground(new Color(144, 202, 249)); // Color celeste
         buscarPanel.add(btnBuscar);
 
-        add(buscarPanel, BorderLayout.NORTH);
+        add(buscarPanel, BorderLayout.CENTER);
 
         JPanel formPanel = new JPanel(new GridLayout(6, 2, 10, 10));
+        formPanel.setBorder(BorderFactory.createEmptyBorder(15, 20, 15, 20)); // Espacios alrededor del panel
 
         formPanel.add(new JLabel("Nombre:"));
         nombreField = new JTextField();
@@ -64,9 +62,10 @@ public class ModificarPacientePanel extends JPanel {
         formPanel.add(edadField);
 
         btnGuardar = new JButton("Guardar");
+        btnGuardar.setBackground(new Color(144, 238, 144));
         formPanel.add(btnGuardar);
 
-        add(formPanel, BorderLayout.CENTER);
+        add(formPanel, BorderLayout.SOUTH);
 
         habilitarFormulario(false);
 
@@ -80,7 +79,6 @@ public class ModificarPacientePanel extends JPanel {
         emailField.setEnabled(habilitar);
         sexoField.setEnabled(habilitar);
         edadField.setEnabled(habilitar);
-
         btnGuardar.setEnabled(habilitar);
     }
 
