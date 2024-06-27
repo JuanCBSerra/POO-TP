@@ -5,34 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="28b9f8f3-54e5-4b3c-aad0-be8618ff5a9e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TPO/src/resources/imagenLogin.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/lombok-1.18.30.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/POO-TP.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/POO-TP.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/controller/UsuarioController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/LaboratorioClinicoApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/LaboratorioClinicoApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/view/CrearPacientePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/view/CrearPacientePanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/view/CrearPeticionPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/view/CrearPeticionPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/view/CrearPracticasPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/view/CrearPracticasPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/view/CrearResultadoPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/view/CrearResultadoPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/view/CrearSucursalPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/view/CrearSucursalPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TPO/src/db/dbUsuarios.txt" beforeDir="false" afterPath="$PROJECT_DIR$/TPO/src/db/dbUsuarios.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/model/Rol.java" beforeDir="false" afterPath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/model/Rol.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/model/Usuario.java" beforeDir="false" afterPath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/model/Usuario.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/view/CrearUsuarioPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/view/CrearUsuarioPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/view/EliminarPacientePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/view/EliminarPacientePanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/view/EliminarPeticionPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/view/EliminarPeticionPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/view/EliminarPracticasPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/view/EliminarPracticasPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/view/EliminarResultadoPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/view/EliminarResultadoPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/view/EliminarSucursalPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/view/EliminarSucursalPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/view/EliminarUsuarioPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/view/EliminarUsuarioPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/view/ModificarPacientePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/view/ModificarPacientePanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/view/ModificarPeticionPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/view/ModificarPeticionPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/view/ModificarPracticasPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/view/ModificarPracticasPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/view/ModificarResultadoPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/view/ModificarResultadoPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/view/ModificarSucursalPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/view/ModificarSucursalPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/view/ModificarUsuarioPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/view/ModificarUsuarioPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TPO/src/menuLogin.form" beforeDir="false" afterPath="$PROJECT_DIR$/TPO/src/menuLogin.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TPO/src/menuLogin.java" beforeDir="false" afterPath="$PROJECT_DIR$/TPO/src/menuLogin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/POO-TP/com/example/TPO/LaboratorioClinicoApp$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/POO-TP/com/example/TPO/LaboratorioClinicoApp$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/POO-TP/com/example/TPO/LaboratorioClinicoApp$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/POO-TP/com/example/TPO/LaboratorioClinicoApp$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/POO-TP/com/example/TPO/LaboratorioClinicoApp$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/POO-TP/com/example/TPO/LaboratorioClinicoApp$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/POO-TP/com/example/TPO/LaboratorioClinicoApp$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/POO-TP/com/example/TPO/LaboratorioClinicoApp$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/POO-TP/com/example/TPO/LaboratorioClinicoApp$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/POO-TP/com/example/TPO/LaboratorioClinicoApp$5.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/POO-TP/com/example/TPO/LaboratorioClinicoApp$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/POO-TP/com/example/TPO/LaboratorioClinicoApp$6.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,9 +42,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 5
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
   <component name="ProjectId" id="2dk8EynckNkJLNnAdLWrBES9hXl" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -137,7 +124,7 @@
     "Repository.Attach.Sources": "false",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "branch/Lautaro",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/tomat/OneDrive/Escritorio/parcial/POO-TP",
     "node.js.detected.package.eslint": "true",
@@ -167,7 +154,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="jdk-21.0.1-openjdk-21.0.1-f644763e9732-f98dd351" />
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.15989.150" />
+        <option value="bundled-js-predefined-1d06a55b98c1-91d5c284f522-JavaScript-IU-241.15989.150" />
       </set>
     </attachedChunks>
   </component>
@@ -180,6 +168,7 @@
       <option name="presentableId" value="Default" />
       <updated>1710540607493</updated>
       <workItem from="1719409382518" duration="23646000" />
+      <workItem from="1719522880807" duration="6121000" />
     </task>
     <servers />
   </component>
