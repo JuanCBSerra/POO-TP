@@ -4,8 +4,8 @@ import lombok.Data;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -16,8 +16,8 @@ public class Peticion {
     private String id;
     private Paciente paciente;
     private String obraSocial;
-    private LocalDate fechaCarga;
-    private LocalDate fechaCalculadaEntrega;
+    private Date fechaCarga;
+    private Date fechaCalculadaEntrega;
     private List<Integer> practicas;
     private ArrayList<Resultado> resultados;
 
@@ -45,19 +45,19 @@ public class Peticion {
         this.obraSocial = obraSocial;
     }
 
-    public LocalDate getFechaCarga() {
+    public Date getFechaCarga() {
         return fechaCarga;
     }
 
-    public void setFechaCarga(LocalDate fechaCarga) {
+    public void setFechaCarga(Date fechaCarga) {
         this.fechaCarga = fechaCarga;
     }
 
-    public LocalDate getFechaCalculadaEntrega() {
+    public Date getFechaCalculadaEntrega() {
         return fechaCalculadaEntrega;
     }
 
-    public void setFechaCalculadaEntrega(LocalDate fechaCalculadaEntrega) {
+    public void setFechaCalculadaEntrega(Date fechaCalculadaEntrega) {
         this.fechaCalculadaEntrega = fechaCalculadaEntrega;
     }
 

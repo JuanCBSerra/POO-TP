@@ -56,7 +56,7 @@ public class menuLogin extends JFrame {
                     redirectUser(usuarioAutenticado.get().getRol());
                     dispose();
                 } else {
-                    JOptionPane.showMessageDialog(null, "Correo, nombre o contraseña incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "nombre de usuario o contraseña incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
