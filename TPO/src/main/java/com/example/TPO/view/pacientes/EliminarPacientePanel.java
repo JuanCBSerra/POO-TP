@@ -25,8 +25,7 @@ public class EliminarPacientePanel extends JPanel {
         titulo.setFont(new Font("Arial", Font.BOLD, 24));
         add(titulo, BorderLayout.NORTH);
 
-        // Panel para buscar paciente
-        JPanel buscarPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10)); // Alineación y espaciado
+        JPanel buscarPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
         buscarPanel.add(new JLabel("DNI:"));
         dniBuscarField = new JTextField(20);
         buscarPanel.add(dniBuscarField);
@@ -34,21 +33,20 @@ public class EliminarPacientePanel extends JPanel {
         btnBuscar.setBackground(new Color(144, 202, 249));
         buscarPanel.add(btnBuscar);
 
-        add(buscarPanel, BorderLayout.CENTER); // Cambiado a BorderLayout.CENTER para que esté debajo del título
+        add(buscarPanel, BorderLayout.CENTER);
 
-        // Panel para mostrar información y eliminar paciente
-        JPanel infoPanel = new JPanel(new GridLayout(3, 2, 10, 10)); // GridLayout para organizar elementos
-        infoPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // Espacios alrededor del panel
+        JPanel infoPanel = new JPanel(new GridLayout(3, 2, 10, 10));
+        infoPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
         infoPanel.add(new JLabel("Nombre:"));
         nombreLabel = new JLabel();
         infoPanel.add(nombreLabel);
 
         btnEliminar = new JButton("Eliminar");
-        btnEliminar.setBackground(new Color(255, 102, 102)); // Cambio de color a rojo
+        btnEliminar.setBackground(new Color(255, 102, 102));
         infoPanel.add(btnEliminar);
 
-        add(infoPanel, BorderLayout.SOUTH); // Cambiado a BorderLayout.SOUTH para que esté debajo del panel de búsqueda
+        add(infoPanel, BorderLayout.SOUTH);
 
         btnEliminar.setEnabled(false);
 

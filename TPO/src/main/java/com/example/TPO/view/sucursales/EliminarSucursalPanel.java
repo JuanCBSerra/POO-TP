@@ -25,21 +25,19 @@ public class EliminarSucursalPanel extends JPanel {
         titulo.setFont(new Font("Arial", Font.BOLD, 24));
         add(titulo, BorderLayout.NORTH);
 
-        // Panel para buscar sucursal
         JPanel buscarPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10,10));
         buscarPanel.add(new JLabel("Número:"));
         numeroBuscarField = Utils.createFormattedTextField();
         numeroBuscarField.setColumns(15);
         buscarPanel.add(numeroBuscarField);
         btnBuscar = new JButton("Buscar");
-        btnBuscar.setBackground(new Color(144, 202, 249)); // Cambio de color a celeste
+        btnBuscar.setBackground(new Color(144, 202, 249));
         buscarPanel.add(btnBuscar);
 
         add(buscarPanel, BorderLayout.CENTER);
 
-        // Panel para mostrar información y eliminar sucursal
         JPanel infoPanel = new JPanel(new GridLayout(3, 2, 10, 10));
-        infoPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // Añadir espacio alrededor del panel
+        infoPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
         infoPanel.add(new JLabel("Dirección:"));
         direccionLabel = new JLabel();
@@ -50,7 +48,7 @@ public class EliminarSucursalPanel extends JPanel {
         infoPanel.add(responsableTecnicoLabel);
 
         btnEliminar = new JButton("Eliminar");
-        btnEliminar.setBackground(new Color(255, 102, 102)); // Rojo claro
+        btnEliminar.setBackground(new Color(255, 102, 102));
         infoPanel.add(btnEliminar);
 
         add(infoPanel, BorderLayout.SOUTH);
@@ -91,7 +89,6 @@ public class EliminarSucursalPanel extends JPanel {
         btnEliminar.setEnabled(false);
     }
 
-    // Método de utilidad para crear un JFormattedTextField sin restricciones de longitud mínima
     private static class Utils {
         public static JFormattedTextField createFormattedTextField() {
             return new JFormattedTextField();

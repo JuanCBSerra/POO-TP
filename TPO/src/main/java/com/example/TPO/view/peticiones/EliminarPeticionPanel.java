@@ -36,14 +36,14 @@ public class EliminarPeticionPanel extends JPanel {
         add(buscarPanel, BorderLayout.CENTER);
 
         JPanel infoPanel = new JPanel(new GridLayout(3, 2, 10, 10));
-        infoPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // Añadir espacio alrededor del panel
+        infoPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
         infoPanel.add(new JLabel("Obra Social:"));
         obraSocialLabel = new JLabel();
         infoPanel.add(obraSocialLabel);
 
         btnEliminar = new JButton("Eliminar");
-        btnEliminar.setBackground(new Color(255, 102, 102)); // Rojo claro
+        btnEliminar.setBackground(new Color(255, 102, 102));
         infoPanel.add(btnEliminar);
 
         add(infoPanel, BorderLayout.SOUTH);
@@ -51,7 +51,6 @@ public class EliminarPeticionPanel extends JPanel {
         // Deshabilitar botón Eliminar hasta que se busque un paciente
         btnEliminar.setEnabled(false);
 
-        // Agregar ActionListeners
         btnBuscar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

@@ -37,10 +37,10 @@ public class CrearPacientePanel extends JPanel {
         addFormRow(formPanel, "Sexo:", sexoField = new JTextField(20));
         addFormRow(formPanel, "Edad:", edadField = Utils.createFormattedTextField());
 
-        formPanel.add(Box.createVerticalGlue()); // Añade espacio flexible antes del botón
+        formPanel.add(Box.createVerticalGlue());
 
         JButton btnGuardar = new JButton("Guardar");
-        btnGuardar.setBackground(new Color(144, 238, 144)); // Verde claro
+        btnGuardar.setBackground(new Color(144, 238, 144));
         btnGuardar.setAlignmentX(Component.CENTER_ALIGNMENT);
         btnGuardar.addActionListener(new ActionListener() {
             @Override
@@ -62,7 +62,7 @@ public class CrearPacientePanel extends JPanel {
         row.add(label, BorderLayout.WEST);
         row.add(textField, BorderLayout.CENTER);
         panel.add(row);
-        panel.add(Box.createVerticalStrut(15)); // Añade un espacio vertical entre las filas
+        panel.add(Box.createVerticalStrut(15));
     }
 
     private void guardarPaciente() {

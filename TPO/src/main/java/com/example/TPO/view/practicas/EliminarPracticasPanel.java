@@ -29,9 +29,8 @@ public class EliminarPracticasPanel extends JPanel {
         JPanel buscarPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
         buscarPanel.add(new JLabel("Código Práctica:"));
 
-        // Utilizando Utils para crear un campo formateado para el código
         codigoBuscarField = Utils.createFormattedTextField();
-        codigoBuscarField.setColumns(10);  // Ajustando el tamaño del campo
+        codigoBuscarField.setColumns(10);
         buscarPanel.add(codigoBuscarField);
 
         btnBuscar = new JButton("Buscar");
@@ -41,14 +40,14 @@ public class EliminarPracticasPanel extends JPanel {
         add(buscarPanel, BorderLayout.CENTER);
 
         JPanel infoPanel = new JPanel(new GridLayout(3, 2, 10, 10));
-        infoPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // Espacio alrededor del panel
+        infoPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
         infoPanel.add(new JLabel("Nombre:"));
         nombreLabel = new JLabel();
         infoPanel.add(nombreLabel);
 
         btnEliminar = new JButton("Eliminar");
-        btnEliminar.setBackground(new Color(255, 102, 102)); // Rojo claro
+        btnEliminar.setBackground(new Color(255, 102, 102));
         infoPanel.add(btnEliminar);
 
         add(infoPanel, BorderLayout.SOUTH);
