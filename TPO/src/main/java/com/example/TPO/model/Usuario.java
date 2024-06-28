@@ -1,15 +1,7 @@
 package com.example.TPO.model;
 
-import com.example.TPO.model.Rol;
-import lombok.Data;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-
 import java.time.LocalDate;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class Usuario {
 
     private String username;
@@ -20,6 +12,17 @@ public class Usuario {
     private String dni;
     private LocalDate fechaNacimiento;
     private Rol rol;
+
+    public Usuario(String username, String nombre, String email, String password, String domicilio, String dni, LocalDate fechaNacimiento, Rol rol) {
+        this.username = username;
+        this.nombre = nombre;
+        this.email = email;
+        this.password = password;
+        this.domicilio = domicilio;
+        this.dni = dni;
+        this.fechaNacimiento = fechaNacimiento;
+        this.rol = rol;
+    }
 
     public String getUsername() {
         return username;

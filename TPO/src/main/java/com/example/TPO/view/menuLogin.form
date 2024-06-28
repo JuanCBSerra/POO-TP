@@ -29,7 +29,7 @@
           <text value="Nombre"/>
         </properties>
       </component>
-      <component id="d1d68" class="javax.swing.JTextField" binding="textFieldName">
+      <component id="d1d68" class="javax.swing.JTextField" binding="textFieldUsername">
         <constraints>
           <grid row="1" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="200" height="30"/>
@@ -56,22 +56,6 @@
         <properties>
           <text value=""/>
         </properties>
-      </component>
-      <component id="36fde" class="javax.swing.JLabel" binding="Mail">
-        <constraints>
-          <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Mail"/>
-        </properties>
-      </component>
-      <component id="a437a" class="javax.swing.JTextField" binding="textFieldMail">
-        <constraints>
-          <grid row="2" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-            <preferred-size width="200" height="30"/>
-          </grid>
-        </constraints>
-        <properties/>
       </component>
       <component id="e03fe" class="javax.swing.JButton" binding="loginButton" default-binding="true">
         <constraints>

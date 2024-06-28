@@ -4,7 +4,6 @@ import java.io.*;
 import com.example.TPO.model.Usuario;
 import com.example.TPO.model.Rol;
 
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +14,10 @@ public class UsuarioController {
     private static UsuarioController instance;
     private final List<Usuario> usuarios = new ArrayList<>();
 
+    private static final String DB_FILE = new File("").getAbsolutePath() + "/src/db/dbUsuarios.txt";
+
     private UsuarioController() {
+        cargarUsuariosDesdeBD();
     }
 
     public static UsuarioController getInstance() {
@@ -57,14 +59,14 @@ public class UsuarioController {
         }
     }
 
-    public boolean modificarUsuario(String username, String nombre,String email,String password,String domicilio,String dni,LocalDate fecNac,String rol) {
+    public boolean modificarUsuario(String username, String nombre, String email, String password, String domicilio, String dni, LocalDate fecNac, String rol) {
         Optional<Usuario> usuarioOpt = buscarUsuarioPorDni(dni);
         if (usuarioOpt.isPresent()) {
             Usuario usuario = usuarioOpt.get();
             if (username != null) {
-                usuario.setUsername(nombre);
+                usuario.setUsername(username);
             }
-            if (username != null){
+            if (nombre != null){
                 usuario.setNombre(nombre);
             }
             if (email != null) {
@@ -75,9 +77,6 @@ public class UsuarioController {
             }
             if (domicilio != null) {
                 usuario.setDomicilio(domicilio);
-            }
-            if (dni != null) {
-                usuario.setDni(dni);
             }
             if (fecNac != null) {
                 usuario.setFechaNacimiento(fecNac);
@@ -98,26 +97,55 @@ public class UsuarioController {
     }
 
     private void guardarUsuarioEnBD(Usuario usuario) {
-        String rutaArchivo = "TPO/src/db/dbUsuarios.txt";
-
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(rutaArchivo, true))) {
-            String linea = String.format("%s,%s,%s,%s,%s",
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(DB_FILE, true))) {
+            String linea = String.format("%s,%s,%s,%s,%s,%s,%s,%s",
+                    usuario.getUsername(),
                     usuario.getNombre(),
                     usuario.getEmail(),
                     usuario.getPassword(),
-                    usuario.getRol().toString().toLowerCase(),
-                    usuario.getDni());
+                    usuario.getDomicilio(),
+                    usuario.getDni(),
+                    usuario.getFechaNacimiento().toString(),
+                    usuario.getRol().toString().toLowerCase());
             writer.write(linea);
             writer.newLine();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Error al guardar usuario en la base de datos: " + e.getMessage());
         }
     }
 
-    private void eliminarUsuarioDeBD(String dni) {
-        String rutaArchivo = "TPO/src/db/dbUsuarios.txt";
-        File archivo = new File(rutaArchivo);
-        File archivoTemp = new File("TPO/src/db/dbUsuariosTemp.txt");
+    private void cargarUsuariosDesdeBD() {
+        File archivo = new File(DB_FILE);
+        if (!archivo.exists()) {
+            return;
+        }
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(archivo))) {
+            String linea;
+            while ((linea = reader.readLine()) != null) {
+                String[] datos = linea.split(",");
+                if (datos.length == 8) {
+                    Usuario usuario = new Usuario(
+                            datos[0],
+                            datos[1],
+                            datos[2],
+                            datos[3],
+                            datos[4],
+                            datos[5],
+                            LocalDate.parse(datos[6]),
+                            Rol.valueOf(datos[7].toUpperCase())
+                    );
+                    usuarios.add(usuario);
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Error al cargar usuarios desde la base de datos: " + e.getMessage());
+        }
+    }
+
+    public static void eliminarUsuarioDeBD(String dni) {
+        File archivo = new File(DB_FILE);
+        File archivoTemp = new File(archivo.getParent(), "tempDb");
 
         try (BufferedReader reader = new BufferedReader(new FileReader(archivo));
              BufferedWriter writer = new BufferedWriter(new FileWriter(archivoTemp))) {
@@ -131,13 +159,24 @@ public class UsuarioController {
             }
 
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Error al eliminar usuario de la base de datos: " + e.getMessage());
         }
 
         // Eliminar el archivo original
         if (archivo.delete()) {
             // Renombrar el archivo temporal
-            archivoTemp.renameTo(archivo);
+            if (!archivoTemp.renameTo(archivo)) {
+                System.err.println("Error al renombrar el archivo temporal.");
+            }
+        } else {
+            System.err.println("Error al eliminar el archivo original.");
         }
     }
+
+    public Optional<Usuario> autenticarUsuario(String username, String password) {
+        return usuarios.stream()
+                .filter(u -> u.getUsername().equals(username) && u.getPassword().equals(password))
+                .findFirst();
+    }
+
 }

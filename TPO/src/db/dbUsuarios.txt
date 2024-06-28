@@ -1,4 +1,1 @@
-Juan Perez,juan.perez@example.com,1234,Administrador
-Carlos Garcia,carlos.garcia@example.com,pass123,Recepcionista
-Ana Martinez,ana.martinez@example.com,qwerty,Administrador
-Luis Fernandez,luis.fernandez@example.com,zxcvb,Laboratorista
+Jperez,Juan Perez,juan.perez@example.com,1234,Domicilio1,12345678,1000-01-01,ADMINISTRADOR
