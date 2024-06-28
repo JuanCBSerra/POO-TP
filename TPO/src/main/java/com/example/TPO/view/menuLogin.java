@@ -1,3 +1,5 @@
+package com.example.TPO.view;
+
 import com.example.TPO.LaboratorioClinicoApp;
 
 import javax.swing.*;

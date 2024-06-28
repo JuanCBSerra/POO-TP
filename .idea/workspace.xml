@@ -6,9 +6,19 @@
   <component name="ChangeListManager">
     <list default="true" id="28b9f8f3-54e5-4b3c-aad0-be8618ff5a9e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/LaboratorioClinicoApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/LaboratorioClinicoApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/view/CrearUsuarioPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/view/CrearUsuarioPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/view/ModificarUsuarioPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/view/ModificarUsuarioPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TPO/bin/src/menuLogin.form" beforeDir="false" afterPath="$PROJECT_DIR$/TPO/bin/src/menuLogin.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TPO/src/menuLogin.form" beforeDir="false" afterPath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/view/menuLogin.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TPO/src/menuLogin.java" beforeDir="false" afterPath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/view/menuLogin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/POO-TP/com/example/TPO/LaboratorioClinicoApp$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/POO-TP/com/example/TPO/LaboratorioClinicoApp$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/POO-TP/com/example/TPO/LaboratorioClinicoApp$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/POO-TP/com/example/TPO/LaboratorioClinicoApp$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/POO-TP/com/example/TPO/LaboratorioClinicoApp$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/POO-TP/com/example/TPO/LaboratorioClinicoApp$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/POO-TP/com/example/TPO/LaboratorioClinicoApp$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/POO-TP/com/example/TPO/LaboratorioClinicoApp$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/POO-TP/com/example/TPO/LaboratorioClinicoApp$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/POO-TP/com/example/TPO/LaboratorioClinicoApp$5.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/POO-TP/com/example/TPO/LaboratorioClinicoApp$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/POO-TP/com/example/TPO/LaboratorioClinicoApp$6.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/POO-TP/menuLogin$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/POO-TP/menuLogin$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/POO-TP/menuLogin.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,6 +116,7 @@
     "Application.LaboratorioClinicoApp.executor": "Run",
     "Application.Main.executor": "Run",
     "Application.MainFrame.executor": "Run",
+    "Application.com.example.TPO.view.menuLogin.executor": "Run",
     "Application.menuLogin.executor": "Run",
     "Downloaded.Files.Path.Enabled": "true",
     "Repository.Attach.Annotations": "false",
@@ -115,7 +126,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "467",
-    "git-widget-placeholder": "branch/Lautaro",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/tomat/OneDrive/Escritorio/parcial/POO-TP",
     "node.js.detected.package.eslint": "true",
@@ -126,12 +137,30 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\tomat\OneDrive\Escritorio\parcial\POO-TP\TPO\src\main\java\com\example\TPO\view" />
+    </key>
+  </component>
   <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="com.example.TPO.App" />
       <module name="POO-TP" />
       <RunnerSettings RunnerId="Run" />
       <ConfigurationWrapper RunnerId="Run" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="com.example.TPO.view.menuLogin" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.example.TPO.view.menuLogin" />
+      <module name="POO-TP" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.TPO.view.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -146,6 +175,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
+        <item itemvalue="Application.com.example.TPO.view.menuLogin" />
         <item itemvalue="Application.menuLogin" />
       </list>
     </recent_temporary>
@@ -153,8 +183,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.15989.150" />
-        <option value="bundled-js-predefined-1d06a55b98c1-91d5c284f522-JavaScript-IU-241.15989.150" />
+        <option value="jdk-21.0.1-openjdk-21.0.1-f644763e9732-f98dd351" />
       </set>
     </attachedChunks>
   </component>
@@ -169,6 +198,7 @@
       <workItem from="1719409382518" duration="23646000" />
       <workItem from="1719522880807" duration="6581000" />
       <workItem from="1719534634081" duration="2542000" />
+      <workItem from="1719538249387" duration="422000" />
     </task>
     <servers />
   </component>
