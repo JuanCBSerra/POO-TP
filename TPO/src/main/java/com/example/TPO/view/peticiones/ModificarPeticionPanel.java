@@ -1,4 +1,4 @@
-package com.example.TPO.view;
+package com.example.TPO.view.peticiones;
 
 import javax.swing.*;
 import java.awt.*;
