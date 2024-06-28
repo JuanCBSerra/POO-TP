@@ -1,9 +1,11 @@
 package com.example.TPO.view;
 
+import com.example.TPO.Utils;
 import com.example.TPO.controller.PracticaController;
-import com.example.TPO.controller.SucursalController;
 import com.example.TPO.model.Practica;
 import com.example.TPO.model.ValorCritico;
+import com.example.TPO.model.ValorCriticoNumerico;
+import com.example.TPO.model.ValorCriticoString;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,15 +14,18 @@ import java.awt.event.ActionListener;
 
 public class CrearPracticasPanel extends JPanel {
 
-    private static final long serialVersionUID = 1L;
-    private JTextField codigoField;
-    private JTextField nombreField;
-    private JTextField grupoField;
-    private JTextField valoresCriticosField;
-    private JTextField valoresReservadosField;
-    private JTextField horasResultadoField;
+    private final JFormattedTextField codigoField;
+    private final JTextField nombreField;
+    private final JTextField grupoField;
+    private final JTextField valoresCriticosField;
+    private final JCheckBox valoresReservadosCheckBox;
+    private final JFormattedTextField horasResultadoField;
+    private final JCheckBox habilitadaCheckbox;
 
     private final PracticaController practicaController = PracticaController.getInstance();
+
+    private final JRadioButton valorCriticoStringRadio;
+    private final JRadioButton valorCriticoNumericoRadio;
 
     public CrearPracticasPanel() {
         setLayout(new BorderLayout());
@@ -33,12 +38,27 @@ public class CrearPracticasPanel extends JPanel {
         formPanel.setLayout(new BoxLayout(formPanel, BoxLayout.Y_AXIS));
         formPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        addFormRow(formPanel, "Codigo:", codigoField = new JTextField(20));
+        addFormRow(formPanel, "Codigo:", codigoField = Utils.createFormattedTextField());
         addFormRow(formPanel, "Nombre:", nombreField = new JTextField(20));
         addFormRow(formPanel, "Grupo:", grupoField = new JTextField(20));
         addFormRow(formPanel, "Valores Criticos:", valoresCriticosField = new JTextField(20));
-        addFormRow(formPanel, "Valores Reservados:", valoresReservadosField = new JTextField(20));
-        addFormRow(formPanel, "Horas Resultado:", horasResultadoField = new JTextField(20));
+
+        JPanel valorCriticoPanel = new JPanel();
+        valorCriticoPanel.setLayout(new BoxLayout(valorCriticoPanel, BoxLayout.Y_AXIS));
+        valorCriticoPanel.setBorder(BorderFactory.createTitledBorder("Tipo de Valor Crítico"));
+
+        valorCriticoStringRadio = new JRadioButton("Valor Crítico String");
+        valorCriticoNumericoRadio = new JRadioButton("Valor Crítico Numérico");
+
+        valorCriticoPanel.add(valorCriticoStringRadio);
+        valorCriticoPanel.add(valorCriticoNumericoRadio);
+
+        formPanel.add(valorCriticoPanel);
+
+        addFormRow(formPanel, "Valores Reservados:", valoresReservadosCheckBox = new JCheckBox());
+        addFormRow(formPanel, "Horas Resultado:", horasResultadoField = Utils.createFormattedTextField());
+        addFormRow(formPanel, "Habilitada:", habilitadaCheckbox = new JCheckBox());
+
 
         JButton btnGuardar = new JButton("Guardar");
         btnGuardar.setBackground(new Color(144, 238, 144)); // Verde claro
@@ -50,21 +70,21 @@ public class CrearPracticasPanel extends JPanel {
             }
         });
 
-        formPanel.add(Box.createVerticalStrut(10)); // Añade un espacio vertical antes del botón
+        formPanel.add(Box.createVerticalStrut(10));
         formPanel.add(btnGuardar);
 
         add(formPanel, BorderLayout.CENTER);
     }
 
-    private void addFormRow(JPanel panel, String labelText, JTextField textField) {
+    private void addFormRow(JPanel panel, String labelText, JComponent component) {
         JPanel row = new JPanel(new BorderLayout(10, 10));
-        row.setMaximumSize(new Dimension(Integer.MAX_VALUE, textField.getPreferredSize().height));
+        row.setMaximumSize(new Dimension(Integer.MAX_VALUE, component.getPreferredSize().height));
         JLabel label = new JLabel(labelText);
-        label.setPreferredSize(new Dimension(150, textField.getPreferredSize().height));
+        label.setPreferredSize(new Dimension(150, component.getPreferredSize().height));
         row.add(label, BorderLayout.WEST);
-        row.add(textField, BorderLayout.CENTER);
+        row.add(component, BorderLayout.CENTER);
         panel.add(row);
-        panel.add(Box.createVerticalStrut(10)); // Añade un espacio vertical entre las filas
+        panel.add(Box.createVerticalStrut(10));
     }
 
     private void guardarPractica() {
@@ -72,10 +92,11 @@ public class CrearPracticasPanel extends JPanel {
         String nombreString = nombreField.getText();
         String grupoString = grupoField.getText();
         String valoresCriticosString = valoresCriticosField.getText();
-        String valoresReservadosString =  valoresReservadosField.getText();
+        boolean valoresReservados = valoresReservadosCheckBox.isSelected();
         String horasResultadoString = horasResultadoField.getText();
+        boolean habilitada = habilitadaCheckbox.isSelected();
 
-        if (codigoString.isEmpty() || nombreString.isEmpty() || grupoString.isEmpty() || valoresCriticosString.isEmpty() || valoresReservadosString.isEmpty() || horasResultadoString.isEmpty()) {
+        if (codigoString.isEmpty() || nombreString.isEmpty() || grupoString.isEmpty() || valoresCriticosString.isEmpty() || horasResultadoString.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -83,15 +104,33 @@ public class CrearPracticasPanel extends JPanel {
         int codigo = Integer.parseInt(codigoString);
         int horasResultado = Integer.parseInt(horasResultadoString);
 
-        ValorCritico valorCritico = new ValorCritico() {
-            @Override
-            public boolean esCritico(String valorResultado) {
-                return false;
+        ValorCritico valorCritico = null;
+
+        if (valorCriticoStringRadio.isSelected()) {
+            valorCritico = new ValorCriticoString(valoresCriticosString);
+        } else if (valorCriticoNumericoRadio.isSelected()) {
+            String[] valores = valoresCriticosString.split(",");
+            if (valores.length == 2) {
+                try {
+                    int valorMinimo = Integer.parseInt(valores[0].trim());
+                    int valorMaximo = Integer.parseInt(valores[1].trim());
+                    valorCritico = new ValorCriticoNumerico(valorMinimo, valorMaximo);
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(this, "Formato inválido para valores críticos numéricos.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Formato inválido para valores críticos numéricos.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
             }
-        };
-        Boolean valorReservado = Boolean.TRUE;
-        Boolean estaHabilitada = Boolean.TRUE;
-        Practica practica = new Practica(codigo,nombreString,grupoString,valorCritico,valorReservado,horasResultado,estaHabilitada);
+        }
+
+        if (valorCritico == null) {
+            JOptionPane.showMessageDialog(this, "Seleccione un tipo de valor crítico.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        Practica practica = new Practica(codigo, nombreString, grupoString, valorCritico, valoresReservados, horasResultado, habilitada);
 
         practicaController.agregarPractica(practica);
 
@@ -100,11 +139,12 @@ public class CrearPracticasPanel extends JPanel {
     }
 
     private void clearFields() {
-        codigoField.setText("");
+        codigoField.setText(null);
         nombreField.setText("");
         grupoField.setText("");
         valoresCriticosField.setText("");
-        valoresReservadosField.setText("");
-        horasResultadoField.setText("");
+        valoresReservadosCheckBox.setSelected(false);
+        horasResultadoField.setText(null);
+        habilitadaCheckbox.setSelected(false);
     }
 }

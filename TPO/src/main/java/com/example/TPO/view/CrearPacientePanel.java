@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class CrearPacientePanel extends JPanel {
-    private static final long serialVersionUID = 1L;
+
     private final JTextField nombreField;
     private final JTextField domicilioField;
     private final JTextField dniField;

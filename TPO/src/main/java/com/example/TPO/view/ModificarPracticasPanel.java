@@ -1,30 +1,32 @@
 package com.example.TPO.view;
 
+import com.example.TPO.Utils;
 import com.example.TPO.controller.PracticaController;
-import com.example.TPO.controller.SucursalController;
 import com.example.TPO.model.Practica;
-import com.example.TPO.model.Sucursal;
 import com.example.TPO.model.ValorCritico;
+import com.example.TPO.model.ValorCriticoNumerico;
+import com.example.TPO.model.ValorCriticoString;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Optional;
 
 public class ModificarPracticasPanel extends JPanel {
-    private static final long serialVersionUID = 1L;
-    private JTextField codigoBuscarField;
-    private JTextField codigoField;
-    private JTextField nombreField;
-    private JTextField grupoField;
-    private JTextField valoresCriticosField;
-    private JTextField valoresReservadosField;
-    private JTextField horasResultadoField;
-    private JButton btnBuscar;
-    private JButton btnGuardar;
+
+    private final JTextField codigoBuscarField;
+    private final JTextField codigoField;
+    private final JTextField nombreField;
+    private final JTextField grupoField;
+    private final JTextField valoresCriticosField;
+    private final JCheckBox valoresReservadosCheckBox;
+    private final JFormattedTextField horasResultadoField;
+    private final JCheckBox habilitadaCheckbox;
+    private final JButton btnGuardar;
 
     private final PracticaController practicaController = PracticaController.getInstance();
+
+    private final JRadioButton valorCriticoStringRadio;
+    private final JRadioButton valorCriticoNumericoRadio;
 
     public ModificarPracticasPanel() {
         setLayout(new BorderLayout());
@@ -33,48 +35,44 @@ public class ModificarPracticasPanel extends JPanel {
         titulo.setFont(new Font("Arial", Font.BOLD, 24));
         add(titulo, BorderLayout.NORTH);
 
-        JPanel buscarPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
-        buscarPanel.add(new JLabel("Código:"));
-        codigoBuscarField = new JTextField(20);
-        buscarPanel.add(codigoBuscarField);
-        btnBuscar = new JButton("Buscar");
-        btnBuscar.setBackground(new Color(144, 202, 249)); // Color celeste
-        buscarPanel.add(btnBuscar);
+        JPanel formPanel = new JPanel();
+        formPanel.setLayout(new BoxLayout(formPanel, BoxLayout.Y_AXIS));
+        formPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        add(buscarPanel, BorderLayout.CENTER);
+        addFormRow(formPanel, "Código:", codigoBuscarField = new JTextField(20));
+        JButton btnBuscar;
+        addFormRow(formPanel, "Buscar:", btnBuscar = new JButton("Buscar"));
 
-        JPanel formPanel = new JPanel(new GridLayout(7, 2, 10, 10)); // Ajustado a 7 filas para coincidir con el número de campos
-        formPanel.setBorder(BorderFactory.createEmptyBorder(15, 20, 15, 20)); // Espacios alrededor del panel
+        // Componente vacío para separar el botón buscar
+        formPanel.add(Box.createVerticalStrut(10));
 
-        formPanel.add(new JLabel("Código:"));
-        codigoField = new JTextField();
-        formPanel.add(codigoField);
+        addFormRow(formPanel, "Código:", codigoField = new JTextField());
+        addFormRow(formPanel, "Nombre:", nombreField = new JTextField());
+        addFormRow(formPanel, "Grupo:", grupoField = new JTextField());
+        addFormRow(formPanel, "Valores Críticos:", valoresCriticosField = new JTextField());
+        addFormRow(formPanel, "Habilitada:", habilitadaCheckbox = new JCheckBox());
 
-        formPanel.add(new JLabel("Nombre:"));
-        nombreField = new JTextField();
-        formPanel.add(nombreField);
+        JPanel valorCriticoPanel = new JPanel();
+        valorCriticoPanel.setLayout(new BoxLayout(valorCriticoPanel, BoxLayout.Y_AXIS));
+        valorCriticoPanel.setBorder(BorderFactory.createTitledBorder("Tipo de Valor Crítico"));
 
-        formPanel.add(new JLabel("Grupo:"));
-        grupoField = new JTextField();
-        formPanel.add(grupoField);
+        valorCriticoStringRadio = new JRadioButton("Valor Crítico String");
+        valorCriticoNumericoRadio = new JRadioButton("Valor Crítico Numérico");
 
-        formPanel.add(new JLabel("Valores Críticos:"));
-        valoresCriticosField = new JTextField();
-        formPanel.add(valoresCriticosField);
+        valorCriticoPanel.add(valorCriticoStringRadio);
+        valorCriticoPanel.add(valorCriticoNumericoRadio);
 
-        formPanel.add(new JLabel("Valores Reservados:"));
-        valoresReservadosField = new JTextField();
-        formPanel.add(valoresReservadosField);
+        formPanel.add(valorCriticoPanel);
 
-        formPanel.add(new JLabel("Horas Resultado:"));
-        horasResultadoField = new JTextField();
-        formPanel.add(horasResultadoField);
+        addFormRow(formPanel, "Valores Reservados:", valoresReservadosCheckBox = new JCheckBox());
+        addFormRow(formPanel, "Horas Resultado:", horasResultadoField = Utils.createFormattedTextField());
 
         btnGuardar = new JButton("Guardar");
-        btnGuardar.setBackground(new Color(144, 238, 144)); // Color verde
+        btnGuardar.setBackground(new Color(144, 238, 144)); // Color verde claro
+        btnGuardar.setAlignmentX(Component.CENTER_ALIGNMENT);
         formPanel.add(btnGuardar);
 
-        add(formPanel, BorderLayout.SOUTH);
+        add(formPanel, BorderLayout.CENTER);
 
         habilitarFormulario(false);
 
@@ -82,81 +80,117 @@ public class ModificarPracticasPanel extends JPanel {
         btnGuardar.addActionListener(e -> guardarPractica());
     }
 
+    private void addFormRow(JPanel panel, String labelText, JComponent component) {
+        JPanel row = new JPanel(new BorderLayout(10, 10));
+        row.setMaximumSize(new Dimension(Integer.MAX_VALUE, component.getPreferredSize().height));
+        JLabel label = new JLabel(labelText);
+        label.setPreferredSize(new Dimension(150, component.getPreferredSize().height));
+        row.add(label, BorderLayout.WEST);
+        row.add(component, BorderLayout.CENTER);
+        panel.add(row);
+        panel.add(Box.createVerticalStrut(10));
+    }
+
     private void habilitarFormulario(boolean habilitar) {
         codigoField.setEnabled(habilitar);
         nombreField.setEnabled(habilitar);
         grupoField.setEnabled(habilitar);
         valoresCriticosField.setEnabled(habilitar);
-        valoresReservadosField.setEnabled(habilitar);
+        valoresReservadosCheckBox.setEnabled(habilitar);
         horasResultadoField.setEnabled(habilitar);
         btnGuardar.setEnabled(habilitar);
+        valorCriticoStringRadio.setEnabled(habilitar);
+        valorCriticoNumericoRadio.setEnabled(habilitar);
     }
 
     private void buscarPractica() {
         try {
             int codigo = Integer.parseInt(codigoBuscarField.getText());
-            Optional<Practica> practica = practicaController.buscarPracticaPorCodigo(codigo);
+            Optional<Practica> practicaOptional = practicaController.buscarPracticaPorCodigo(codigo);
 
-            if (practica.isPresent()) {
-                nombreField.setText(practica.get().getNombre());
-                grupoField.setText(practica.get().getGrupo());
-                valoresCriticosField.setText("Test");
-                valoresReservadosField.setText("True");
-                horasResultadoField.setText("1234");
+            if (practicaOptional.isPresent()) {
+                Practica practica = practicaOptional.get();
+                codigoField.setText(String.valueOf(practica.getCodigo()));
+                nombreField.setText(practica.getNombre());
+                grupoField.setText(practica.getGrupo());
+                if (practica.getValorCritico() instanceof ValorCriticoString) {
+                    valorCriticoStringRadio.setSelected(true);
+                    valoresCriticosField.setText(((ValorCriticoString) practica.getValorCritico()).getValorCritico());
+                } else if (practica.getValorCritico() instanceof ValorCriticoNumerico) {
+                    valorCriticoNumericoRadio.setSelected(true);
+                    ValorCriticoNumerico valorCriticoNumerico = (ValorCriticoNumerico) practica.getValorCritico();
+                    valoresCriticosField.setText(valorCriticoNumerico.getValorMinimo() + ", " + valorCriticoNumerico.getValorMaximo());
+                }
+                valoresReservadosCheckBox.setSelected(practica.getValorReservado());
+                habilitadaCheckbox.setSelected(practica.isEstaHabilitada());
+                horasResultadoField.setText(String.valueOf(practica.getCantidadHoras()));
                 habilitarFormulario(true);
             } else {
-                JOptionPane.showMessageDialog(this, "Practica no encontrada.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Práctica no encontrada.", "Error", JOptionPane.ERROR_MESSAGE);
                 limpiarCampos();
                 habilitarFormulario(false);
             }
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Número de Practica inválido.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Número de Práctica inválido.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private void guardarPractica() {
         try {
-            String codigoString = codigoField.getText();
-            String nombreString = nombreField.getText();
-            String grupoString = grupoField.getText();
+            int codigo = Integer.parseInt(codigoField.getText());
+            String nombre = nombreField.getText();
+            String grupo = grupoField.getText();
             String valoresCriticosString = valoresCriticosField.getText();
-            String valoresReservadosString =  valoresReservadosField.getText();
-            String horasResultadoString = horasResultadoField.getText();
+            boolean valoresReservados = valoresReservadosCheckBox.isSelected();
+            int horasResultado = Integer.parseInt(horasResultadoField.getText());
+            boolean estaHabilitada = habilitadaCheckbox.isSelected();
 
-            if (codigoString.isEmpty() || nombreString.isEmpty() || grupoString.isEmpty() || valoresCriticosString.isEmpty() || valoresReservadosString.isEmpty() || horasResultadoString.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
+            ValorCritico valorCritico = null;
+
+            if (valorCriticoStringRadio.isSelected()) {
+                valorCritico = new ValorCriticoString(valoresCriticosString);
+            } else if (valorCriticoNumericoRadio.isSelected()) {
+                String[] valores = valoresCriticosString.split(",");
+                if (valores.length == 2) {
+                    try {
+                        int valorMinimo = Integer.parseInt(valores[0].trim());
+                        int valorMaximo = Integer.parseInt(valores[1].trim());
+                        valorCritico = new ValorCriticoNumerico(valorMinimo, valorMaximo);
+                    } catch (NumberFormatException e) {
+                        JOptionPane.showMessageDialog(this, "Formato inválido para valores críticos numéricos.", "Error", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Formato inválido para valores críticos numéricos.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }
+
+            if (valorCritico == null) {
+                JOptionPane.showMessageDialog(this, "Seleccione un tipo de valor crítico.", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
-            int codigo = Integer.parseInt(codigoString);
-            int horasResultado = Integer.parseInt(horasResultadoString);
-            ValorCritico valorCritico = new ValorCritico() {
-                @Override
-                public boolean esCritico(String valorResultado) {
-                    return false;
-                }
-            };
-            Boolean valorReservado = Boolean.TRUE;
-            Boolean estaHabilitada = Boolean.TRUE;
-
-            Practica practica = new Practica(codigo,nombreString,grupoString,valorCritico,valorReservado,horasResultado,estaHabilitada);
+            Practica practica = new Practica(codigo, nombre, grupo, valorCritico, valoresReservados, horasResultado, estaHabilitada);
 
             practicaController.modificarPractica(codigo, practica);
 
-            JOptionPane.showMessageDialog(this, "Practica modificada con éxito.");
+            JOptionPane.showMessageDialog(this, "Práctica modificada con éxito.");
             limpiarCampos();
             habilitarFormulario(false);
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Número de Pratica inválido.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Número de Práctica inválido.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private void limpiarCampos() {
-        codigoField.setText("");
+        codigoField.setText(null);
         nombreField.setText("");
         grupoField.setText("");
         valoresCriticosField.setText("");
-        valoresReservadosField.setText("");
-        horasResultadoField.setText("");
+        valoresReservadosCheckBox.setSelected(false);
+        horasResultadoField.setText(null);
+        valorCriticoStringRadio.setSelected(false);
+        valorCriticoNumericoRadio.setSelected(false);
     }
 }

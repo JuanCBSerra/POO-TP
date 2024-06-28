@@ -1,5 +1,6 @@
 package com.example.TPO.view;
 
+import com.example.TPO.Utils;
 import com.example.TPO.controller.PracticaController;
 import com.example.TPO.model.Practica;
 
@@ -11,7 +12,7 @@ import java.util.Optional;
 
 public class EliminarPracticasPanel extends JPanel {
     private static final long serialVersionUID = 1L;
-    private JTextField codigoBuscarField;
+    private JFormattedTextField codigoBuscarField;
     private JButton btnBuscar;
     private JButton btnEliminar;
     private JLabel nombreLabel;
@@ -27,7 +28,7 @@ public class EliminarPracticasPanel extends JPanel {
 
         JPanel buscarPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
         buscarPanel.add(new JLabel("Código Practica:"));
-        codigoBuscarField = new JTextField(20);
+        codigoBuscarField = Utils.createFormattedTextField();
         buscarPanel.add(codigoBuscarField);
         btnBuscar = new JButton("Buscar");
         btnBuscar.setBackground(new Color(144, 202, 249));
@@ -48,10 +49,8 @@ public class EliminarPracticasPanel extends JPanel {
 
         add(infoPanel, BorderLayout.SOUTH);
 
-        // Deshabilitar botón Eliminar hasta que se busque una práctica
         btnEliminar.setEnabled(false);
 
-        // Agregar ActionListeners
         btnBuscar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
