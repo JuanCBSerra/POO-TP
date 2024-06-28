@@ -9,6 +9,7 @@ import com.example.TPO.model.ValorCriticoString;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ItemEvent;
 import java.util.Optional;
 
 public class ModificarPracticasPanel extends JPanel {
@@ -59,6 +60,11 @@ public class ModificarPracticasPanel extends JPanel {
         valorCriticoStringRadio = new JRadioButton("Valor Crítico String");
         valorCriticoNumericoRadio = new JRadioButton("Valor Crítico Numérico");
 
+        // Agrupar los radio buttons para que solo uno pueda ser seleccionado a la vez
+        ButtonGroup valorCriticoGroup = new ButtonGroup();
+        valorCriticoGroup.add(valorCriticoStringRadio);
+        valorCriticoGroup.add(valorCriticoNumericoRadio);
+
         valorCriticoPanel.add(valorCriticoStringRadio);
         valorCriticoPanel.add(valorCriticoNumericoRadio);
 
@@ -78,6 +84,19 @@ public class ModificarPracticasPanel extends JPanel {
 
         btnBuscar.addActionListener(e -> buscarPractica());
         btnGuardar.addActionListener(e -> guardarPractica());
+
+        // Añadir listener para desactivar el otro radio button cuando uno es seleccionado
+        valorCriticoStringRadio.addItemListener(e -> {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                valorCriticoNumericoRadio.setSelected(false);
+            }
+        });
+
+        valorCriticoNumericoRadio.addItemListener(e -> {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                valorCriticoStringRadio.setSelected(false);
+            }
+        });
     }
 
     private void addFormRow(JPanel panel, String labelText, JComponent component) {
