@@ -52,7 +52,7 @@ public class CrearPeticionPanel extends JPanel {
 
 
         JButton btnGuardar = new JButton("Guardar");
-        btnGuardar.setBackground(new Color(144, 238, 144)); // Verde claro
+        btnGuardar.setBackground(new Color(144, 238, 144));
         btnGuardar.setAlignmentX(Component.CENTER_ALIGNMENT);
         btnGuardar.addActionListener(new ActionListener() {
             @Override
@@ -61,7 +61,7 @@ public class CrearPeticionPanel extends JPanel {
             }
         });
 
-        formPanel.add(Box.createVerticalStrut(20)); // Añade un espacio vertical antes del botón
+        formPanel.add(Box.createVerticalStrut(20));
         formPanel.add(btnGuardar);
 
         add(formPanel, BorderLayout.CENTER);
@@ -75,7 +75,7 @@ public class CrearPeticionPanel extends JPanel {
         row.add(label, BorderLayout.WEST);
         row.add(textField, BorderLayout.CENTER);
         panel.add(row);
-        panel.add(Box.createVerticalStrut(20)); // Añade un espacio vertical entre las filas
+        panel.add(Box.createVerticalStrut(20));
     }
 
     private void guardarPeticion() {

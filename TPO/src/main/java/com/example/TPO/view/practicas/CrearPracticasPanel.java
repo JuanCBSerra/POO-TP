@@ -64,7 +64,7 @@ public class CrearPracticasPanel extends JPanel {
         addFormRow(formPanel, "Habilitada:", habilitadaCheckbox = new JCheckBox());
 
         JButton btnGuardar = new JButton("Guardar");
-        btnGuardar.setBackground(new Color(144, 238, 144)); // Verde claro
+        btnGuardar.setBackground(new Color(144, 238, 144));
         btnGuardar.setAlignmentX(Component.CENTER_ALIGNMENT);
         btnGuardar.addActionListener(new ActionListener() {
             @Override

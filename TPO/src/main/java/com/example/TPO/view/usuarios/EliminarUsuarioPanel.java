@@ -28,13 +28,13 @@ public class EliminarUsuarioPanel extends JPanel {
         dniBuscarField = new JTextField(20);
         buscarPanel.add(dniBuscarField);
         JButton btnBuscar = new JButton("Buscar");
-        btnBuscar.setBackground(new Color(144, 202, 249)); // Color celeste
+        btnBuscar.setBackground(new Color(144, 202, 249));
         buscarPanel.add(btnBuscar);
 
         add(buscarPanel, BorderLayout.CENTER);
 
         JPanel infoPanel = new JPanel(new GridLayout(3, 2, 10, 10));
-        infoPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // Espacios alrededor del panel
+        infoPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
         infoPanel.add(new JLabel("Nombre:"));
         nombreLabel = new JLabel();
@@ -45,7 +45,7 @@ public class EliminarUsuarioPanel extends JPanel {
         infoPanel.add(rolLabel);
 
         btnEliminar = new JButton("Eliminar");
-        btnEliminar.setBackground(new Color(255, 102, 102)); // Rojo claro
+        btnEliminar.setBackground(new Color(255, 102, 102));
         infoPanel.add(btnEliminar);
 
         add(infoPanel, BorderLayout.SOUTH);

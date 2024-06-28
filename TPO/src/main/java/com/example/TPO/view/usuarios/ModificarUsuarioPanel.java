@@ -36,13 +36,13 @@ public class ModificarUsuarioPanel extends JPanel {
         dniBuscarField = new JTextField(20);
         buscarPanel.add(dniBuscarField);
         JButton btnBuscar = new JButton("Buscar");
-        btnBuscar.setBackground(new Color(144, 202, 249)); // Color celeste
+        btnBuscar.setBackground(new Color(144, 202, 249));
         buscarPanel.add(btnBuscar);
 
         add(buscarPanel, BorderLayout.CENTER);
 
         JPanel formPanel = new JPanel(new GridLayout(10, 2, 10, 10));
-        formPanel.setBorder(BorderFactory.createEmptyBorder(15, 20, 15, 20)); // Espacios alrededor del panel
+        formPanel.setBorder(BorderFactory.createEmptyBorder(15, 20, 15, 20));
 
         formPanel.add(new JLabel("Nombre de usuario:"));
         usernameField = new JTextField();
@@ -146,6 +146,6 @@ public class ModificarUsuarioPanel extends JPanel {
         domicilioField.setText("");
         dniBuscarField.setText("");
         fecNacField.setText("");
-        rolComboBox.setSelectedIndex(0); // Assuming default selection is set to index 0
+        rolComboBox.setSelectedIndex(0);
     }
 }

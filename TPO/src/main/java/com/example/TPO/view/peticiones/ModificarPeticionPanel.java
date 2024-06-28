@@ -35,13 +35,13 @@ public class ModificarPeticionPanel extends JPanel {
         idPeticionField = new JTextField(20);
         buscarPanel.add(idPeticionField);
         btnBuscar = new JButton("Buscar");
-        btnBuscar.setBackground(new Color(144, 202, 249)); // Color celeste
+        btnBuscar.setBackground(new Color(144, 202, 249));
         buscarPanel.add(btnBuscar);
 
         add(buscarPanel, BorderLayout.CENTER);
 
         JPanel formPanel = new JPanel(new GridLayout(6,2,8, 8));
-        formPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // Espacios alrededor del panel
+        formPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
         formPanel.add(new JLabel("Obra Social:"));
         obraSocialField = new JTextField();
@@ -56,7 +56,7 @@ public class ModificarPeticionPanel extends JPanel {
         formPanel.add(fechaEntregaField);
 
         btnGuardar = new JButton("Guardar");
-        btnGuardar.setBackground(new Color(144, 238, 144)); // Color verde claro
+        btnGuardar.setBackground(new Color(144, 238, 144));
         formPanel.add(btnGuardar);
 
         add(formPanel, BorderLayout.SOUTH);
@@ -64,7 +64,6 @@ public class ModificarPeticionPanel extends JPanel {
         // Deshabilitar el panel de formulario hasta que se busque una petición
         habilitarFormulario(false);
 
-        // Agregar ActionListeners
         btnBuscar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

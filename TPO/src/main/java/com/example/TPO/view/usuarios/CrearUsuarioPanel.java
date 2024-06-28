@@ -43,7 +43,6 @@ public class CrearUsuarioPanel extends JPanel {
         addFormRow(formPanel, "DNI:", dniField = new JTextField(20));
         addFormRow(formPanel, "Fecha Nacimiento (YYYY-MM-DD):", fecNacField = new JTextField(20));
 
-        // Crear el JComboBox para el rol
         rolComboBox = new JComboBox<>(Rol.values());
         addFormRow(formPanel, "Rol:", rolComboBox);
 
@@ -54,7 +53,6 @@ public class CrearUsuarioPanel extends JPanel {
 
         add(formPanel, BorderLayout.CENTER);
 
-        // Agregar ActionListener al botón Guardar
         btnGuardar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -71,7 +69,7 @@ public class CrearUsuarioPanel extends JPanel {
         row.add(label, BorderLayout.WEST);
         row.add(component, BorderLayout.CENTER);
         panel.add(row);
-        panel.add(Box.createVerticalStrut(20)); // Añade un espacio vertical entre las filas
+        panel.add(Box.createVerticalStrut(20));
     }
 
     private void guardarUsuario() {

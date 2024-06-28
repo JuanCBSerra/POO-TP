@@ -28,17 +28,17 @@ public class ModificarSucursalPanel extends JPanel {
 
         JPanel buscarPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
         buscarPanel.add(new JLabel("Número:"));
-        numeroBuscarField = Utils.createFormattedTextField(); // Utilizando método de utilidad para crear campo formateado
+        numeroBuscarField = Utils.createFormattedTextField();
         numeroBuscarField.setColumns(15);
         buscarPanel.add(numeroBuscarField);
         JButton btnBuscar = new JButton("Buscar");
-        btnBuscar.setBackground(new Color(144, 202, 249)); // Color celeste
+        btnBuscar.setBackground(new Color(144, 202, 249));
         buscarPanel.add(btnBuscar);
 
         add(buscarPanel, BorderLayout.CENTER);
 
         JPanel formPanel = new JPanel(new GridLayout(3, 2, 10, 10));
-        formPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // Espacios alrededor del panel
+        formPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
         formPanel.add(new JLabel("Dirección:"));
         direccionField = new JTextField();
@@ -49,7 +49,7 @@ public class ModificarSucursalPanel extends JPanel {
         formPanel.add(respTecnicoField);
 
         btnGuardar = new JButton("Guardar");
-        btnGuardar.setBackground(new Color(144, 238, 144)); // Color verde claro
+        btnGuardar.setBackground(new Color(144, 238, 144));
         formPanel.add(btnGuardar);
 
         add(formPanel, BorderLayout.SOUTH);
@@ -111,7 +111,7 @@ public class ModificarSucursalPanel extends JPanel {
         respTecnicoField.setText("");
     }
 
-    // Método de utilidad para crear un JFormattedTextField con formato de número entero
+
     private static class Utils {
         public static JFormattedTextField createFormattedTextField() {
             NumberFormat format = NumberFormat.getIntegerInstance();

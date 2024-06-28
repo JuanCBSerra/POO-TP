@@ -55,7 +55,7 @@ public class CrearSucursalPanel extends JPanel {
         row.add(label, BorderLayout.WEST);
         row.add(textField, BorderLayout.CENTER);
         panel.add(row);
-        panel.add(Box.createVerticalStrut(20)); // Añade un espacio vertical entre las filas
+        panel.add(Box.createVerticalStrut(20));
     }
 
     private void guardarSucursal() {
