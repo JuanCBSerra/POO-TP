@@ -103,6 +103,9 @@ public class ModificarPeticionPanel extends JPanel {
                 habilitarFormulario(true);
 
             }
+            else {
+                JOptionPane.showMessageDialog(this, "Petición no encontrada.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
         catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Número de petición inválido.", "Error", JOptionPane.ERROR_MESSAGE);

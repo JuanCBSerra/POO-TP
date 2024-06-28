@@ -1,13 +1,19 @@
 package com.example.TPO.view.peticiones;
 
+import com.example.TPO.controller.PeticionController;
+import com.example.TPO.model.Peticion;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+import java.util.Optional;
 
 public class EliminarPeticionPanel extends JPanel {
     private static final long serialVersionUID = 1L;
-    private JTextField pacienteBuscarField;
+    private JTextField idPeticionField;
     private JButton btnBuscar;
     private JButton btnEliminar;
     private JLabel obraSocialLabel;
@@ -20,9 +26,9 @@ public class EliminarPeticionPanel extends JPanel {
         add(titulo, BorderLayout.NORTH);
 
         JPanel buscarPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
-        buscarPanel.add(new JLabel("Paciente:"));
-        pacienteBuscarField = new JTextField(20);
-        buscarPanel.add(pacienteBuscarField);
+        buscarPanel.add(new JLabel("Ingrese ID Petición:"));
+        idPeticionField = new JTextField(20);
+        buscarPanel.add(idPeticionField);
         btnBuscar = new JButton("Buscar");
         btnBuscar.setBackground(new Color(144, 202, 249));
         buscarPanel.add(btnBuscar);
@@ -49,40 +55,46 @@ public class EliminarPeticionPanel extends JPanel {
         btnBuscar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                buscarPaciente();
+                buscarPeticion();
             }
         });
 
         btnEliminar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                eliminarPaciente();
+                eliminarPeticion();
             }
         });
     }
 
-    private void buscarPaciente() {
-        // Aquí puedes implementar la lógica para buscar al paciente por su nombre o ID
-        // por ejemplo:
-        // String pacienteNombre = pacienteBuscarField.getText();
-        // Optional<Paciente> paciente = pacienteService.buscarPacientePorNombre(pacienteNombre);
+    private void buscarPeticion() {
 
-        // Simulación de búsqueda
-        String pacienteNombre = pacienteBuscarField.getText();
-        obraSocialLabel.setText("Obra Social: Ejemplo"); // Ejemplo de texto para la etiqueta de obra social
-        btnEliminar.setEnabled(true);
+        try{
+            Optional<Peticion> peticionOptional = PeticionController.getInstance().buscarPeticionPorId(idPeticionField.getText());
+
+            if(peticionOptional.isPresent()) {
+
+                Peticion peticion = peticionOptional.get();
+                obraSocialLabel.setText(peticion.getObraSocial());
+                btnEliminar.setEnabled(true);
+            }
+            else {
+                JOptionPane.showMessageDialog(this, "Petición no encontrada.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Número de petición inválido.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
-    private void eliminarPaciente() {
-        // Aquí puedes implementar la lógica para eliminar al paciente
-        // por ejemplo:
-        // String pacienteNombre = pacienteBuscarField.getText();
-        // boolean eliminado = pacienteService.eliminarPaciente(pacienteNombre);
-
-        // Simulación de eliminación
-        JOptionPane.showMessageDialog(this, "Peticion eliminada con éxito.");
-        obraSocialLabel.setText("");
-        pacienteBuscarField.setText("");
-        btnEliminar.setEnabled(false);
+    private void eliminarPeticion() {
+        try {
+            String idPeticion = idPeticionField.getText();
+            PeticionController.getInstance().eliminarPeticion(idPeticion);
+            JOptionPane.showMessageDialog(this, "Petición eliminada con éxito.");
+            btnEliminar.setEnabled(false);
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Número de petición inválido.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 }
