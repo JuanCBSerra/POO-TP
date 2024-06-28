@@ -1,9 +1,13 @@
 package com.example.TPO.view;
 
+import com.example.TPO.controller.PracticaController;
+import com.example.TPO.model.Practica;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Optional;
 
 public class EliminarPracticasPanel extends JPanel {
     private static final long serialVersionUID = 1L;
@@ -11,6 +15,8 @@ public class EliminarPracticasPanel extends JPanel {
     private JButton btnBuscar;
     private JButton btnEliminar;
     private JLabel nombreLabel;
+
+    private final PracticaController practicaController = PracticaController.getInstance();
 
     public EliminarPracticasPanel() {
         setLayout(new BorderLayout());
@@ -61,25 +67,28 @@ public class EliminarPracticasPanel extends JPanel {
         });
     }
 
-    private void buscarPractica() {
-        // Aquí puedes implementar la lógica para buscar la práctica por su código
-        // por ejemplo:
-        // String codigoPractica = codigoBuscarField.getText();
-        // Optional<Practica> practica = practicaService.buscarPracticaPorCodigo(codigoPractica);
 
-        // Simulación de búsqueda
-        String codigoPractica = codigoBuscarField.getText();
-        nombreLabel.setText("Nombre de la práctica: Ejemplo"); // Ejemplo de texto para la etiqueta de nombre
-        btnEliminar.setEnabled(true);
+    private void buscarPractica() {
+        try {
+            int codigo = Integer.parseInt(codigoBuscarField.getText());
+            Optional<Practica> practica = practicaController.buscarPracticaPorCodigo(codigo);
+
+            if (practica.isPresent()) {
+                nombreLabel.setText(practica.get().getNombre());
+                btnEliminar.setEnabled(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "Practica no encontrada.", "Error", JOptionPane.ERROR_MESSAGE);
+
+            }
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Número de Practica inválido.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
     }
 
     private void eliminarPractica() {
-        // Aquí puedes implementar la lógica para eliminar la práctica
-        // por ejemplo:
-        // String codigoPractica = codigoBuscarField.getText();
-        // boolean eliminada = practicaService.eliminarPractica(codigoPractica);
-
-        // Simulación de eliminación
+        int codigo = Integer.parseInt(codigoBuscarField.getText());
+        practicaController.deshabilitarPractica(codigo);
         JOptionPane.showMessageDialog(this, "Práctica eliminada con éxito.");
         nombreLabel.setText("");
         codigoBuscarField.setText("");

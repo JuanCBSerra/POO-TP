@@ -44,7 +44,7 @@ public class CrearSucursalPanel extends JPanel {
         btnGuardar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                guardarPaciente();
+                guardarSucursal();
             }
         });
     }
@@ -60,7 +60,7 @@ public class CrearSucursalPanel extends JPanel {
         panel.add(Box.createVerticalStrut(20)); // Añade un espacio vertical entre las filas
     }
 
-    private void guardarPaciente() {
+    private void guardarSucursal() {
         String numeroString = numeroField.getText();
         String direccion = direccionField.getText();
         String responsableTecnico = respTecnicoField.getText();

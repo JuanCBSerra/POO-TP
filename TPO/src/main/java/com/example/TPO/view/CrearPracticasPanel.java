@@ -1,5 +1,10 @@
 package com.example.TPO.view;
 
+import com.example.TPO.controller.PracticaController;
+import com.example.TPO.controller.SucursalController;
+import com.example.TPO.model.Practica;
+import com.example.TPO.model.ValorCritico;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -14,6 +19,8 @@ public class CrearPracticasPanel extends JPanel {
     private JTextField valoresCriticosField;
     private JTextField valoresReservadosField;
     private JTextField horasResultadoField;
+
+    private final PracticaController practicaController = PracticaController.getInstance();
 
     public CrearPracticasPanel() {
         setLayout(new BorderLayout());
@@ -61,10 +68,43 @@ public class CrearPracticasPanel extends JPanel {
     }
 
     private void guardarPractica() {
-        // Aquí puedes llamar a los métodos correspondientes para crear la práctica
-        // Por ejemplo: Practica nuevaPractica = new Practica(...);
-        // practicaService.crearPractica(nuevaPractica);
+        String codigoString = codigoField.getText();
+        String nombreString = nombreField.getText();
+        String grupoString = grupoField.getText();
+        String valoresCriticosString = valoresCriticosField.getText();
+        String valoresReservadosString =  valoresReservadosField.getText();
+        String horasResultadoString = horasResultadoField.getText();
 
-        JOptionPane.showMessageDialog(this, "Práctica creada con éxito.");
+        if (codigoString.isEmpty() || nombreString.isEmpty() || grupoString.isEmpty() || valoresCriticosString.isEmpty() || valoresReservadosString.isEmpty() || horasResultadoString.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        int codigo = Integer.parseInt(codigoString);
+        int horasResultado = Integer.parseInt(horasResultadoString);
+
+        ValorCritico valorCritico = new ValorCritico() {
+            @Override
+            public boolean esCritico(String valorResultado) {
+                return false;
+            }
+        };
+        Boolean valorReservado = Boolean.TRUE;
+        Boolean estaHabilitada = Boolean.TRUE;
+        Practica practica = new Practica(codigo,nombreString,grupoString,valorCritico,valorReservado,horasResultado,estaHabilitada);
+
+        practicaController.agregarPractica(practica);
+
+        JOptionPane.showMessageDialog(this, "Practica creada con éxito.");
+        clearFields();
+    }
+
+    private void clearFields() {
+        codigoField.setText("");
+        nombreField.setText("");
+        grupoField.setText("");
+        valoresCriticosField.setText("");
+        valoresReservadosField.setText("");
+        horasResultadoField.setText("");
     }
 }

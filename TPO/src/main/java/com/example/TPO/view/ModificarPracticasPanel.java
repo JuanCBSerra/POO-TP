@@ -1,9 +1,16 @@
 package com.example.TPO.view;
 
+import com.example.TPO.controller.PracticaController;
+import com.example.TPO.controller.SucursalController;
+import com.example.TPO.model.Practica;
+import com.example.TPO.model.Sucursal;
+import com.example.TPO.model.ValorCritico;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Optional;
 
 public class ModificarPracticasPanel extends JPanel {
     private static final long serialVersionUID = 1L;
@@ -16,6 +23,8 @@ public class ModificarPracticasPanel extends JPanel {
     private JTextField horasResultadoField;
     private JButton btnBuscar;
     private JButton btnGuardar;
+
+    private final PracticaController practicaController = PracticaController.getInstance();
 
     public ModificarPracticasPanel() {
         setLayout(new BorderLayout());
@@ -84,25 +93,62 @@ public class ModificarPracticasPanel extends JPanel {
     }
 
     private void buscarPractica() {
-        String codigo = codigoBuscarField.getText();
-        // Aquí implementa la lógica para buscar la práctica según el código
-        // Puedes usar un controlador o servicio similar al PacienteController
-        // Ejemplo ficticio:
-        // Practica practica = practicaController.buscarPracticaPorCodigo(codigo);
-        // Luego actualizas los campos del formulario con los datos encontrados
+        try {
+            int codigo = Integer.parseInt(codigoBuscarField.getText());
+            Optional<Practica> practica = practicaController.buscarPracticaPorCodigo(codigo);
 
-        habilitarFormulario(true); // Habilita el formulario después de la búsqueda
+            if (practica.isPresent()) {
+                nombreField.setText(practica.get().getNombre());
+                grupoField.setText(practica.get().getGrupo());
+                valoresCriticosField.setText("Test");
+                valoresReservadosField.setText("True");
+                horasResultadoField.setText("1234");
+                habilitarFormulario(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "Practica no encontrada.", "Error", JOptionPane.ERROR_MESSAGE);
+                limpiarCampos();
+                habilitarFormulario(false);
+            }
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Número de Practica inválido.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void guardarPractica() {
-        // Aquí implementa la lógica para guardar la práctica modificada
-        // Puedes usar un controlador o servicio similar al PacienteController
-        // Ejemplo ficticio:
-        // practicaController.modificarPractica(codigo, nombre, grupo, valoresCriticos, valoresReservados, horasResultado);
+        try {
+            String codigoString = codigoField.getText();
+            String nombreString = nombreField.getText();
+            String grupoString = grupoField.getText();
+            String valoresCriticosString = valoresCriticosField.getText();
+            String valoresReservadosString =  valoresReservadosField.getText();
+            String horasResultadoString = horasResultadoField.getText();
 
-        JOptionPane.showMessageDialog(this, "Práctica modificada con éxito.");
-        limpiarCampos();
-        habilitarFormulario(false);
+            if (codigoString.isEmpty() || nombreString.isEmpty() || grupoString.isEmpty() || valoresCriticosString.isEmpty() || valoresReservadosString.isEmpty() || horasResultadoString.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            int codigo = Integer.parseInt(codigoString);
+            int horasResultado = Integer.parseInt(horasResultadoString);
+            ValorCritico valorCritico = new ValorCritico() {
+                @Override
+                public boolean esCritico(String valorResultado) {
+                    return false;
+                }
+            };
+            Boolean valorReservado = Boolean.TRUE;
+            Boolean estaHabilitada = Boolean.TRUE;
+
+            Practica practica = new Practica(codigo,nombreString,grupoString,valorCritico,valorReservado,horasResultado,estaHabilitada);
+
+            practicaController.modificarPractica(codigo, practica);
+
+            JOptionPane.showMessageDialog(this, "Practica modificada con éxito.");
+            limpiarCampos();
+            habilitarFormulario(false);
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Número de Pratica inválido.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void limpiarCampos() {
