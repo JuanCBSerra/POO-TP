@@ -10,15 +10,11 @@ import java.awt.event.ActionListener;
 import java.util.Optional;
 
 public class EliminarUsuarioPanel extends JPanel {
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1L;
-    private JTextField dniBuscarField;
-    private JButton btnBuscar;
-    private JButton btnEliminar;
-    private JLabel nombreLabel;
-    private JLabel rolLabel;
+
+    private final JTextField dniBuscarField;
+    private final JButton btnEliminar;
+    private final JLabel nombreLabel;
+    private final JLabel rolLabel;
 
     public EliminarUsuarioPanel() {
         setLayout(new BorderLayout());
@@ -31,7 +27,7 @@ public class EliminarUsuarioPanel extends JPanel {
         buscarPanel.add(new JLabel("DNI de usuario:"));
         dniBuscarField = new JTextField(20);
         buscarPanel.add(dniBuscarField);
-        btnBuscar = new JButton("Buscar");
+        JButton btnBuscar = new JButton("Buscar");
         btnBuscar.setBackground(new Color(144, 202, 249)); // Color celeste
         buscarPanel.add(btnBuscar);
 
@@ -98,8 +94,13 @@ public class EliminarUsuarioPanel extends JPanel {
             JOptionPane.showMessageDialog(this, "No se pudo eliminar al usuario", "Error", JOptionPane.ERROR_MESSAGE);
         }
 
+        limpiarCampos();
+        btnEliminar.setEnabled(false);
+    }
+
+    private void limpiarCampos(){
         nombreLabel.setText("");
         dniBuscarField.setText("");
-        btnEliminar.setEnabled(false);
+        rolLabel.setText("");
     }
 }

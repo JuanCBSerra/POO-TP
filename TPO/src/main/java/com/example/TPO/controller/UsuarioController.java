@@ -1,11 +1,14 @@
 package com.example.TPO.controller;
 
 import java.io.*;
+
+import com.example.TPO.Utils;
 import com.example.TPO.model.Usuario;
 import com.example.TPO.model.Rol;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,7 +30,7 @@ public class UsuarioController {
         return instance;
     }
 
-    public void agregarUsuario(String username, String nombre, String correo, String password, String domicilio, String dni, LocalDate fechaNac, Rol rol) {
+    public void agregarUsuario(String username, String nombre, String correo, String password, String domicilio, String dni, Date fechaNac, Rol rol) {
         Usuario nuevoUsuario = new Usuario(
                 username,
                 nombre,
@@ -59,7 +62,7 @@ public class UsuarioController {
         }
     }
 
-    public boolean modificarUsuario(String username, String nombre, String email, String password, String domicilio, String dni, LocalDate fecNac, String rol) {
+    public boolean modificarUsuario(String username, String nombre, String email, String password, String domicilio, String dni, Date fecNac, String rol) {
         Optional<Usuario> usuarioOpt = buscarUsuarioPorDni(dni);
         if (usuarioOpt.isPresent()) {
             Usuario usuario = usuarioOpt.get();
@@ -132,7 +135,7 @@ public class UsuarioController {
                             datos[3],
                             datos[4],
                             datos[5],
-                            LocalDate.parse(datos[6]),
+                            Utils.parseDate(datos[6]),
                             Rol.valueOf(datos[7].toUpperCase())
                     );
                     usuarios.add(usuario);

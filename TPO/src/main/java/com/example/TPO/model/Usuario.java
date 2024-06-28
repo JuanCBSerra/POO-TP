@@ -1,6 +1,7 @@
 package com.example.TPO.model;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 public class Usuario {
 
@@ -10,10 +11,10 @@ public class Usuario {
     private String password;
     private String domicilio;
     private String dni;
-    private LocalDate fechaNacimiento;
+    private Date fechaNacimiento;
     private Rol rol;
 
-    public Usuario(String username, String nombre, String email, String password, String domicilio, String dni, LocalDate fechaNacimiento, Rol rol) {
+    public Usuario(String username, String nombre, String email, String password, String domicilio, String dni, Date fechaNacimiento, Rol rol) {
         this.username = username;
         this.nombre = nombre;
         this.email = email;
@@ -72,11 +73,11 @@ public class Usuario {
         this.dni = dni;
     }
 
-    public LocalDate getFechaNacimiento() {
+    public Date getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(LocalDate fechaNacimiento) {
+    public void setFechaNacimiento(Date fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 

@@ -1,5 +1,6 @@
 package com.example.TPO.view;
 
+import com.example.TPO.Utils;
 import com.example.TPO.controller.UsuarioController;
 import com.example.TPO.model.Rol;
 
@@ -7,18 +8,22 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Serial;
 import java.time.LocalDate;
 
 public class CrearUsuarioPanel extends JPanel {
+    @Serial
     private static final long serialVersionUID = 1L;
-    private JTextField usuarioField;
-    private JTextField correoField;
-    private JTextField passwordField;
-    private JTextField nombreField;
-    private JTextField domicilioField;
-    private JTextField dniField;
-    private JTextField fecNacField;
-    private JComboBox<Rol> rolComboBox;
+    private final JTextField usuarioField;
+    private final JTextField correoField;
+    private final JTextField passwordField;
+    private final JTextField nombreField;
+    private final JTextField domicilioField;
+    private final JTextField dniField;
+    private final JTextField fecNacField;
+    private final JComboBox<Rol> rolComboBox;
+
+    private final UsuarioController usuarioController = UsuarioController.getInstance();
 
     public CrearUsuarioPanel() {
         setLayout(new BorderLayout());
@@ -79,7 +84,6 @@ public class CrearUsuarioPanel extends JPanel {
         String dni = dniField.getText();
         String fecNac =fecNacField.getText();
 
-        // Validar que rolComboBox no sea null antes de usarlo
         if (rolComboBox == null) {
             JOptionPane.showMessageDialog(this, "Error: el campo de rol no está inicializado correctamente.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
@@ -87,13 +91,12 @@ public class CrearUsuarioPanel extends JPanel {
 
         Rol rol = (Rol) rolComboBox.getSelectedItem();
 
-        // Validaciones básicas
         if (nombre.isEmpty() || username.isEmpty() || dni.isEmpty() || password.isEmpty() || domicilio.isEmpty() || correo.isEmpty() || fecNac.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        UsuarioController.getInstance().agregarUsuario(username, nombre, correo, password, domicilio, dni, LocalDate.parse(fecNac), rol);
+        usuarioController.agregarUsuario(username, nombre, correo, password, domicilio, dni, Utils.parseDate(fecNac), rol);
 
         JOptionPane.showMessageDialog(this, "Usuario creado con éxito.");
     }
