@@ -3,6 +3,7 @@ package com.example.TPO.view.peticiones;
 import com.example.TPO.Utils;
 import com.example.TPO.controller.PacienteController;
 import com.example.TPO.controller.PeticionController;
+import com.example.TPO.controller.PracticaController;
 import com.example.TPO.model.*;
 
 import javax.swing.*;
@@ -14,14 +15,12 @@ import java.util.*;
 import java.util.List;
 
 public class ModificarPeticionPanel extends JPanel {
-    private static final long serialVersionUID = 1L;
 
-    private JTextField idPeticionField;
-    private JTextField obraSocialField;
-    private JTextField practicaAsociadaField;
-    private JTextField fechaEntregaField;
-    private JButton btnBuscar;
-    private JButton btnGuardar;
+    private final JTextField idPeticionField;
+    private final JTextField obraSocialField;
+    private final JTextField practicaAsociadaField;
+    private final JTextField fechaEntregaField;
+    private final JButton btnGuardar;
 
     public ModificarPeticionPanel() {
         setLayout(new BorderLayout());
@@ -34,13 +33,22 @@ public class ModificarPeticionPanel extends JPanel {
         buscarPanel.add(new JLabel("Ingrese ID de la petición:"));
         idPeticionField = new JTextField(20);
         buscarPanel.add(idPeticionField);
+<<<<<<< HEAD
         btnBuscar = new JButton("Buscar");
         btnBuscar.setBackground(new Color(144, 202, 249));
+=======
+        JButton btnBuscar = new JButton("Buscar");
+        btnBuscar.setBackground(new Color(144, 202, 249)); // Color celeste
+>>>>>>> c8ecc63926f477e3aa1937014d2809a09c78f4b2
         buscarPanel.add(btnBuscar);
 
         add(buscarPanel, BorderLayout.CENTER);
 
+<<<<<<< HEAD
         JPanel formPanel = new JPanel(new GridLayout(6,2,8, 8));
+=======
+        JPanel formPanel = new JPanel(new GridLayout(6, 2, 8, 8));
+>>>>>>> c8ecc63926f477e3aa1937014d2809a09c78f4b2
         formPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
         formPanel.add(new JLabel("Obra Social:"));
@@ -61,7 +69,6 @@ public class ModificarPeticionPanel extends JPanel {
 
         add(formPanel, BorderLayout.SOUTH);
 
-        // Deshabilitar el panel de formulario hasta que se busque una petición
         habilitarFormulario(false);
 
         btnBuscar.addActionListener(new ActionListener() {
@@ -87,29 +94,34 @@ public class ModificarPeticionPanel extends JPanel {
     }
 
     private void buscarPeticion() {
-
-        try{
+        try {
             Optional<Peticion> peticionOptional = PeticionController.getInstance().buscarPeticionPorId(idPeticionField.getText());
 
-            if(peticionOptional.isPresent()) {
-
+            if (peticionOptional.isPresent()) {
                 Peticion peticion = peticionOptional.get();
                 obraSocialField.setText(peticion.getObraSocial());
-                practicaAsociadaField.setText(peticion.getPracticas().toString());
+
+                List<Integer> practicas = peticion.getPracticas();
+                StringBuilder practicasString = new StringBuilder();
+                for (int i = 0; i < practicas.size(); i++) {
+                    practicasString.append(practicas.get(i));
+                    if (i < practicas.size() - 1) {
+                        practicasString.append(", ");
+                    }
+                }
+                practicaAsociadaField.setText(practicasString.toString());
+
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
                 String formattedDate = dateFormat.format(peticion.getFechaCalculadaEntrega());
                 fechaEntregaField.setText(formattedDate);
                 habilitarFormulario(true);
 
-            }
-            else {
+            } else {
                 JOptionPane.showMessageDialog(this, "Petición no encontrada.", "Error", JOptionPane.ERROR_MESSAGE);
             }
-        }
-        catch (NumberFormatException ex) {
+        } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Número de petición inválido.", "Error", JOptionPane.ERROR_MESSAGE);
         }
-
     }
 
     private void guardarPeticion() {
@@ -123,19 +135,31 @@ public class ModificarPeticionPanel extends JPanel {
             return;
         }
 
+        List<Integer> practicas = new ArrayList<>();
+        String[] practicasArray = practicaAsociada.split(",");
+        for (String practicaCodigo : practicasArray) {
+            practicaCodigo = practicaCodigo.trim();
+            if (!practicaCodigo.isEmpty()) {
+                Optional<Practica> practicaOpt = PracticaController.getInstance().buscarPracticaPorCodigo(Integer.parseInt(practicaCodigo));
+                if (practicaOpt.isPresent()) {
+                    practicas.add(Integer.parseInt(practicaCodigo));
+                } else {
+                    JOptionPane.showMessageDialog(this, "Práctica con código " + practicaCodigo + " inexistente.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }
+        }
+
         Paciente paciente = PeticionController.getInstance().buscarPeticionPorId(id).get().getPaciente();
         Date fechaCarga = PeticionController.getInstance().buscarPeticionPorId(id).get().getFechaCarga();
-        List<Integer> practica = PeticionController.getInstance().buscarPeticionPorId(id).get().getPracticas();
-
-        // TODO
 
         Resultado resultado = new Resultado();
         ArrayList<Resultado> resultados = new ArrayList<>();
         resultados.add(resultado);
 
-        Peticion peticion = new Peticion(id, paciente, obraSocial, fechaCarga, Utils.parseDate(fechaEntrega), practica, resultados);
+        Peticion peticion = new Peticion(id, paciente, obraSocial, fechaCarga, Utils.parseDate(fechaEntrega), practicas, resultados);
 
-        PeticionController.getInstance().modificarPeticion(id,peticion);
+        PeticionController.getInstance().modificarPeticion(id, peticion);
 
         JOptionPane.showMessageDialog(this, "Petición modificada con éxito.");
         limpiarCampos();
