@@ -108,8 +108,8 @@ public class UsuarioController {
                     usuario.getPassword(),
                     usuario.getDomicilio(),
                     usuario.getDni(),
-                    usuario.getFechaNacimiento().toString(),
-                    usuario.getRol().toString().toLowerCase());
+                    Utils.formatDate(usuario.getFechaNacimiento()),
+                    usuario.getRol());
             writer.write(linea);
             writer.newLine();
         } catch (IOException e) {
