@@ -1,4 +1,4 @@
-package com.example.TPO.view;
+package com.example.TPO.view.pacientes;
 
 import com.example.TPO.controller.PacienteController;
 import com.example.TPO.model.Paciente;

@@ -1,5 +1,22 @@
 package com.example.TPO;
-import com.example.TPO.view.*;
+import com.example.TPO.view.pacientes.CrearPacientePanel;
+import com.example.TPO.view.pacientes.EliminarPacientePanel;
+import com.example.TPO.view.pacientes.ModificarPacientePanel;
+import com.example.TPO.view.peticiones.CrearPeticionPanel;
+import com.example.TPO.view.peticiones.EliminarPeticionPanel;
+import com.example.TPO.view.peticiones.ModificarPeticionPanel;
+import com.example.TPO.view.practicas.CrearPracticasPanel;
+import com.example.TPO.view.practicas.EliminarPracticasPanel;
+import com.example.TPO.view.practicas.ModificarPracticasPanel;
+import com.example.TPO.view.resultados.CrearResultadoPanel;
+import com.example.TPO.view.resultados.EliminarResultadoPanel;
+import com.example.TPO.view.resultados.ModificarResultadoPanel;
+import com.example.TPO.view.sucursales.CrearSucursalPanel;
+import com.example.TPO.view.sucursales.EliminarSucursalPanel;
+import com.example.TPO.view.sucursales.ModificarSucursalPanel;
+import com.example.TPO.view.usuarios.CrearUsuarioPanel;
+import com.example.TPO.view.usuarios.EliminarUsuarioPanel;
+import com.example.TPO.view.usuarios.ModificarUsuarioPanel;
 
 import javax.swing.*;
 import java.awt.*;

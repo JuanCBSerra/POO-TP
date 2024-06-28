@@ -1,4 +1,4 @@
-package com.example.TPO.view;
+package com.example.TPO.view.usuarios;
 
 import com.example.TPO.controller.UsuarioController;
 import com.example.TPO.model.Usuario;

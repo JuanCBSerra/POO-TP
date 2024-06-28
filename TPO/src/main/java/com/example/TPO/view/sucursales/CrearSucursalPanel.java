@@ -1,14 +1,12 @@
-package com.example.TPO.view;
+package com.example.TPO.view.sucursales;
 
 import com.example.TPO.Utils;
 import com.example.TPO.controller.SucursalController;
 
 import javax.swing.*;
-import javax.swing.text.NumberFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.NumberFormat;
 
 public class CrearSucursalPanel extends JPanel {
 

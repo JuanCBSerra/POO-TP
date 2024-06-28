@@ -1,4 +1,4 @@
-package com.example.TPO.view;
+package com.example.TPO.view.usuarios;
 
 import com.example.TPO.Utils;
 import com.example.TPO.controller.UsuarioController;
@@ -9,7 +9,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.Serial;
-import java.time.LocalDate;
 
 public class CrearUsuarioPanel extends JPanel {
     @Serial

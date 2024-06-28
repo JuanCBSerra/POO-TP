@@ -1,4 +1,4 @@
-package com.example.TPO.view;
+package com.example.TPO.view.usuarios;
 
 import com.example.TPO.Utils;
 import com.example.TPO.controller.UsuarioController;
@@ -7,7 +7,6 @@ import com.example.TPO.model.Usuario;
 
 import javax.swing.*;
 import java.awt.*;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.Optional;
 

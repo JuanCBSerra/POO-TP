@@ -1,4 +1,4 @@
-package com.example.TPO.view;
+package com.example.TPO.view.practicas;
 
 import com.example.TPO.Utils;
 import com.example.TPO.controller.PracticaController;
@@ -50,6 +50,10 @@ public class CrearPracticasPanel extends JPanel {
         valorCriticoStringRadio = new JRadioButton("Valor Crítico String");
         valorCriticoNumericoRadio = new JRadioButton("Valor Crítico Numérico");
 
+        ButtonGroup valorCriticoGroup = new ButtonGroup();
+        valorCriticoGroup.add(valorCriticoStringRadio);
+        valorCriticoGroup.add(valorCriticoNumericoRadio);
+
         valorCriticoPanel.add(valorCriticoStringRadio);
         valorCriticoPanel.add(valorCriticoNumericoRadio);
 
@@ -58,7 +62,6 @@ public class CrearPracticasPanel extends JPanel {
         addFormRow(formPanel, "Valores Reservados:", valoresReservadosCheckBox = new JCheckBox());
         addFormRow(formPanel, "Horas Resultado:", horasResultadoField = Utils.createFormattedTextField());
         addFormRow(formPanel, "Habilitada:", habilitadaCheckbox = new JCheckBox());
-
 
         JButton btnGuardar = new JButton("Guardar");
         btnGuardar.setBackground(new Color(144, 238, 144)); // Verde claro
@@ -146,5 +149,7 @@ public class CrearPracticasPanel extends JPanel {
         valoresReservadosCheckBox.setSelected(false);
         horasResultadoField.setText(null);
         habilitadaCheckbox.setSelected(false);
+        valorCriticoStringRadio.setSelected(false);
+        valorCriticoNumericoRadio.setSelected(false);
     }
 }

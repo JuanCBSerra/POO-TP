@@ -1,6 +1,5 @@
-package com.example.TPO.view;
+package com.example.TPO.view.sucursales;
 
-import com.example.TPO.Utils;
 import com.example.TPO.controller.SucursalController;
 import com.example.TPO.model.Sucursal;
 

@@ -1,13 +1,10 @@
-package com.example.TPO.view;
+package com.example.TPO.view.sucursales;
 
-import com.example.TPO.Utils;
 import com.example.TPO.controller.SucursalController;
 import com.example.TPO.model.Sucursal;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.text.NumberFormat;
 import java.util.Optional;
 
