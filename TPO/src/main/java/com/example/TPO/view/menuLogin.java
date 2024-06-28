@@ -24,7 +24,7 @@ public class menuLogin extends JFrame {
     private JButton loginButton;
     private JButton exitButton;
 
-    private static final String DB_FILE = new File("").getAbsolutePath() + "/TPO/src/db/dbUsuarios.txt";
+    private static final String DB_FILE = new File("").getAbsolutePath() + "/src/db/dbUsuarios.txt";
     private Map<String, String[]> usersDatabase;
 
     public menuLogin(String titulo) {
@@ -128,8 +128,5 @@ public class menuLogin extends JFrame {
         }
     }
 
-    public static void main(String[] args) {
-        menuLogin frame = new menuLogin("Sistema de Gestión de Laboratorio");
-        frame.setVisible(true);
-    }
+
 }

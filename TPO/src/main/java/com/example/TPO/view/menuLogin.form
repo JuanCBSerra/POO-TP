@@ -16,7 +16,7 @@
         </constraints>
         <properties>
           <horizontalAlignment value="0"/>
-          <icon value="resources/imagenLogin.jpg"/>
+          <icon value="imagenLogin.jpg"/>
           <text value=""/>
           <verticalAlignment value="0"/>
         </properties>
