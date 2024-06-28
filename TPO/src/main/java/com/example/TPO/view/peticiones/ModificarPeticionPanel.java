@@ -33,22 +33,14 @@ public class ModificarPeticionPanel extends JPanel {
         buscarPanel.add(new JLabel("Ingrese ID de la petición:"));
         idPeticionField = new JTextField(20);
         buscarPanel.add(idPeticionField);
-<<<<<<< HEAD
-        btnBuscar = new JButton("Buscar");
-        btnBuscar.setBackground(new Color(144, 202, 249));
-=======
+
         JButton btnBuscar = new JButton("Buscar");
         btnBuscar.setBackground(new Color(144, 202, 249)); // Color celeste
->>>>>>> c8ecc63926f477e3aa1937014d2809a09c78f4b2
         buscarPanel.add(btnBuscar);
 
         add(buscarPanel, BorderLayout.CENTER);
 
-<<<<<<< HEAD
-        JPanel formPanel = new JPanel(new GridLayout(6,2,8, 8));
-=======
         JPanel formPanel = new JPanel(new GridLayout(6, 2, 8, 8));
->>>>>>> c8ecc63926f477e3aa1937014d2809a09c78f4b2
         formPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
         formPanel.add(new JLabel("Obra Social:"));
