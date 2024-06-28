@@ -1,29 +1,33 @@
 package com.example.TPO.view.resultados;
 
+import com.example.TPO.model.Resultado;
+import com.example.TPO.controller.ResultadoController;
+
 import javax.swing.*;
 import java.awt.*;
+import java.util.Optional;
 
 public class ModificarResultadoPanel extends JPanel {
     private static final long serialVersionUID = 1L;
 
-    private JTextField dniBuscarField;
-    private JTextField nombreField;
-    private JTextField apellidoField;
-    private JTextField dniField;
+    private JTextField valorField;
+    private JTextField idBuscarField;
     private JButton btnBuscar;
     private JButton btnGuardar;
+
+    private final ResultadoController resultadoController = ResultadoController.getInstance();
 
     public ModificarResultadoPanel() {
         setLayout(new BorderLayout());
 
-        JLabel titulo = new JLabel("Modificar Paciente", SwingConstants.CENTER);
+        JLabel titulo = new JLabel("Modificar Resultado", SwingConstants.CENTER);
         titulo.setFont(new Font("Arial", Font.BOLD, 24));
         add(titulo, BorderLayout.NORTH);
 
         JPanel buscarPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
-        buscarPanel.add(new JLabel("DNI:"));
-        dniBuscarField = new JTextField(20);
-        buscarPanel.add(dniBuscarField);
+        buscarPanel.add(new JLabel("ID:"));
+        idBuscarField = new JTextField(20);
+        buscarPanel.add(idBuscarField);
         btnBuscar = new JButton("Buscar");
         btnBuscar.setBackground(new Color(144, 202, 249)); // Color celeste
         buscarPanel.add(btnBuscar);
@@ -33,17 +37,10 @@ public class ModificarResultadoPanel extends JPanel {
         JPanel formPanel = new JPanel(new GridLayout(4, 2, 10, 10));
         formPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // Espacios alrededor del panel
 
-        formPanel.add(new JLabel("Nombre:"));
-        nombreField = new JTextField();
-        formPanel.add(nombreField);
 
-        formPanel.add(new JLabel("Apellido:"));
-        apellidoField = new JTextField();
-        formPanel.add(apellidoField);
-
-        formPanel.add(new JLabel("DNI:"));
-        dniField = new JTextField();
-        formPanel.add(dniField);
+        formPanel.add(new JLabel("Valor:"));
+        valorField = new JTextField();
+        formPanel.add(valorField);
 
         btnGuardar = new JButton("Guardar");
         btnGuardar.setBackground(new Color(144, 238, 144)); // Color verde claro
@@ -55,46 +52,53 @@ public class ModificarResultadoPanel extends JPanel {
         habilitarFormulario(false);
 
         // Agregar ActionListeners
-        btnBuscar.addActionListener(e -> buscarPaciente());
-        btnGuardar.addActionListener(e -> guardarPaciente());
+        btnBuscar.addActionListener(e -> buscarResultado());
+        btnGuardar.addActionListener(e -> guardarResultado());
     }
 
     private void habilitarFormulario(boolean habilitar) {
-        nombreField.setEnabled(habilitar);
-        apellidoField.setEnabled(habilitar);
-        dniField.setEnabled(habilitar);
+        valorField.setEnabled(habilitar);
         btnGuardar.setEnabled(habilitar);
     }
 
-    private void buscarPaciente() {
-        String dni = dniBuscarField.getText();
+    private void buscarResultado(){
+        String id = idBuscarField.getText();
 
         // Implementación simulada para buscar el paciente y cargar datos estáticos
-        if (dni.equals("12345678")) {
-            nombreField.setText("Juan");
-            apellidoField.setText("Pérez");
-            dniField.setText("12345678");
+
+        Optional<Resultado> resultadoBusqueda = resultadoController.buscarResultadoPorId(id);
+
+
+        if (resultadoBusqueda.isPresent()) {
+            valorField.setText(resultadoBusqueda.get().getResultado());
             habilitarFormulario(true);
         } else {
-            JOptionPane.showMessageDialog(this, "Paciente no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Resultado no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
             habilitarFormulario(false);
         }
     }
 
-    private void guardarPaciente() {
-        String nombre = nombreField.getText();
-        String apellido = apellidoField.getText();
-        String dni = dniField.getText();
+    private void guardarResultado() {
+        String valor = valorField.getText();
+        String id = idBuscarField.getText();
 
         // Validaciones básicas
-        if (nombre.isEmpty() || apellido.isEmpty() || dni.isEmpty()) {
+        if (valor.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        // Implementación simulada para guardar el paciente modificado
-        // Aquí iría la lógica para guardar los datos modificados del paciente
+        Resultado resultadoActualizado = new Resultado();
 
-        JOptionPane.showMessageDialog(this, "Paciente modificado con éxito.");
+        resultadoActualizado.setId(id);
+        resultadoActualizado.setResultado(valor);
+
+
+        if (!resultadoController.modificarResultado(id, resultadoActualizado)) {
+            JOptionPane.showMessageDialog(this, "Error actulizando.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        JOptionPane.showMessageDialog(this, "Resultado modificado con éxito.");
     }
 }

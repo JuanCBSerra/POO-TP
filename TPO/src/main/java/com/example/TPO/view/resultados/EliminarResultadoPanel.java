@@ -1,29 +1,35 @@
 package com.example.TPO.view.resultados;
 
+import com.example.TPO.controller.ResultadoController;
+import com.example.TPO.model.Resultado;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Optional;
 
 public class EliminarResultadoPanel extends JPanel {
     private static final long serialVersionUID = 1L;
-    private JTextField dniBuscarField;
+    private JTextField idBuscarField;
     private JButton btnBuscar;
     private JButton btnEliminar;
-    private JLabel nombreLabel;
-    private JLabel apellidoLabel;
+    private JLabel idLabel;
+    private JLabel valorLabel;
+
+    private final ResultadoController resultadoController = ResultadoController.getInstance();
 
     public EliminarResultadoPanel() {
         setLayout(new BorderLayout());
 
-        JLabel titulo = new JLabel("Eliminar Paciente", SwingConstants.CENTER);
+        JLabel titulo = new JLabel("Eliminar Resultado", SwingConstants.CENTER);
         titulo.setFont(new Font("Arial", Font.BOLD, 24));
         add(titulo, BorderLayout.NORTH);
 
         JPanel buscarPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
-        buscarPanel.add(new JLabel("DNI:"));
-        dniBuscarField = new JTextField(20);
-        buscarPanel.add(dniBuscarField);
+        buscarPanel.add(new JLabel("ID:"));
+        idBuscarField = new JTextField(20);
+        buscarPanel.add(idBuscarField);
         btnBuscar = new JButton("Buscar");
         btnBuscar.setBackground(new Color(144, 202, 249));
         buscarPanel.add(btnBuscar);
@@ -33,13 +39,13 @@ public class EliminarResultadoPanel extends JPanel {
         JPanel infoPanel = new JPanel(new GridLayout(3, 2, 10, 10));
         infoPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // Añadir espacio alrededor del panel
 
-        infoPanel.add(new JLabel("Nombre:"));
-        nombreLabel = new JLabel();
-        infoPanel.add(nombreLabel);
+        infoPanel.add(new JLabel("ID:"));
+        idLabel = new JLabel();
+        infoPanel.add(idLabel);
 
-        infoPanel.add(new JLabel("Apellido:"));
-        apellidoLabel = new JLabel();
-        infoPanel.add(apellidoLabel);
+        infoPanel.add(new JLabel("Valor:"));
+        valorLabel = new JLabel();
+        infoPanel.add(valorLabel);
 
         btnEliminar = new JButton("Eliminar");
         btnEliminar.setBackground(new Color(255, 102, 102)); // Rojo claro
@@ -47,63 +53,47 @@ public class EliminarResultadoPanel extends JPanel {
 
         add(infoPanel, BorderLayout.SOUTH);
 
-        // Deshabilitar botón Eliminar hasta que se busque un paciente
         btnEliminar.setEnabled(false);
 
-        // Agregar ActionListeners
         btnBuscar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                buscarPaciente();
+                buscarResultado();
             }
         });
 
         btnEliminar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                eliminarPaciente();
+                eliminarResultado();
             }
         });
     }
 
-    private void buscarPaciente() {
-        String dni = dniBuscarField.getText();
+    private void buscarResultado() {
+        String id = idBuscarField.getText();
 
-        // Simulación de búsqueda de paciente por DNI
-        // Aquí deberías implementar la lógica real para buscar el paciente por su DNI
-        // y cargar los datos en los labels correspondientes.
-        // Por ejemplo:
-        // Paciente paciente = pacienteService.buscarPorDni(dni);
-        // if (paciente != null) {
-        //     nombreLabel.setText(paciente.getNombre());
-        //     apellidoLabel.setText(paciente.getApellido());
-        //     btnEliminar.setEnabled(true);
-        // } else {
-        //     JOptionPane.showMessageDialog(this, "Paciente no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
-        //     btnEliminar.setEnabled(false);
-        // }
+        Optional<Resultado> resultadoBuscado = resultadoController.buscarResultadoPorId(id);
 
-        // Simulación para el ejemplo:
-        if (dni.equals("12345678")) {
-            nombreLabel.setText("Juan");
-            apellidoLabel.setText("Pérez");
+        if(resultadoBuscado.isPresent()){
+            idLabel.setText(id);
+            valorLabel.setText(resultadoBuscado.get().getResultado());
             btnEliminar.setEnabled(true);
         } else {
-            JOptionPane.showMessageDialog(this, "Paciente no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
-            btnEliminar.setEnabled(false);
+            JOptionPane.showMessageDialog(this, "Resultado no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
         }
+
     }
 
-    private void eliminarPaciente() {
-        String dni = dniBuscarField.getText();
+    private void eliminarResultado() {
+        String id = idBuscarField.getText();
 
-        // Aquí puedes llamar a los métodos correspondientes para eliminar el paciente
-        // Por ejemplo: pacienteService.eliminarPaciente(dni);
 
-        JOptionPane.showMessageDialog(this, "Paciente eliminado con éxito.");
-        nombreLabel.setText("");
-        apellidoLabel.setText("");
-        dniBuscarField.setText("");
+        resultadoController.eliminarResultado(id);
+
+        JOptionPane.showMessageDialog(this, "Resultado eliminado con éxito.");
+        idLabel.setText("");
+        valorLabel.setText("");
         btnEliminar.setEnabled(false);
     }
 }

@@ -1,5 +1,8 @@
 package com.example.TPO.view.resultados;
 
+import com.example.TPO.controller.ResultadoController;
+import com.example.TPO.model.Resultado;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -7,9 +10,10 @@ import java.awt.event.ActionListener;
 
 public class CrearResultadoPanel extends JPanel {
     private static final long serialVersionUID = 1L;
-    private JTextField nombreField;
-    private JTextField apellidoField;
-    private JTextField dniField;
+    private JTextField idField;
+    private JTextField valorField;
+
+    private final ResultadoController resultadoController = ResultadoController.getInstance();
 
     public CrearResultadoPanel() {
         setLayout(new BorderLayout());
@@ -22,9 +26,10 @@ public class CrearResultadoPanel extends JPanel {
         formPanel.setLayout(new BoxLayout(formPanel, BoxLayout.Y_AXIS));
         formPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        addFormRow(formPanel, "Nombre:", nombreField = new JTextField(20));
-        addFormRow(formPanel, "Apellido:", apellidoField = new JTextField(20));
-        addFormRow(formPanel, "DNI:", dniField = new JTextField(20));
+        addFormRow(formPanel, "ID:", idField = new JTextField(20));
+        addFormRow(formPanel, "Valor:", valorField = new JTextField(20));
+
+
 
         JButton btnGuardar = new JButton("Guardar");
         btnGuardar.setBackground(new Color(144, 238, 144)); // Verde claro
@@ -54,26 +59,31 @@ public class CrearResultadoPanel extends JPanel {
     }
 
     private void guardarResultado() {
-        String nombre = nombreField.getText();
-        String apellido = apellidoField.getText();
-        String dni = dniField.getText();
+        String idString = idField.getText();
+        String valorString = valorField.getText();
+
+
 
         // Validaciones básicas
-        if (nombre.isEmpty() || apellido.isEmpty() || dni.isEmpty()) {
+        if (idString.isEmpty() || valorString.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        // Aquí puedes implementar la lógica para guardar el resultado
-        // Por ejemplo: resultadoService.guardarResultado(nombre, apellido, dni);
+        Resultado resultado = new Resultado();
+
+        resultado.setId(idString);
+        resultado.setResultado(valorString);
+
+        resultadoController.agregarResultado(resultado);
+
 
         JOptionPane.showMessageDialog(this, "Resultado creado con éxito.");
         clearFields();
     }
 
     private void clearFields() {
-        nombreField.setText("");
-        apellidoField.setText("");
-        dniField.setText("");
+        idField.setText("");
+        valorField.setText("");
     }
 }

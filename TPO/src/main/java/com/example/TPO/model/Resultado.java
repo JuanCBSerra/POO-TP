@@ -13,9 +13,7 @@ import java.time.LocalDate;
 public class Resultado {
 
     private String id;
-    private Peticion peticion;
     private String resultado;
-    private LocalDate fecha;
 
     public String getId() {
         return id;
@@ -25,13 +23,6 @@ public class Resultado {
         this.id = id;
     }
 
-    public Peticion getPeticion() {
-        return peticion;
-    }
-
-    public void setPeticion(Peticion peticion) {
-        this.peticion = peticion;
-    }
 
     public String getResultado() {
         return resultado;
@@ -41,11 +32,5 @@ public class Resultado {
         this.resultado = resultado;
     }
 
-    public LocalDate getFecha() {
-        return fecha;
-    }
 
-    public void setFecha(LocalDate fecha) {
-        this.fecha = fecha;
-    }
 }

@@ -31,10 +31,11 @@ public class ResultadoController {
 
     public boolean modificarResultado(String id, Resultado resultadoActualizado) {
         Optional<Resultado> resultadoExistente = buscarResultadoPorId(id);
+
         if (resultadoExistente.isPresent()) {
             Resultado resultado = resultadoExistente.get();
-            resultado.setFecha(resultadoActualizado.getFecha());
-            resultado.setPeticion(resultadoActualizado.getPeticion());
+            resultado.setId(resultadoActualizado.getId());
+            resultado.setResultado(resultadoActualizado.getResultado());
             return true;
         }
         return false;
