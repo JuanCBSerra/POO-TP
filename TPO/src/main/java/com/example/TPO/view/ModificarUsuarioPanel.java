@@ -1,6 +1,7 @@
 package com.example.TPO.view;
 
 import com.example.TPO.controller.UsuarioController;
+import com.example.TPO.model.Rol;
 import com.example.TPO.model.Usuario;
 
 import javax.swing.*;
@@ -21,7 +22,7 @@ public class ModificarUsuarioPanel extends JPanel {
     private JTextField domicilioField;
     private JTextField dniField;
     private JTextField fecNacField;
-    private JTextField rolField;
+    private JComboBox<Rol> rolComboBox;
     private JTextField dniBuscarField;
     private JButton btnBuscar;
     private JButton btnGuardar;
@@ -43,44 +44,93 @@ public class ModificarUsuarioPanel extends JPanel {
 
         add(buscarPanel, BorderLayout.CENTER);
 
-        JPanel formPanel = new JPanel(new GridLayout(8, 2, 3, 3));
-        formPanel.setBorder(BorderFactory.createEmptyBorder(5, 20, 5, 20)); // Espacios alrededor del panel
+        JPanel formPanel = new JPanel(new GridBagLayout());
+        formPanel.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20)); // Espacios alrededor del panel
 
-        formPanel.add(new JLabel("Nombre de usuario:"));
-        usernameField = new JTextField();
-        formPanel.add(usernameField);
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.insets = new Insets(5, 5, 5, 5);
 
-        formPanel.add(new JLabel("Nombre:"));
-        nombreField = new JTextField();
-        formPanel.add(nombreField);
+        // Row 1: Username
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        formPanel.add(new JLabel("Nombre de usuario:"), gbc);
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        usernameField = new JTextField(20);
+        formPanel.add(usernameField, gbc);
 
-        formPanel.add(new JLabel("Email:"));
-        emailField = new JTextField();
-        formPanel.add(emailField);
+        // Row 2: Nombre completo
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        formPanel.add(new JLabel("Nombre completo:"), gbc);
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        nombreField = new JTextField(20);
+        formPanel.add(nombreField, gbc);
 
-        formPanel.add(new JLabel("Contraseña:"));
-        passwordField = new JTextField();
-        formPanel.add(passwordField);
+        // Row 3: Email
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        formPanel.add(new JLabel("Email:"), gbc);
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        emailField = new JTextField(20);
+        formPanel.add(emailField, gbc);
 
-        formPanel.add(new JLabel("Domicilio:"));
-        domicilioField = new JTextField();
-        formPanel.add(domicilioField);
+        // Row 4: Contraseña
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        formPanel.add(new JLabel("Contraseña:"), gbc);
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        passwordField = new JPasswordField(20); // JPasswordField para contraseñas
+        formPanel.add(passwordField, gbc);
 
-        formPanel.add(new JLabel("DNI:"));
-        dniField = new JTextField();
-        formPanel.add(dniField);
+        // Row 5: Domicilio
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        formPanel.add(new JLabel("Domicilio:"), gbc);
+        gbc.gridx = 1;
+        gbc.gridy = 4;
+        domicilioField = new JTextField(20);
+        formPanel.add(domicilioField, gbc);
 
-        formPanel.add(new JLabel("Fecha Nacimiento:"));
-        fecNacField = new JTextField();
-        formPanel.add(fecNacField);
+        // Row 6: DNI
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        formPanel.add(new JLabel("DNI:"), gbc);
+        gbc.gridx = 1;
+        gbc.gridy = 5;
+        dniField = new JTextField(20);
+        formPanel.add(dniField, gbc);
 
-        formPanel.add(new JLabel("Rol:"));
-        rolField = new JTextField();
-        formPanel.add(rolField);
+        // Row 7: Fecha de Nacimiento
+        gbc.gridx = 0;
+        gbc.gridy = 6;
+        formPanel.add(new JLabel("Fecha de Nacimiento:"), gbc);
+        gbc.gridx = 1;
+        gbc.gridy = 6;
+        fecNacField = new JTextField(20);
+        formPanel.add(fecNacField, gbc);
 
+        // Row 8: Rol
+        gbc.gridx = 0;
+        gbc.gridy = 7;
+        formPanel.add(new JLabel("Rol:"), gbc);
+        gbc.gridx = 1;
+        gbc.gridy = 7;
+        rolComboBox = new JComboBox<>(Rol.values());
+        formPanel.add(rolComboBox, gbc);
+
+        // Botón Guardar
+        gbc.gridx = 0;
+        gbc.gridy = 8;
+        gbc.gridwidth = 2;
+        gbc.anchor = GridBagConstraints.CENTER;
         btnGuardar = new JButton("Guardar");
         btnGuardar.setBackground(new Color(144, 238, 144)); // Color verde claro
-        formPanel.add(btnGuardar);
+        formPanel.add(btnGuardar, gbc);
 
         add(formPanel, BorderLayout.SOUTH);
 
@@ -91,22 +141,20 @@ public class ModificarUsuarioPanel extends JPanel {
     }
 
     private void habilitarFormulario(boolean habilitar) {
-        usernameField.setEnabled(habilitar);
-        nombreField.setEnabled(habilitar);
-        emailField.setEnabled(habilitar);
-        passwordField.setEnabled(habilitar);
-        domicilioField.setEnabled(habilitar);
-        dniField.setEnabled(habilitar);
-        fecNacField.setEnabled(habilitar);
-        rolField.setEnabled(habilitar);
-        btnGuardar.setEnabled(habilitar);
+        Component[] components = {
+                usernameField, nombreField, emailField, passwordField,
+                domicilioField, dniField, fecNacField, rolComboBox, btnGuardar
+        };
+        for (Component component : components) {
+            component.setEnabled(habilitar);
+        }
     }
 
     private void buscarUsuario() {
         String dni = dniBuscarField.getText();
         Optional<Usuario> usuario = UsuarioController.getInstance().buscarUsuarioPorDni(dni);
 
-        if(usuario.isPresent()){
+        if (usuario.isPresent()) {
             Usuario u = usuario.get();
             usernameField.setText(u.getUsername());
             nombreField.setText(u.getNombre());
@@ -115,11 +163,10 @@ public class ModificarUsuarioPanel extends JPanel {
             domicilioField.setText(u.getDomicilio());
             dniField.setText(u.getDni());
             fecNacField.setText(String.valueOf(u.getFechaNacimiento()));
-            rolField.setText(String.valueOf(u.getRol()));
+            rolComboBox.setSelectedItem(u.getRol());
 
             habilitarFormulario(true);
-        }
-        else {
+        } else {
             JOptionPane.showMessageDialog(this, "Usuario no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
             limpiarCampos();
             habilitarFormulario(false);
@@ -135,14 +182,14 @@ public class ModificarUsuarioPanel extends JPanel {
         String domicilio = domicilioField.getText();
         String dni = dniField.getText();
         LocalDate fecNac = LocalDate.parse(fecNacField.getText());
-        String rol = rolField.getText();
+        Rol rol = (Rol) rolComboBox.getSelectedItem();
 
-        if (nombre.isEmpty() || domicilio.isEmpty() || email.isEmpty() || username.isEmpty() || dni.isEmpty() || rol.isEmpty() || fecNac.toString().isEmpty()) {
+        if (nombre.isEmpty() || domicilio.isEmpty() || email.isEmpty() || username.isEmpty() || dni.isEmpty() || fecNac.toString().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos correctamente.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        UsuarioController.getInstance().modificarUsuario(username, nombre, email, password, domicilio, dni, fecNac, rol);
+        UsuarioController.getInstance().modificarUsuario(username, nombre, email, password, domicilio, dni, fecNac, String.valueOf(rol));
 
         JOptionPane.showMessageDialog(this, "Usuario modificado con éxito.");
         limpiarCampos();
@@ -157,6 +204,5 @@ public class ModificarUsuarioPanel extends JPanel {
         domicilioField.setText("");
         dniField.setText("");
         fecNacField.setText("");
-        rolField.setText("");
     }
 }

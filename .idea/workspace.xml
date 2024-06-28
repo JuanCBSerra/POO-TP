@@ -5,21 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="28b9f8f3-54e5-4b3c-aad0-be8618ff5a9e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/controller/UsuarioController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TPO/src/db/dbUsuarios.txt" beforeDir="false" afterPath="$PROJECT_DIR$/TPO/src/db/dbUsuarios.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/model/Rol.java" beforeDir="false" afterPath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/model/Rol.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/model/Usuario.java" beforeDir="false" afterPath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/model/Usuario.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/LaboratorioClinicoApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/LaboratorioClinicoApp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/view/CrearUsuarioPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/view/CrearUsuarioPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/view/EliminarUsuarioPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/view/EliminarUsuarioPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/view/ModificarUsuarioPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/TPO/src/main/java/com/example/TPO/view/ModificarUsuarioPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/POO-TP/com/example/TPO/LaboratorioClinicoApp$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/POO-TP/com/example/TPO/LaboratorioClinicoApp$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/POO-TP/com/example/TPO/LaboratorioClinicoApp$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/POO-TP/com/example/TPO/LaboratorioClinicoApp$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/POO-TP/com/example/TPO/LaboratorioClinicoApp$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/POO-TP/com/example/TPO/LaboratorioClinicoApp$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/POO-TP/com/example/TPO/LaboratorioClinicoApp$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/POO-TP/com/example/TPO/LaboratorioClinicoApp$4.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/POO-TP/com/example/TPO/LaboratorioClinicoApp$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/POO-TP/com/example/TPO/LaboratorioClinicoApp$5.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/POO-TP/com/example/TPO/LaboratorioClinicoApp$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/POO-TP/com/example/TPO/LaboratorioClinicoApp$6.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -123,7 +112,9 @@
     "Repository.Attach.JavaDocs": "false",
     "Repository.Attach.Sources": "false",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "467",
     "git-widget-placeholder": "branch/Lautaro",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/tomat/OneDrive/Escritorio/parcial/POO-TP",
@@ -135,7 +126,7 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="com.example.TPO.App" />
       <module name="POO-TP" />
@@ -145,9 +136,17 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="menuLogin" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="menuLogin" />
+      <module name="POO-TP" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
+        <item itemvalue="Application.menuLogin" />
       </list>
     </recent_temporary>
   </component>
@@ -168,7 +167,8 @@
       <option name="presentableId" value="Default" />
       <updated>1710540607493</updated>
       <workItem from="1719409382518" duration="23646000" />
-      <workItem from="1719522880807" duration="6121000" />
+      <workItem from="1719522880807" duration="6581000" />
+      <workItem from="1719534634081" duration="2542000" />
     </task>
     <servers />
   </component>
