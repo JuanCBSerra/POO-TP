@@ -12,7 +12,7 @@ public class LaboratorioClinicoApp extends JFrame {
 
     public LaboratorioClinicoApp() {
         setTitle("Administración del Laboratorio Clínico");
-        setSize(600, 400);
+        setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 

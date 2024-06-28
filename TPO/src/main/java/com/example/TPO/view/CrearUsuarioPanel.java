@@ -10,9 +10,6 @@ import java.awt.event.ActionListener;
 import java.time.LocalDate;
 
 public class CrearUsuarioPanel extends JPanel {
-    /**
-     *
-     */
     private static final long serialVersionUID = 1L;
     private JTextField usuarioField;
     private JTextField correoField;
@@ -21,7 +18,7 @@ public class CrearUsuarioPanel extends JPanel {
     private JTextField domicilioField;
     private JTextField dniField;
     private JTextField fecNacField;
-    private JTextField rolField;
+    private JComboBox<Rol> rolComboBox;
 
     public CrearUsuarioPanel() {
         setLayout(new BorderLayout());
@@ -34,14 +31,17 @@ public class CrearUsuarioPanel extends JPanel {
         formPanel.setLayout(new BoxLayout(formPanel, BoxLayout.Y_AXIS));
         formPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        addFormRow(formPanel, "Usuario:", usuarioField = new JTextField(20));
-        addFormRow(formPanel, "Nombre:", nombreField = new JTextField(20));
-        addFormRow(formPanel, "Correo:", correoField = new JTextField(20));
-        addFormRow(formPanel, "Contraseña:", passwordField = new JTextField(20));
+        addFormRow(formPanel, "Nombre de usuario:", usuarioField = new JTextField(20));
+        addFormRow(formPanel, "Nombre completo:", nombreField = new JTextField(20));
+        addFormRow(formPanel, "Email:", correoField = new JTextField(20));
+        addFormRow(formPanel, "Contraseña:", passwordField = new JPasswordField(20));
         addFormRow(formPanel, "Domicilio:", domicilioField = new JTextField(20));
         addFormRow(formPanel, "DNI:", dniField = new JTextField(20));
         addFormRow(formPanel, "Fecha Nacimiento (YYYY-MM-DD):", fecNacField = new JTextField(20));
-        addFormRow(formPanel, "Rol:", rolField = new JTextField(20));
+
+        // Crear el JComboBox para el rol
+        rolComboBox = new JComboBox<>(Rol.values());
+        addFormRow(formPanel, "Rol:", rolComboBox);
 
         JButton btnGuardar = new JButton("Guardar");
         btnGuardar.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -59,13 +59,13 @@ public class CrearUsuarioPanel extends JPanel {
         });
     }
 
-    private void addFormRow(JPanel panel, String labelText, JTextField textField) {
+    private void addFormRow(JPanel panel, String labelText, JComponent component) {
         JPanel row = new JPanel(new BorderLayout(20, 20));
-        row.setMaximumSize(new Dimension(Integer.MAX_VALUE, textField.getPreferredSize().height));
+        row.setMaximumSize(new Dimension(Integer.MAX_VALUE, component.getPreferredSize().height));
         JLabel label = new JLabel(labelText);
-        label.setPreferredSize(new Dimension(190, textField.getPreferredSize().height));
+        label.setPreferredSize(new Dimension(190, component.getPreferredSize().height));
         row.add(label, BorderLayout.WEST);
-        row.add(textField, BorderLayout.CENTER);
+        row.add(component, BorderLayout.CENTER);
         panel.add(row);
         panel.add(Box.createVerticalStrut(20)); // Añade un espacio vertical entre las filas
     }
@@ -77,16 +77,23 @@ public class CrearUsuarioPanel extends JPanel {
         String password = passwordField.getText();
         String domicilio = domicilioField.getText();
         String dni = dniField.getText();
-        LocalDate fecNac = LocalDate.parse(fecNacField.getText());
-        Rol rol = Rol.valueOf(rolField.getText().toLowerCase());
+        String fecNac =fecNacField.getText();
+
+        // Validar que rolComboBox no sea null antes de usarlo
+        if (rolComboBox == null) {
+            JOptionPane.showMessageDialog(this, "Error: el campo de rol no está inicializado correctamente.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        Rol rol = (Rol) rolComboBox.getSelectedItem();
 
         // Validaciones básicas
-        if (nombre.isEmpty() || username.isEmpty() || dni.isEmpty() || password.isEmpty() || domicilio.isEmpty() || dni.isEmpty()) {
+        if (nombre.isEmpty() || username.isEmpty() || dni.isEmpty() || password.isEmpty() || domicilio.isEmpty() || correo.isEmpty() || fecNac.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        UsuarioController.getInstance().agregarUsuario(username,nombre,correo,password,domicilio,dni,fecNac,rol);
+        UsuarioController.getInstance().agregarUsuario(username, nombre, correo, password, domicilio, dni, LocalDate.parse(fecNac), rol);
 
         JOptionPane.showMessageDialog(this, "Usuario creado con éxito.");
     }
