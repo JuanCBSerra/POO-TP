@@ -51,6 +51,12 @@ public class UsuarioController {
                 .findFirst();
     }
 
+    public Optional<Usuario> buscarUsuarioPorUsername(String username) {
+        return usuarios.stream()
+                .filter(p -> p.getUsername().equals(username))
+                .findFirst();
+    }
+
     public boolean eliminarUsuario(String dni) {
         Optional<Usuario> usuario = buscarUsuarioPorDni(dni);
         if (usuario.isPresent()) {

@@ -1,4 +1,4 @@
-package com.example.TPO.model;
+package com.example.TPO.DTO;
 
 import lombok.Data;
 import lombok.AllArgsConstructor;
@@ -11,14 +11,14 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Peticion {
+public class PeticionDTO {
 
     private String id;
-    private Paciente paciente;
+    private PacienteDTO paciente;
     private String obraSocial;
     private Date fechaCarga;
     private Date fechaCalculadaEntrega;
-    private List<Practica> practicas;
-    private ArrayList<Resultado> resultados;
+    private List<PracticaDTO> practicas;
+    private ArrayList<ResultadoDTO> resultados;
 
 }

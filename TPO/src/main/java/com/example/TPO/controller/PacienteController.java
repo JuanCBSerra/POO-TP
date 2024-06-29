@@ -28,7 +28,7 @@ public class PacienteController {
                 domicilio,
                 email,
                 sexo,
-                new ArrayList<String>(),
+                new ArrayList<>(),
                 edad
         );
 

@@ -70,14 +70,17 @@ public class CrearSucursalPanel extends JPanel {
 
         int numero = Integer.parseInt(numeroString);
 
-        sucursalController.agregarSucursal(
-                numero,
-                direccion,
-                responsableTecnico
-        );
-
-        JOptionPane.showMessageDialog(this, "Sucursal creada con éxito.");
-        clearFields();
+        try{
+            sucursalController.agregarSucursal(
+                    numero,
+                    direccion,
+                    responsableTecnico
+            );
+            JOptionPane.showMessageDialog(this, "Sucursal creada con éxito.");
+            clearFields();
+        } catch (Exception error){
+            JOptionPane.showMessageDialog(this, "La sucursal no pudo ser creada con éxito.");
+        }
     }
 
     private void clearFields() {

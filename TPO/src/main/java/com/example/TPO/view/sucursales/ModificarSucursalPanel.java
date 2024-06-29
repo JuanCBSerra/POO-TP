@@ -10,8 +10,6 @@ import java.util.Optional;
 
 public class ModificarSucursalPanel extends JPanel {
 
-    private static final long serialVersionUID = 1L;
-
     private final JFormattedTextField numeroBuscarField;
     private final JTextField direccionField;
     private final JTextField respTecnicoField;
@@ -57,7 +55,7 @@ public class ModificarSucursalPanel extends JPanel {
         habilitarFormulario(false);
 
         btnBuscar.addActionListener(e -> buscarSucursal());
-        btnGuardar.addActionListener(e -> guardarSucursal());
+        btnGuardar.addActionListener(e -> modificarSucursal());
     }
 
     private void habilitarFormulario(boolean habilitar) {
@@ -73,7 +71,7 @@ public class ModificarSucursalPanel extends JPanel {
 
             if (sucursal.isPresent()) {
                 direccionField.setText(sucursal.get().getDireccion());
-                respTecnicoField.setText(sucursal.get().getResponsableTecnico());
+                respTecnicoField.setText(sucursal.get().getResponsableTecnico().getUsername());
                 habilitarFormulario(true);
             } else {
                 JOptionPane.showMessageDialog(this, "Sucursal no encontrada.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -85,24 +83,22 @@ public class ModificarSucursalPanel extends JPanel {
         }
     }
 
-    private void guardarSucursal() {
-        try {
-            int numero = Integer.parseInt(numeroBuscarField.getText());
-            String direccion = direccionField.getText();
-            String responsableTecnico = respTecnicoField.getText();
+    private void modificarSucursal() {
+        int numero = Integer.parseInt(numeroBuscarField.getText());
+        String direccion = direccionField.getText();
+        String responsableTecnico = respTecnicoField.getText();
 
-            if (direccion.isEmpty() || responsableTecnico.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos correctamente.", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
+        if (direccion.isEmpty() || responsableTecnico.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos correctamente.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try{
             sucursalController.modificarSucursal(numero, direccion, responsableTecnico);
-
             JOptionPane.showMessageDialog(this, "Sucursal modificada con éxito.");
             limpiarCampos();
             habilitarFormulario(false);
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Número de sucursal inválido.", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "La sucursal no pudo ser modificada.");
         }
     }
 
@@ -115,8 +111,8 @@ public class ModificarSucursalPanel extends JPanel {
     private static class Utils {
         public static JFormattedTextField createFormattedTextField() {
             NumberFormat format = NumberFormat.getIntegerInstance();
-            format.setGroupingUsed(false); // No usar separadores de miles
-            format.setMinimumIntegerDigits(1); // Mínimo de dígitos enteros permitidos
+            format.setGroupingUsed(false);
+            format.setMinimumIntegerDigits(1);
 
             return new JFormattedTextField(format);
         }

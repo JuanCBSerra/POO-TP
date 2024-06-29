@@ -95,7 +95,7 @@ public class CrearPeticionPanel extends JPanel {
         }
 
         Paciente paciente = pacienteOpt.get();
-        List<Integer> practicas = new ArrayList<>();
+        List<Practica> practicas = new ArrayList<>();
         ArrayList<Resultado> resultados = new ArrayList<>();
 
         String[] practicasArray = practicasAsociadasString.split(",");
@@ -104,7 +104,7 @@ public class CrearPeticionPanel extends JPanel {
             if (!practicaCodigo.isEmpty()) {
                 Optional<Practica> practicaOpt = PracticaController.getInstance().buscarPracticaPorCodigo(Integer.parseInt(practicaCodigo));
                 if (practicaOpt.isPresent()) {
-                    practicas.add(Integer.parseInt(practicaCodigo));
+                    practicas.add(practicaOpt.get());
                     resultados.add(new Resultado()); // Añadir un resultado vacío o predeterminado
                 } else {
                     JOptionPane.showMessageDialog(this, "Práctica con código " + practicaCodigo + " inexistente.", "Error", JOptionPane.ERROR_MESSAGE);

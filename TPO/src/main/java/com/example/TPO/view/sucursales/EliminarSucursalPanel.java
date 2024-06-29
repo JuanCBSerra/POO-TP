@@ -66,7 +66,7 @@ public class EliminarSucursalPanel extends JPanel {
 
         if (sucursal.isPresent()) {
             direccionLabel.setText(sucursal.get().getDireccion());
-            responsableTecnicoLabel.setText(sucursal.get().getResponsableTecnico());
+            responsableTecnicoLabel.setText(sucursal.get().getResponsableTecnico().getUsername());
             btnEliminar.setEnabled(true);
         } else {
             JOptionPane.showMessageDialog(this, "Sucursal no encontrada.", "Error", JOptionPane.ERROR_MESSAGE);

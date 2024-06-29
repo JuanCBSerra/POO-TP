@@ -140,7 +140,7 @@ public class ModificarPracticasPanel extends JPanel {
                     ValorCriticoNumerico valorCriticoNumerico = (ValorCriticoNumerico) practica.getValorCritico();
                     valoresCriticosField.setText(valorCriticoNumerico.getValorMinimo() + ", " + valorCriticoNumerico.getValorMaximo());
                 }
-                valoresReservadosCheckBox.setSelected(practica.getValorReservado());
+                valoresReservadosCheckBox.setSelected(practica.isValorReservado());
                 habilitadaCheckbox.setSelected(practica.isEstaHabilitada());
                 horasResultadoField.setText(String.valueOf(practica.getCantidadHoras()));
                 habilitarFormulario(true);

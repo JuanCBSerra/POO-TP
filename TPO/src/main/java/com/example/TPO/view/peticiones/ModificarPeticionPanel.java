@@ -93,7 +93,7 @@ public class ModificarPeticionPanel extends JPanel {
                 Peticion peticion = peticionOptional.get();
                 obraSocialField.setText(peticion.getObraSocial());
 
-                List<Integer> practicas = peticion.getPracticas();
+                List<Practica> practicas = peticion.getPracticas();
                 StringBuilder practicasString = new StringBuilder();
                 for (int i = 0; i < practicas.size(); i++) {
                     practicasString.append(practicas.get(i));
@@ -127,14 +127,14 @@ public class ModificarPeticionPanel extends JPanel {
             return;
         }
 
-        List<Integer> practicas = new ArrayList<>();
+        List<Practica> practicas = new ArrayList<>();
         String[] practicasArray = practicaAsociada.split(",");
         for (String practicaCodigo : practicasArray) {
             practicaCodigo = practicaCodigo.trim();
             if (!practicaCodigo.isEmpty()) {
                 Optional<Practica> practicaOpt = PracticaController.getInstance().buscarPracticaPorCodigo(Integer.parseInt(practicaCodigo));
                 if (practicaOpt.isPresent()) {
-                    practicas.add(Integer.parseInt(practicaCodigo));
+                    practicas.add(practicaOpt.get());
                 } else {
                     JOptionPane.showMessageDialog(this, "Práctica con código " + practicaCodigo + " inexistente.", "Error", JOptionPane.ERROR_MESSAGE);
                     return;

@@ -1,7 +1,8 @@
 package com.example.TPO.controller;
 
-import com.example.TPO.model.Paciente;
 import com.example.TPO.model.Sucursal;
+import com.example.TPO.model.Usuario;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,9 +12,7 @@ public class SucursalController {
 
     private static SucursalController instance;
     private final List<Sucursal> sucursales = new ArrayList<>();
-
-    private SucursalController() {
-    }
+    private final UsuarioController usuarioController = UsuarioController.getInstance();
 
     public static SucursalController getInstance() {
         if (instance == null) {
@@ -22,14 +21,18 @@ public class SucursalController {
         return instance;
     }
 
-    public void agregarSucursal(int numero, String direccion, String responsableTecnico){
-        Sucursal nuevaSucursal = new Sucursal(
-                numero,
-                direccion,
-                responsableTecnico,
-                new ArrayList<>()
-        );
-        sucursales.add(nuevaSucursal);
+    public void agregarSucursal(int numero, String direccion, String responsableTecnicoUsername) throws Exception {
+        Optional<Usuario> responsableTecnicoOpt = usuarioController.buscarUsuarioPorUsername(responsableTecnicoUsername);
+        if(responsableTecnicoOpt.isPresent()){
+            Sucursal nuevaSucursal = new Sucursal(
+                    numero,
+                    direccion,
+                    responsableTecnicoOpt.get(),
+                    new ArrayList<>()
+            );
+            sucursales.add(nuevaSucursal);
+        }else throw new Exception();
+
     }
 
     public Optional<Sucursal> buscarSucursalPorNumero(int numero) {
@@ -48,22 +51,20 @@ public class SucursalController {
         }
     }
 
-    public boolean modificarSucursal(int numero, String direccion, String responsableTecnico) {
+    public void modificarSucursal(int numero, String direccion, String responsableTecnicoUsername) throws Exception {
         Optional<Sucursal> sucursalOpt = buscarSucursalPorNumero(numero);
         if (sucursalOpt.isPresent()) {
             Sucursal sucursal = sucursalOpt.get();
             if (direccion != null) {
                 sucursal.setDireccion(direccion);
             }
-            if (responsableTecnico != null) {
-                sucursal.setResponsableTecnico(responsableTecnico);
+            if (responsableTecnicoUsername != null) {
+                Optional<Usuario> responsableTecnicoOpt = usuarioController.buscarUsuarioPorUsername(responsableTecnicoUsername);
+                if(responsableTecnicoOpt.isPresent()){
+                    sucursal.setResponsableTecnico(responsableTecnicoOpt.get());
+                }else throw new Exception();
             }
-            return true;
-        }
-        return false;
+        } else throw new Exception();
     }
 
-    public List<Sucursal> obtenerTodasLasSucursales() {
-        return sucursales;
-    }
 }
