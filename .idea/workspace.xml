@@ -37,7 +37,7 @@
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/ivang/OneDrive/Desktop/POO/terceraeslavendia/POO-TP/TPO",
+    "last_opened_file_path": "C:/Users/lauta/Desktop/UADE/POO/TPO/POO-TP/TPO",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -74,8 +74,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="jdk-21.0.1-openjdk-21.0.1-4caba194b151-23eed401" />
-        <option value="jdk-22-openjdk-22-4caba194b151-f504ca98" />
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.15989.150" />
+        <option value="bundled-js-predefined-1d06a55b98c1-91d5c284f522-JavaScript-IU-241.15989.150" />
       </set>
     </attachedChunks>
   </component>
@@ -93,6 +93,7 @@
       <workItem from="1719590060382" duration="26000" />
       <workItem from="1719590126555" duration="1270000" />
       <workItem from="1719604096559" duration="238000" />
+      <workItem from="1720296491476" duration="83000" />
     </task>
     <servers />
   </component>
