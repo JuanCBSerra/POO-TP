@@ -3,14 +3,12 @@ package com.example.TPO.view.pacientes;
 import com.example.TPO.DTO.PacienteDTO;
 import com.example.TPO.Utils;
 import com.example.TPO.controller.PacienteController;
-import com.example.TPO.model.Paciente;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.Optional;
 
 public class ModificarPacientePanel extends JPanel {
-    private static final long serialVersionUID = 1L;
 
     private final JTextField dniBuscarField;
     private final JTextField nombreField;

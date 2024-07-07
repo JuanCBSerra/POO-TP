@@ -1,18 +1,11 @@
 package com.example.TPO.view.peticiones;
 
-import com.example.TPO.DTO.PacienteDTO;
 import com.example.TPO.Utils;
-import com.example.TPO.controller.PacienteController;
 import com.example.TPO.controller.PeticionController;
-import com.example.TPO.controller.PracticaController;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.Optional;
 
 public class CrearPeticionPanel extends JPanel {
 
@@ -21,6 +14,7 @@ public class CrearPeticionPanel extends JPanel {
     private final JTextField obraSocialField;
     private final JTextField fechaCargaField;
     private final JTextField fechaEntregaField;
+    private final JFormattedTextField numeroSucursalField;
     private final JTextArea practicasAsociadasArea;
 
     public CrearPeticionPanel() {
@@ -36,6 +30,7 @@ public class CrearPeticionPanel extends JPanel {
 
         addFormRow(formPanel, "ID petición: ", idPeticionField = new JTextField(20));
         addFormRow(formPanel, "DNI paciente: ", pacienteField = new JTextField(20));
+        addFormRow(formPanel, "Numero sucursal: ", numeroSucursalField = Utils.createFormattedTextField());
         addFormRow(formPanel, "Obra social:", obraSocialField = new JTextField(20));
         addFormRow(formPanel, "Fecha de carga: (YYYY-MM-DD)", fechaCargaField = new JTextField(20));
         addFormRow(formPanel, "Fecha estimada de entrega: (YYYY-MM-DD)", fechaEntregaField = new JTextField(20));
@@ -44,12 +39,7 @@ public class CrearPeticionPanel extends JPanel {
         JButton btnGuardar = new JButton("Guardar");
         btnGuardar.setBackground(new Color(144, 238, 144));
         btnGuardar.setAlignmentX(Component.CENTER_ALIGNMENT);
-        btnGuardar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                guardarPeticion();
-            }
-        });
+        btnGuardar.addActionListener(e -> guardarPeticion());
 
         formPanel.add(Box.createVerticalStrut(20));
         formPanel.add(btnGuardar);
@@ -75,23 +65,24 @@ public class CrearPeticionPanel extends JPanel {
         String fechaCargaString = fechaCargaField.getText();
         String fechaEntregaString = fechaEntregaField.getText();
         String practicasAsociadasString = practicasAsociadasArea.getText();
+        String numeroSucursalText = numeroSucursalField.getText();
 
-        if (idPeticionString.isEmpty() || pacienteString.isEmpty() || obraSocialString.isEmpty() || fechaCargaString.isEmpty() || fechaEntregaString.isEmpty() || practicasAsociadasString.isEmpty()) {
+        if (idPeticionString.isEmpty() || pacienteString.isEmpty() || obraSocialString.isEmpty() || fechaCargaString.isEmpty() || fechaEntregaString.isEmpty() || practicasAsociadasString.isEmpty() || numeroSucursalText.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
+        int numeroSucursal = Integer.parseInt(numeroSucursalText);
         Date fechaCarga = Utils.parseDate(fechaCargaString);
         Date fechaEntrega = Utils.parseDate(fechaEntregaString);
-        Optional<PacienteDTO> pacienteOpt = PacienteController.getInstance().getPaciente(pacienteString);
+        String[] codigosPracticas = practicasAsociadasString.split(",");
 
-        if (pacienteOpt.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Paciente inexistente.", "Error", JOptionPane.ERROR_MESSAGE);
+        try{
+            PeticionController.getInstance().agregarPeticion(pacienteString, numeroSucursal, idPeticionString, obraSocialString, fechaCarga, fechaEntrega, codigosPracticas);
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-
-        String[] codigosPracticas = practicasAsociadasString.split(",");
-        PeticionController.getInstance().agregarPeticion(pacienteString, idPeticionString, obraSocialString, fechaCarga, fechaEntrega, codigosPracticas);
 
         JOptionPane.showMessageDialog(this, "Peticion creada con exito.");
         clearFields();

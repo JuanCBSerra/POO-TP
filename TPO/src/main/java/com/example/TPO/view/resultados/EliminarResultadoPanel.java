@@ -2,7 +2,6 @@ package com.example.TPO.view.resultados;
 
 import com.example.TPO.DTO.ResultadoDTO;
 import com.example.TPO.controller.ResultadoController;
-import com.example.TPO.model.Resultado;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,12 +10,11 @@ import java.awt.event.ActionListener;
 import java.util.Optional;
 
 public class EliminarResultadoPanel extends JPanel {
-    private static final long serialVersionUID = 1L;
-    private JTextField idBuscarField;
-    private JButton btnBuscar;
-    private JButton btnEliminar;
-    private JLabel idLabel;
-    private JLabel valorLabel;
+
+    private final JTextField idBuscarField;
+    private final JButton btnEliminar;
+    private final JLabel idLabel;
+    private final JLabel valorLabel;
 
     private final ResultadoController resultadoController = ResultadoController.getInstance();
 
@@ -31,7 +29,7 @@ public class EliminarResultadoPanel extends JPanel {
         buscarPanel.add(new JLabel("ID:"));
         idBuscarField = new JTextField(20);
         buscarPanel.add(idBuscarField);
-        btnBuscar = new JButton("Buscar");
+        JButton btnBuscar = new JButton("Buscar");
         btnBuscar.setBackground(new Color(144, 202, 249));
         buscarPanel.add(btnBuscar);
 
@@ -88,8 +86,6 @@ public class EliminarResultadoPanel extends JPanel {
 
     private void eliminarResultado() {
         String id = idBuscarField.getText();
-
-
         resultadoController.eliminarResultado(id);
 
         JOptionPane.showMessageDialog(this, "Resultado eliminado con éxito.");

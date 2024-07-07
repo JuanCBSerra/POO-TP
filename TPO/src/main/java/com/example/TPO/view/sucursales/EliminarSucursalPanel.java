@@ -14,6 +14,7 @@ public class EliminarSucursalPanel extends JPanel {
     private final JButton btnEliminar;
     private final JLabel direccionLabel;
     private final JLabel responsableTecnicoLabel;
+    private final JFormattedTextField numeroSucursalDerivacionesField;
 
     private final SucursalController sucursalController = SucursalController.getInstance();
 
@@ -35,7 +36,7 @@ public class EliminarSucursalPanel extends JPanel {
 
         add(buscarPanel, BorderLayout.CENTER);
 
-        JPanel infoPanel = new JPanel(new GridLayout(3, 2, 10, 10));
+        JPanel infoPanel = new JPanel(new GridLayout(4, 2, 10, 10));
         infoPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
         infoPanel.add(new JLabel("Dirección:"));
@@ -45,6 +46,11 @@ public class EliminarSucursalPanel extends JPanel {
         infoPanel.add(new JLabel("Responsable Técnico:"));
         responsableTecnicoLabel = new JLabel();
         infoPanel.add(responsableTecnicoLabel);
+
+        infoPanel.add(new JLabel("Sucursal a derivar: "));
+        numeroSucursalDerivacionesField = Utils.createFormattedTextField();
+        numeroSucursalDerivacionesField.setColumns(15);
+        infoPanel.add(numeroSucursalDerivacionesField);
 
         btnEliminar = new JButton("Eliminar");
         btnEliminar.setBackground(new Color(255, 102, 102));
@@ -75,13 +81,22 @@ public class EliminarSucursalPanel extends JPanel {
 
     private void eliminarSucursal() {
         int numero = Integer.parseInt(numeroBuscarField.getText());
-        boolean sucursalEliminada = sucursalController.eliminarSucursal(numero);
 
-        if (sucursalEliminada) {
-            JOptionPane.showMessageDialog(this, "Sucursal eliminada con éxito.");
-        } else {
-            JOptionPane.showMessageDialog(this, "No se pudo eliminar la sucursal.", "Error", JOptionPane.ERROR_MESSAGE);
+        if(numeroSucursalDerivacionesField.getText() == null){
+            JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
+
+        int numeroSucursalADerivar = Integer.parseInt(numeroSucursalDerivacionesField.getText());
+
+        try{
+            sucursalController.eliminarSucursal(numero, numeroSucursalADerivar);
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        JOptionPane.showMessageDialog(this, "Sucursal eliminada con éxito.");
 
         direccionLabel.setText("");
         responsableTecnicoLabel.setText("");

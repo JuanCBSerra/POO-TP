@@ -1,6 +1,8 @@
 package com.example.TPO.controller;
 
 import com.example.TPO.DTO.SucursalDTO;
+import com.example.TPO.model.Paciente;
+import com.example.TPO.model.Peticion;
 import com.example.TPO.model.Sucursal;
 import com.example.TPO.model.Usuario;
 
@@ -41,19 +43,32 @@ public class SucursalController {
                 .findFirst();
     }
 
+    protected void agregarPeticionASucursal(int numeroSucursal, Peticion nuevaPeticion) {
+        Optional<Sucursal> sucursal = buscarSucursalPorNumero(numeroSucursal);
+        if (sucursal.isEmpty()) {
+            throw new RuntimeException("Sucursal con numero " + numeroSucursal + " no encontrada.");
+        }
+        sucursal.get().agregarPeticion(nuevaPeticion);
+    }
+
     public Optional<SucursalDTO> getSucursal(int numero){
         Optional<Sucursal> sucursal  = buscarSucursalPorNumero(numero);
         return sucursal.map(SucursalDTO::new);
     }
 
-    public boolean eliminarSucursal(int numero) {
-        Optional<Sucursal> sucursal = buscarSucursalPorNumero(numero);
-        if (sucursal.isPresent()) {
-            sucursales.remove(sucursal.get());
-            return true;
-        } else {
-            return false;
+    public void eliminarSucursal(int numeroSucursal, int numeroSucursalDerivaciones) {
+        Sucursal sucursal = buscarSucursalPorNumero(numeroSucursal)
+                .orElseThrow(() -> new RuntimeException("Sucursal con número " + numeroSucursal + " no encontrada"));
+
+        Sucursal sucursalADerivar = buscarSucursalPorNumero(numeroSucursalDerivaciones)
+                .orElseThrow(() -> new RuntimeException("Sucursal para derivaciones con número " + numeroSucursalDerivaciones + " no encontrada"));
+
+        if (!sucursal.sePuedeEliminar()) {
+            throw new RuntimeException("La sucursal con número " + numeroSucursal + " no se puede eliminar");
         }
+
+        sucursal.derivarPeticiones(sucursalADerivar);
+        sucursales.remove(sucursal);
     }
 
     public void modificarSucursal(int numero, String direccion, String responsableTecnicoUsername) throws Exception {

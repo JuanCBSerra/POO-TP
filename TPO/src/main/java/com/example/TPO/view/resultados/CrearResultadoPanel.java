@@ -1,13 +1,10 @@
 package com.example.TPO.view.resultados;
 
 import com.example.TPO.controller.ResultadoController;
-import com.example.TPO.model.Resultado;
 
 import java.time.LocalDate;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class CrearResultadoPanel extends JPanel {
 
@@ -37,7 +34,7 @@ public class CrearResultadoPanel extends JPanel {
         btnGuardar.setAlignmentX(Component.CENTER_ALIGNMENT);
         btnGuardar.addActionListener(e -> guardarResultado());
 
-        formPanel.add(Box.createVerticalStrut(20)); // Añade un espacio vertical antes del botón
+        formPanel.add(Box.createVerticalStrut(20));
         formPanel.add(btnGuardar);
 
         add(formPanel, BorderLayout.CENTER);

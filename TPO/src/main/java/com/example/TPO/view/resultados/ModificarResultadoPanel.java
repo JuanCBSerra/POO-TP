@@ -10,12 +10,10 @@ import java.awt.*;
 import java.util.Optional;
 
 public class ModificarResultadoPanel extends JPanel {
-    private static final long serialVersionUID = 1L;
 
-    private JTextField valorField;
-    private JTextField idBuscarField;
-    private JButton btnBuscar;
-    private JButton btnGuardar;
+    private final JTextField valorField;
+    private final JTextField idBuscarField;
+    private final JButton btnGuardar;
 
     private final ResultadoController resultadoController = ResultadoController.getInstance();
 
@@ -30,7 +28,7 @@ public class ModificarResultadoPanel extends JPanel {
         buscarPanel.add(new JLabel("ID:"));
         idBuscarField = new JTextField(20);
         buscarPanel.add(idBuscarField);
-        btnBuscar = new JButton("Buscar");
+        JButton btnBuscar = new JButton("Buscar");
         btnBuscar.setBackground(new Color(144, 202, 249)); // Color celeste
         buscarPanel.add(btnBuscar);
 
