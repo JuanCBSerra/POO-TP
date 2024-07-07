@@ -99,7 +99,7 @@ public class ModificarPeticionPanel extends JPanel {
                 List<PracticaDTO> practicas = peticion.getPracticas();
                 StringBuilder practicasString = new StringBuilder();
                 for (int i = 0; i < practicas.size(); i++) {
-                    practicasString.append(practicas.get(i));
+                    practicasString.append(practicas.get(i).getCodigo());
                     if (i < practicas.size() - 1) {
                         practicasString.append(", ");
                     }

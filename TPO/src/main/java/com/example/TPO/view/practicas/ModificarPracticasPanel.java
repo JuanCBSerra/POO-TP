@@ -1,8 +1,8 @@
 package com.example.TPO.view.practicas;
 
+import com.example.TPO.DTO.PracticaDTO;
 import com.example.TPO.Utils;
 import com.example.TPO.controller.PracticaController;
-import com.example.TPO.model.Practica;
 import com.example.TPO.model.ValorCritico;
 import com.example.TPO.model.ValorCriticoNumerico;
 import com.example.TPO.model.ValorCriticoString;
@@ -44,7 +44,6 @@ public class ModificarPracticasPanel extends JPanel {
         JButton btnBuscar;
         addFormRow(formPanel, "Buscar:", btnBuscar = new JButton("Buscar"));
 
-        // Componente vacío para separar el botón buscar
         formPanel.add(Box.createVerticalStrut(10));
 
         addFormRow(formPanel, "Código:", codigoField = new JTextField());
@@ -60,7 +59,6 @@ public class ModificarPracticasPanel extends JPanel {
         valorCriticoStringRadio = new JRadioButton("Valor Crítico String");
         valorCriticoNumericoRadio = new JRadioButton("Valor Crítico Numérico");
 
-        // Agrupar los radio buttons para que solo uno pueda ser seleccionado a la vez
         ButtonGroup valorCriticoGroup = new ButtonGroup();
         valorCriticoGroup.add(valorCriticoStringRadio);
         valorCriticoGroup.add(valorCriticoNumericoRadio);
@@ -85,7 +83,6 @@ public class ModificarPracticasPanel extends JPanel {
         btnBuscar.addActionListener(e -> buscarPractica());
         btnGuardar.addActionListener(e -> guardarPractica());
 
-        // Añadir listener para desactivar el otro radio button cuando uno es seleccionado
         valorCriticoStringRadio.addItemListener(e -> {
             if (e.getStateChange() == ItemEvent.SELECTED) {
                 valorCriticoNumericoRadio.setSelected(false);
@@ -125,23 +122,22 @@ public class ModificarPracticasPanel extends JPanel {
     private void buscarPractica() {
         try {
             int codigo = Integer.parseInt(codigoBuscarField.getText());
-            Optional<Practica> practicaOptional = practicaController.buscarPracticaPorCodigo(codigo);
+            Optional<PracticaDTO> practicaOptional = practicaController.getPractica(codigo);
 
             if (practicaOptional.isPresent()) {
-                Practica practica = practicaOptional.get();
+                PracticaDTO practica = practicaOptional.get();
                 codigoField.setText(String.valueOf(practica.getCodigo()));
                 nombreField.setText(practica.getNombre());
                 grupoField.setText(practica.getGrupo());
                 if (practica.getValorCritico() instanceof ValorCriticoString) {
                     valorCriticoStringRadio.setSelected(true);
                     valoresCriticosField.setText(((ValorCriticoString) practica.getValorCritico()).getValorCritico());
-                } else if (practica.getValorCritico() instanceof ValorCriticoNumerico) {
+                } else if (practica.getValorCritico() instanceof ValorCriticoNumerico valorCriticoNumerico) {
                     valorCriticoNumericoRadio.setSelected(true);
-                    ValorCriticoNumerico valorCriticoNumerico = (ValorCriticoNumerico) practica.getValorCritico();
                     valoresCriticosField.setText(valorCriticoNumerico.getValorMinimo() + ", " + valorCriticoNumerico.getValorMaximo());
                 }
                 valoresReservadosCheckBox.setSelected(practica.isValorReservado());
-                habilitadaCheckbox.setSelected(practica.isEstaHabilitada());
+                habilitadaCheckbox.setSelected(practica.isHabilitada());
                 horasResultadoField.setText(String.valueOf(practica.getCantidadHoras()));
                 habilitarFormulario(true);
             } else {
@@ -190,9 +186,7 @@ public class ModificarPracticasPanel extends JPanel {
                 return;
             }
 
-            Practica practica = new Practica(codigo, nombre, grupo, valorCritico, valoresReservados, horasResultado, estaHabilitada);
-
-            practicaController.modificarPractica(codigo, practica);
+            practicaController.modificarPractica(codigo, nombre, grupo, valorCritico, valoresReservados, horasResultado, estaHabilitada);
 
             JOptionPane.showMessageDialog(this, "Práctica modificada con éxito.");
             limpiarCampos();

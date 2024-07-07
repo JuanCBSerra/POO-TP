@@ -25,6 +25,6 @@ public class PracticaDTO {
         this.valorCritico = practica.getValorCritico();
         this.valorReservado = practica.isValorReservado();
         this.cantidadHoras = practica.getCantidadHoras();;
-        this.habilitada = practica.isEstaHabilitada();
+        this.habilitada = practica.isHabilitada();
     }
 }

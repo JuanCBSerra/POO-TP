@@ -2,7 +2,6 @@ package com.example.TPO.view.practicas;
 
 import com.example.TPO.Utils;
 import com.example.TPO.controller.PracticaController;
-import com.example.TPO.model.Practica;
 import com.example.TPO.model.ValorCritico;
 import com.example.TPO.model.ValorCriticoNumerico;
 import com.example.TPO.model.ValorCriticoString;
@@ -66,12 +65,7 @@ public class CrearPracticasPanel extends JPanel {
         JButton btnGuardar = new JButton("Guardar");
         btnGuardar.setBackground(new Color(144, 238, 144));
         btnGuardar.setAlignmentX(Component.CENTER_ALIGNMENT);
-        btnGuardar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                guardarPractica();
-            }
-        });
+        btnGuardar.addActionListener(e -> guardarPractica());
 
         formPanel.add(Box.createVerticalStrut(10));
         formPanel.add(btnGuardar);
@@ -133,9 +127,7 @@ public class CrearPracticasPanel extends JPanel {
             return;
         }
 
-        Practica practica = new Practica(codigo, nombreString, grupoString, valorCritico, valoresReservados, horasResultado, habilitada);
-
-        practicaController.agregarPractica(practica);
+        practicaController.agregarPractica(codigo, nombreString, grupoString, valorCritico, valoresReservados, horasResultado, habilitada);
 
         JOptionPane.showMessageDialog(this, "Practica creada con éxito.");
         clearFields();

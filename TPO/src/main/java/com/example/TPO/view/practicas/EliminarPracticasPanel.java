@@ -1,8 +1,8 @@
 package com.example.TPO.view.practicas;
 
+import com.example.TPO.DTO.PracticaDTO;
 import com.example.TPO.Utils;
 import com.example.TPO.controller.PracticaController;
-import com.example.TPO.model.Practica;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,9 +11,7 @@ import java.awt.event.ActionListener;
 import java.util.Optional;
 
 public class EliminarPracticasPanel extends JPanel {
-    private static final long serialVersionUID = 1L;
     private final JFormattedTextField codigoBuscarField;
-    private final JButton btnBuscar;
     private final JButton btnEliminar;
     private final JLabel nombreLabel;
 
@@ -33,7 +31,7 @@ public class EliminarPracticasPanel extends JPanel {
         codigoBuscarField.setColumns(10);
         buscarPanel.add(codigoBuscarField);
 
-        btnBuscar = new JButton("Buscar");
+        JButton btnBuscar = new JButton("Buscar");
         btnBuscar.setBackground(new Color(144, 202, 249));
         buscarPanel.add(btnBuscar);
 
@@ -72,7 +70,7 @@ public class EliminarPracticasPanel extends JPanel {
     private void buscarPractica() {
         try {
             int codigo = Integer.parseInt(codigoBuscarField.getText());
-            Optional<Practica> practica = practicaController.buscarPracticaPorCodigo(codigo);
+            Optional<PracticaDTO> practica = practicaController.getPractica(codigo);
 
             if (practica.isPresent()) {
                 nombreLabel.setText(practica.get().getNombre());

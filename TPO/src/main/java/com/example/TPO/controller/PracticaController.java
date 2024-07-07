@@ -1,6 +1,10 @@
 package com.example.TPO.controller;
 
+import com.example.TPO.DTO.PeticionDTO;
+import com.example.TPO.DTO.PracticaDTO;
+import com.example.TPO.model.Peticion;
 import com.example.TPO.model.Practica;
+import com.example.TPO.model.ValorCritico;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,20 +25,34 @@ public class PracticaController {
         return instance;
     }
 
-    public void agregarPractica(Practica practica) {
-        practicas.add(practica);
+    public void agregarPractica(int codigo, String nombre, String grupo, ValorCritico valorCritico, boolean valorReservado, int cantidadHoras, boolean habilitada) {
+        practicas.add(new Practica(
+                codigo,
+                nombre,
+                grupo,
+                valorCritico,
+                valorReservado,
+                cantidadHoras,
+                habilitada
+        ));
     }
 
-    public void modificarPractica(int codigo, Practica practicaActualizada) {
+    public void modificarPractica(int codigo, String nombre, String grupo, ValorCritico valorCritico, boolean valoresReservados, int cantidadHoras, boolean habilitada) {
         Optional<Practica> practicaExistente = buscarPracticaPorCodigo(codigo);
         if (practicaExistente.isPresent()) {
             Practica practica = practicaExistente.get();
-            practica.setNombre(practicaActualizada.getNombre());
-            practica.setGrupo(practicaActualizada.getGrupo());
-            practica.setValorCritico(practicaActualizada.getValorCritico());
-            practica.setValorReservado(practicaActualizada.isValorReservado());
-            practica.setCantidadHoras(practicaActualizada.getCantidadHoras());
-            practica.setEstaHabilitada(practicaActualizada.isEstaHabilitada());
+            if(nombre != null){
+                practica.setNombre(nombre);
+            }
+            if(grupo != null){
+                practica.setGrupo(grupo);
+            }
+            if(valorCritico != null){
+                practica.setValorCritico(valorCritico);
+            }
+            practica.setValorReservado(valoresReservados);
+            practica.setCantidadHoras(cantidadHoras);
+            practica.setHabilitada(habilitada);
         }
     }
 
@@ -42,14 +60,18 @@ public class PracticaController {
         Optional<Practica> practicaExistente = buscarPracticaPorCodigo(codigo);
         if (practicaExistente.isPresent()) {
             Practica practica = practicaExistente.get();
-            practica.setEstaHabilitada(false);
+            practica.setHabilitada(false);
         }
     }
 
-    public Optional<Practica> buscarPracticaPorCodigo(int codigo) {
+    protected Optional<Practica> buscarPracticaPorCodigo(int codigo) {
         return practicas.stream()
                 .filter(practica -> practica.getCodigo() == codigo)
                 .findFirst();
     }
 
+    public Optional<PracticaDTO> getPractica(int codigo) {
+        Optional<Practica> practica = buscarPracticaPorCodigo(codigo);
+        return practica.map(PracticaDTO::new);
+    }
 }
