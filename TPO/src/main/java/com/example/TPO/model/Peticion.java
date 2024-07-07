@@ -20,4 +20,12 @@ public class Peticion {
     private List<Practica> practicas;
     private ArrayList<Resultado> resultados;
 
+    public void agregarResultado(Resultado resultado){
+        resultados.add(resultado);
+    }
+
+    public void eliminarResultado(Resultado resultado){
+        resultados.remove(resultado);
+    }
+
 }

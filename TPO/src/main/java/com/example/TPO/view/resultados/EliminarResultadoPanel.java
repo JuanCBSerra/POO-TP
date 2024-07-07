@@ -1,7 +1,7 @@
 package com.example.TPO.view.resultados;
 
 import com.example.TPO.DTO.ResultadoDTO;
-import com.example.TPO.controller.ResultadoController;
+import com.example.TPO.controller.PeticionController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,7 +16,7 @@ public class EliminarResultadoPanel extends JPanel {
     private final JLabel idLabel;
     private final JLabel valorLabel;
 
-    private final ResultadoController resultadoController = ResultadoController.getInstance();
+    private final PeticionController peticionController = PeticionController.getInstance();
 
     public EliminarResultadoPanel() {
         setLayout(new BorderLayout());
@@ -54,25 +54,15 @@ public class EliminarResultadoPanel extends JPanel {
 
         btnEliminar.setEnabled(false);
 
-        btnBuscar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                buscarResultado();
-            }
-        });
+        btnBuscar.addActionListener(e -> buscarResultado());
 
-        btnEliminar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                eliminarResultado();
-            }
-        });
+        btnEliminar.addActionListener(e -> eliminarResultado());
     }
 
     private void buscarResultado() {
         String id = idBuscarField.getText();
 
-        Optional<ResultadoDTO> resultadoBuscado = resultadoController.getResultado(id);
+        Optional<ResultadoDTO> resultadoBuscado = peticionController.getResultado(id);
 
         if(resultadoBuscado.isPresent()){
             idLabel.setText(id);
@@ -86,7 +76,12 @@ public class EliminarResultadoPanel extends JPanel {
 
     private void eliminarResultado() {
         String id = idBuscarField.getText();
-        resultadoController.eliminarResultado(id);
+        try{
+            peticionController.eliminarResultado(id);
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
         JOptionPane.showMessageDialog(this, "Resultado eliminado con éxito.");
         idLabel.setText("");

@@ -2,8 +2,7 @@ package com.example.TPO.view.resultados;
 
 import java.time.LocalDate;
 import com.example.TPO.DTO.ResultadoDTO;
-import com.example.TPO.model.Resultado;
-import com.example.TPO.controller.ResultadoController;
+import com.example.TPO.controller.PeticionController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,7 +14,7 @@ public class ModificarResultadoPanel extends JPanel {
     private final JTextField idBuscarField;
     private final JButton btnGuardar;
 
-    private final ResultadoController resultadoController = ResultadoController.getInstance();
+    private final PeticionController peticionController = PeticionController.getInstance();
 
     public ModificarResultadoPanel() {
         setLayout(new BorderLayout());
@@ -48,10 +47,8 @@ public class ModificarResultadoPanel extends JPanel {
 
         add(formPanel, BorderLayout.SOUTH);
 
-        // Deshabilitar el panel de formulario hasta que se busque un paciente
         habilitarFormulario(false);
 
-        // Agregar ActionListeners
         btnBuscar.addActionListener(e -> buscarResultado());
         btnGuardar.addActionListener(e -> guardarResultado());
     }
@@ -63,11 +60,7 @@ public class ModificarResultadoPanel extends JPanel {
 
     private void buscarResultado(){
         String id = idBuscarField.getText();
-
-        // Implementación simulada para buscar el paciente y cargar datos estáticos
-
-        Optional<ResultadoDTO> resultadoBusqueda = resultadoController.getResultado(id);
-
+        Optional<ResultadoDTO> resultadoBusqueda = peticionController.getResultado(id);
 
         if (resultadoBusqueda.isPresent()) {
             valorField.setText(resultadoBusqueda.get().getResultado());
@@ -82,7 +75,6 @@ public class ModificarResultadoPanel extends JPanel {
         String valor = valorField.getText();
         String id = idBuscarField.getText();
 
-        // Validaciones básicas
         if (valor.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
@@ -90,7 +82,7 @@ public class ModificarResultadoPanel extends JPanel {
 
         LocalDate fechaActual = LocalDate.now();
 
-        if (!resultadoController.modificarResultado(id, valor,fechaActual)) {
+        if (!peticionController.modificarResultado(id, valor,fechaActual)) {
             JOptionPane.showMessageDialog(this, "Error actulizando.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }

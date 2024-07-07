@@ -1,6 +1,6 @@
 package com.example.TPO.view.resultados;
 
-import com.example.TPO.controller.ResultadoController;
+import com.example.TPO.controller.PeticionController;
 
 import java.time.LocalDate;
 import javax.swing.*;
@@ -10,8 +10,9 @@ public class CrearResultadoPanel extends JPanel {
 
     private final JTextField idField;
     private final JTextField valorField;
+    private final JTextField numeroPeticionField;
 
-    private final ResultadoController resultadoController = ResultadoController.getInstance();
+    private final PeticionController peticionController = PeticionController.getInstance();
 
     public CrearResultadoPanel() {
         setLayout(new BorderLayout());
@@ -26,8 +27,7 @@ public class CrearResultadoPanel extends JPanel {
 
         addFormRow(formPanel, "ID:", idField = new JTextField(20));
         addFormRow(formPanel, "Valor:", valorField = new JTextField(20));
-
-
+        addFormRow(formPanel, "Numero Peticion:", numeroPeticionField = new JTextField(20));
 
         JButton btnGuardar = new JButton("Guardar");
         btnGuardar.setBackground(new Color(144, 238, 144)); // Verde claro
@@ -54,15 +54,20 @@ public class CrearResultadoPanel extends JPanel {
     private void guardarResultado() {
         String idString = idField.getText();
         String valorString = valorField.getText();
+        String idPeticionString = numeroPeticionField.getText();
 
-        if (idString.isEmpty() || valorString.isEmpty()) {
+        if (idString.isEmpty() || valorString.isEmpty() || idPeticionString.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         LocalDate fechaActual = LocalDate.now();
-        resultadoController.agregarResultado(idString,valorString,fechaActual);
-
+        try{
+            peticionController.agregarResultado(idPeticionString,idString,valorString,fechaActual);
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
         JOptionPane.showMessageDialog(this, "Resultado creado con éxito.");
         clearFields();
