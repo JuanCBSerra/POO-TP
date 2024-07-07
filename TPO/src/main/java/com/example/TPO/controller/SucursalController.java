@@ -1,8 +1,8 @@
 package com.example.TPO.controller;
 
+import com.example.TPO.DTO.SucursalDTO;
 import com.example.TPO.model.Sucursal;
 import com.example.TPO.model.Usuario;
-import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,10 +35,15 @@ public class SucursalController {
 
     }
 
-    public Optional<Sucursal> buscarSucursalPorNumero(int numero) {
+    protected Optional<Sucursal> buscarSucursalPorNumero(int numero) {
         return sucursales.stream()
                 .filter(p -> p.getNumero() == numero)
                 .findFirst();
+    }
+
+    public Optional<SucursalDTO> getSucursal(int numero){
+        Optional<Sucursal> sucursal  = buscarSucursalPorNumero(numero);
+        return sucursal.map(SucursalDTO::new);
     }
 
     public boolean eliminarSucursal(int numero) {

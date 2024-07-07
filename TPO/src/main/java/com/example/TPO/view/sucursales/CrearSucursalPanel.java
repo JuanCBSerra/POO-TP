@@ -5,12 +5,9 @@ import com.example.TPO.controller.SucursalController;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class CrearSucursalPanel extends JPanel {
 
-    private static final long serialVersionUID = 1L;
     private final JFormattedTextField numeroField;
     private final JTextField direccionField;
     private final JTextField respTecnicoField;
@@ -39,12 +36,7 @@ public class CrearSucursalPanel extends JPanel {
 
         add(formPanel, BorderLayout.CENTER);
 
-        btnGuardar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                guardarSucursal();
-            }
-        });
+        btnGuardar.addActionListener(e -> guardarSucursal());
     }
 
     private void addFormRow(JPanel panel, String labelText, JComponent textField) {

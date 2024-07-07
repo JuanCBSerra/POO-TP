@@ -1,5 +1,6 @@
 package com.example.TPO.view.sucursales;
 
+import com.example.TPO.DTO.SucursalDTO;
 import com.example.TPO.controller.SucursalController;
 import com.example.TPO.model.Sucursal;
 
@@ -9,12 +10,10 @@ import java.util.Optional;
 
 public class EliminarSucursalPanel extends JPanel {
 
-    private static final long serialVersionUID = 1L;
-    private JFormattedTextField numeroBuscarField;
-    private JButton btnBuscar;
-    private JButton btnEliminar;
-    private JLabel direccionLabel;
-    private JLabel responsableTecnicoLabel;
+    private final JFormattedTextField numeroBuscarField;
+    private final JButton btnEliminar;
+    private final JLabel direccionLabel;
+    private final JLabel responsableTecnicoLabel;
 
     private final SucursalController sucursalController = SucursalController.getInstance();
 
@@ -30,7 +29,7 @@ public class EliminarSucursalPanel extends JPanel {
         numeroBuscarField = Utils.createFormattedTextField();
         numeroBuscarField.setColumns(15);
         buscarPanel.add(numeroBuscarField);
-        btnBuscar = new JButton("Buscar");
+        JButton btnBuscar = new JButton("Buscar");
         btnBuscar.setBackground(new Color(144, 202, 249));
         buscarPanel.add(btnBuscar);
 
@@ -62,7 +61,7 @@ public class EliminarSucursalPanel extends JPanel {
 
     private void buscarSucursal() {
         int numero = Integer.parseInt(numeroBuscarField.getText());
-        Optional<Sucursal> sucursal = sucursalController.buscarSucursalPorNumero(numero);
+        Optional<SucursalDTO> sucursal = sucursalController.getSucursal(numero);
 
         if (sucursal.isPresent()) {
             direccionLabel.setText(sucursal.get().getDireccion());

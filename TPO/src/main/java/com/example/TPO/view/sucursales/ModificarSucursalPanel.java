@@ -1,7 +1,7 @@
 package com.example.TPO.view.sucursales;
 
+import com.example.TPO.DTO.SucursalDTO;
 import com.example.TPO.controller.SucursalController;
-import com.example.TPO.model.Sucursal;
 
 import javax.swing.*;
 import java.awt.*;
@@ -67,7 +67,7 @@ public class ModificarSucursalPanel extends JPanel {
     private void buscarSucursal() {
         try {
             int numero = Integer.parseInt(numeroBuscarField.getText());
-            Optional<Sucursal> sucursal = sucursalController.buscarSucursalPorNumero(numero);
+            Optional<SucursalDTO> sucursal = sucursalController.getSucursal(numero);
 
             if (sucursal.isPresent()) {
                 direccionField.setText(sucursal.get().getDireccion());

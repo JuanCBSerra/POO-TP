@@ -1,6 +1,6 @@
 package com.example.TPO.DTO;
 
-import com.example.TPO.model.Usuario;
+import com.example.TPO.model.Sucursal;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,6 +13,12 @@ import java.util.List;
 public class SucursalDTO {
     private int numero;
     private String direccion;
-    private Usuario responsableTecnico;
+    private UsuarioDTO responsableTecnico;
     private List<PeticionDTO> peticiones;
+
+    public SucursalDTO(Sucursal sucursal){
+        this.numero = sucursal.getNumero();
+        this.direccion = sucursal.getDireccion();
+        this.responsableTecnico = new UsuarioDTO(sucursal.getResponsableTecnico());
+    }
 }
