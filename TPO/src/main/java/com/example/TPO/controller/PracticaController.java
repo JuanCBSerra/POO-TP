@@ -1,8 +1,6 @@
 package com.example.TPO.controller;
 
-import com.example.TPO.DTO.PeticionDTO;
 import com.example.TPO.DTO.PracticaDTO;
-import com.example.TPO.model.Peticion;
 import com.example.TPO.model.Practica;
 import com.example.TPO.model.ValorCritico;
 

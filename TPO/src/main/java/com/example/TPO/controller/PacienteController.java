@@ -2,6 +2,7 @@ package com.example.TPO.controller;
 
 import com.example.TPO.DTO.PacienteDTO;
 import com.example.TPO.model.Paciente;
+import com.example.TPO.model.Peticion;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +42,15 @@ public class PacienteController {
                 .filter(p -> p.getDni().equals(dni))
                 .findFirst();
     }
+
+    protected void agregarPeticionAPaciente(String dniPaciente, Peticion nuevaPeticion) {
+        Optional<Paciente> paciente = buscarPacientePorDni(dniPaciente);
+        if (paciente.isEmpty()) {
+            throw new RuntimeException("Paciente con DNI " + dniPaciente + " no encontrado");
+        }
+        paciente.get().agregarPeticion(nuevaPeticion);
+    }
+
 
     public Optional<PacienteDTO> getPaciente(String dni) {
         Optional<Paciente> paciente = buscarPacientePorDni(dni);

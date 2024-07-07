@@ -16,4 +16,7 @@ public class Paciente {
     private List<Peticion> peticiones;
     private int edad;
 
+    public void agregarPeticion(Peticion nuevaPeticion){
+        this.peticiones.add(nuevaPeticion);
+    }
 }

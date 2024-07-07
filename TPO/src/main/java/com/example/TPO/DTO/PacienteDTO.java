@@ -1,6 +1,7 @@
 package com.example.TPO.DTO;
 
 import com.example.TPO.model.Paciente;
+import com.example.TPO.model.Peticion;
 import lombok.*;
 
 import java.util.List;

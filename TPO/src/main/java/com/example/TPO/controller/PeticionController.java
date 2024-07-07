@@ -10,6 +10,7 @@ public class PeticionController {
     private static PeticionController instance;
     private final List<Peticion> peticiones = new ArrayList<>();
     private static final PracticaController practicaController = PracticaController.getInstance();
+    private static final PacienteController pacienteController = PacienteController.getInstance();
 
     private PeticionController() {}
 
@@ -20,7 +21,7 @@ public class PeticionController {
         return instance;
     }
 
-    public void agregarPeticion(String idPeticionString, String obraSocialString, Date fechaCarga, Date fechaEntrega, String[] codigosPracticas) {
+    public void agregarPeticion(String dniPaciente, String idPeticionString, String obraSocialString, Date fechaCarga, Date fechaEntrega, String[] codigosPracticas) {
         List<Practica> practicas = obtenerPracticasPorCodigos(codigosPracticas);
         Peticion nuevaPeticion = new Peticion(
                 idPeticionString,
@@ -30,6 +31,7 @@ public class PeticionController {
                 practicas,
                 new ArrayList<>()
         );
+        pacienteController.agregarPeticionAPaciente(dniPaciente, nuevaPeticion);
         this.peticiones.add(nuevaPeticion);
     }
 

@@ -91,7 +91,7 @@ public class CrearPeticionPanel extends JPanel {
         }
 
         String[] codigosPracticas = practicasAsociadasString.split(",");
-        PeticionController.getInstance().agregarPeticion(idPeticionString, obraSocialString, fechaCarga, fechaEntrega, codigosPracticas);
+        PeticionController.getInstance().agregarPeticion(pacienteString, idPeticionString, obraSocialString, fechaCarga, fechaEntrega, codigosPracticas);
 
         JOptionPane.showMessageDialog(this, "Peticion creada con exito.");
         clearFields();
