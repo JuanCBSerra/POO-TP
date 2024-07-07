@@ -1,7 +1,7 @@
 package com.example.TPO.view.usuarios;
 
+import com.example.TPO.DTO.UsuarioDTO;
 import com.example.TPO.controller.UsuarioController;
-import com.example.TPO.model.Usuario;
 
 import javax.swing.*;
 import java.awt.*;
@@ -70,7 +70,7 @@ public class EliminarUsuarioPanel extends JPanel {
     private void buscarUsuario() {
         String dni = dniBuscarField.getText();
 
-        Optional<Usuario> usuario = UsuarioController.getInstance().buscarUsuarioPorDni(dni);
+        Optional<UsuarioDTO> usuario = UsuarioController.getInstance().getUsuario(dni);
 
         if (usuario.isPresent()) {
             nombreLabel.setText(usuario.get().getNombre());

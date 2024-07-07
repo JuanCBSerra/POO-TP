@@ -1,9 +1,9 @@
 package com.example.TPO.view.usuarios;
 
+import com.example.TPO.DTO.UsuarioDTO;
 import com.example.TPO.Utils;
 import com.example.TPO.controller.UsuarioController;
 import com.example.TPO.model.Rol;
-import com.example.TPO.model.Usuario;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,7 +17,6 @@ public class ModificarUsuarioPanel extends JPanel {
     private final JTextField nombreField;
     private final JTextField emailField;
     private final JTextField domicilioField;
-    private final JTextField passwordField;
     private final JTextField fecNacField;
     private final JComboBox<Rol> rolComboBox;
     private final JButton btnGuardar;
@@ -41,7 +40,7 @@ public class ModificarUsuarioPanel extends JPanel {
 
         add(buscarPanel, BorderLayout.CENTER);
 
-        JPanel formPanel = new JPanel(new GridLayout(10, 2, 10, 10));
+        JPanel formPanel = new JPanel(new GridLayout(9, 2, 10, 10));
         formPanel.setBorder(BorderFactory.createEmptyBorder(15, 20, 15, 20));
 
         formPanel.add(new JLabel("Nombre de usuario:"));
@@ -55,10 +54,6 @@ public class ModificarUsuarioPanel extends JPanel {
         formPanel.add(new JLabel("Email:"));
         emailField = new JTextField();
         formPanel.add(emailField);
-
-        formPanel.add(new JLabel("Contraseña:"));
-        passwordField = new JPasswordField();
-        formPanel.add(passwordField);
 
         formPanel.add(new JLabel("Domicilio:"));
         domicilioField = new JTextField();
@@ -86,7 +81,7 @@ public class ModificarUsuarioPanel extends JPanel {
 
     private void habilitarFormulario(boolean habilitar) {
         Component[] components = {
-                usernameField, nombreField, emailField, passwordField,
+                usernameField, nombreField, emailField,
                 domicilioField, fecNacField, rolComboBox, btnGuardar
         };
         for (Component component : components) {
@@ -96,14 +91,13 @@ public class ModificarUsuarioPanel extends JPanel {
 
     private void buscarUsuario() {
         String dni = dniBuscarField.getText();
-        Optional<Usuario> usuario = usuarioController.buscarUsuarioPorDni(dni);
+        Optional<UsuarioDTO> usuario = usuarioController.getUsuario(dni);
 
         if (usuario.isPresent()) {
-            Usuario u = usuario.get();
+            UsuarioDTO u = usuario.get();
             usernameField.setText(u.getUsername());
             nombreField.setText(u.getNombre());
             emailField.setText(u.getEmail());
-            passwordField.setText(u.getPassword());
             domicilioField.setText(u.getDomicilio());
             fecNacField.setText(Utils.formatDate(u.getFechaNacimiento()));
             rolComboBox.setSelectedItem(u.getRol());
@@ -121,17 +115,16 @@ public class ModificarUsuarioPanel extends JPanel {
         String username = usernameField.getText();
         String nombre = nombreField.getText();
         String email = emailField.getText();
-        String password = passwordField.getText();
         String domicilio = domicilioField.getText();
         Date fecNac = Utils.parseDate(fecNacField.getText());
         Rol rol = (Rol) rolComboBox.getSelectedItem();
 
-        if (username.isEmpty() || nombre.isEmpty() || email.isEmpty() || password.isEmpty() || domicilio.isEmpty() || fecNac == null) {
+        if (username.isEmpty() || nombre.isEmpty() || email.isEmpty() || domicilio.isEmpty() || fecNac == null) {
             JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos correctamente.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        usuarioController.modificarUsuario(username, nombre, email, password, domicilio, null, fecNac, String.valueOf(rol));
+        usuarioController.modificarUsuario(username, nombre, email, domicilio, null, fecNac, String.valueOf(rol));
 
         JOptionPane.showMessageDialog(this, "Usuario modificado con éxito.");
         limpiarCampos();
@@ -142,7 +135,6 @@ public class ModificarUsuarioPanel extends JPanel {
         usernameField.setText("");
         nombreField.setText("");
         emailField.setText("");
-        passwordField.setText("");
         domicilioField.setText("");
         dniBuscarField.setText("");
         fecNacField.setText("");

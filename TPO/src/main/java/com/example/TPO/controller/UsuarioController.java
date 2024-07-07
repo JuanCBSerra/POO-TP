@@ -2,10 +2,10 @@ package com.example.TPO.controller;
 
 import java.io.*;
 
+import com.example.TPO.DTO.UsuarioDTO;
 import com.example.TPO.Utils;
 import com.example.TPO.model.Usuario;
 import com.example.TPO.model.Rol;
-
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -45,10 +45,15 @@ public class UsuarioController {
         guardarUsuarioEnBD(nuevoUsuario);
     }
 
-    public Optional<Usuario> buscarUsuarioPorDni(String dni) {
+    protected Optional<Usuario> buscarUsuarioPorDni(String dni) {
         return usuarios.stream()
                 .filter(p -> p.getDni().equals(dni))
                 .findFirst();
+    }
+
+    public Optional<UsuarioDTO> getUsuario(String dni) {
+        Optional<Usuario> usuario = buscarUsuarioPorDni(dni);
+        return usuario.map(UsuarioDTO::new);
     }
 
     public Optional<Usuario> buscarUsuarioPorUsername(String username) {
@@ -68,7 +73,7 @@ public class UsuarioController {
         }
     }
 
-    public boolean modificarUsuario(String username, String nombre, String email, String password, String domicilio, String dni, Date fecNac, String rol) {
+    public boolean modificarUsuario(String username, String nombre, String email, String domicilio, String dni, Date fecNac, String rol) {
         Optional<Usuario> usuarioOpt = buscarUsuarioPorDni(dni);
         if (usuarioOpt.isPresent()) {
             Usuario usuario = usuarioOpt.get();
@@ -80,9 +85,6 @@ public class UsuarioController {
             }
             if (email != null) {
                 usuario.setEmail(email);
-            }
-            if (password != null) {
-                usuario.setPassword(password);
             }
             if (domicilio != null) {
                 usuario.setDomicilio(domicilio);

@@ -1,1 +1,0 @@
-Jperez,Juan Perez,juan.perez@example.com,1234,Domicilio1,12345678,1000-01-01,ADMINISTRADOR
