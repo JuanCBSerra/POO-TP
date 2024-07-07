@@ -9,9 +9,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class CrearResultadoPanel extends JPanel {
-    private static final long serialVersionUID = 1L;
-    private JTextField idField;
-    private JTextField valorField;
+
+    private final JTextField idField;
+    private final JTextField valorField;
 
     private final ResultadoController resultadoController = ResultadoController.getInstance();
 
@@ -34,12 +34,7 @@ public class CrearResultadoPanel extends JPanel {
         JButton btnGuardar = new JButton("Guardar");
         btnGuardar.setBackground(new Color(144, 238, 144)); // Verde claro
         btnGuardar.setAlignmentX(Component.CENTER_ALIGNMENT);
-        btnGuardar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                guardarResultado();
-            }
-        });
+        btnGuardar.addActionListener(e -> guardarResultado());
 
         formPanel.add(Box.createVerticalStrut(20)); // Añade un espacio vertical antes del botón
         formPanel.add(btnGuardar);
@@ -55,16 +50,13 @@ public class CrearResultadoPanel extends JPanel {
         row.add(label, BorderLayout.WEST);
         row.add(textField, BorderLayout.CENTER);
         panel.add(row);
-        panel.add(Box.createVerticalStrut(20)); // Añade un espacio vertical entre las filas
+        panel.add(Box.createVerticalStrut(20));
     }
 
     private void guardarResultado() {
         String idString = idField.getText();
         String valorString = valorField.getText();
 
-
-
-        // Validaciones básicas
         if (idString.isEmpty() || valorString.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
             return;

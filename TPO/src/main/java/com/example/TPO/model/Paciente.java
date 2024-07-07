@@ -20,4 +20,16 @@ public class Paciente {
     public void agregarPeticion(Peticion nuevaPeticion){
         this.peticiones.add(nuevaPeticion);
     }
+
+    public boolean sePuedeEliminar(){
+        boolean sePuedeEliminar = true;
+        for(Peticion peticion: peticiones){
+            List<Resultado> resultados = peticion.getResultados();
+            if (!resultados.isEmpty()) {
+                sePuedeEliminar = false;
+                break;
+            }
+        }
+        return sePuedeEliminar;
+    }
 }

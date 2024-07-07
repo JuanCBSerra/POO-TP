@@ -73,7 +73,7 @@ public class UsuarioController {
         }
     }
 
-    public boolean modificarUsuario(String username, String nombre, String email, String domicilio, String dni, Date fecNac, String rol) {
+    public void modificarUsuario(String username, String nombre, String email, String domicilio, String dni, Date fecNac, String rol) {
         Optional<Usuario> usuarioOpt = buscarUsuarioPorDni(dni);
         if (usuarioOpt.isPresent()) {
             Usuario usuario = usuarioOpt.get();
@@ -98,9 +98,7 @@ public class UsuarioController {
 
             eliminarUsuarioDeBD(dni);
             guardarUsuarioEnBD(usuario);
-            return true;
         }
-        return false;
     }
 
     public List<Usuario> obtenerTodosLosUsuarios() {

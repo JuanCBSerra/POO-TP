@@ -63,13 +63,10 @@ public class PacienteController {
     }
 
     public boolean eliminarPaciente(String dni) {
-        Optional<Paciente> paciente = buscarPacientePorDni(dni);
-        if (paciente.isPresent()) {
-            pacientes.remove(paciente.get());
-            return true;
-        } else {
-            return false;
-        }
+        return buscarPacientePorDni(dni)
+                .filter(Paciente::sePuedeEliminar)
+                .map(pacientes::remove)
+                .orElse(false);
     }
 
     public void modificarPaciente(String dni, String nombre, String domicilio, String email, String sexo, int edad) {
