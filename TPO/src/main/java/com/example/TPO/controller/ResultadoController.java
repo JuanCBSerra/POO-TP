@@ -1,5 +1,6 @@
 package com.example.TPO.controller;
 
+import com.example.TPO.DTO.ResultadoDTO;
 import com.example.TPO.model.Resultado;
 
 import java.util.ArrayList;
@@ -41,10 +42,15 @@ public class ResultadoController {
         return false;
     }
 
-    public Optional<Resultado> buscarResultadoPorId(String id) {
+    protected Optional<Resultado> buscarResultadoPorId(String id) {
         return resultados.stream()
                 .filter(resultado -> resultado.getId().equals(id))
                 .findFirst();
+    }
+
+    public Optional<ResultadoDTO> getResultado(String id) {
+        Optional<Resultado> resultado = buscarResultadoPorId(id);
+        return resultado.map(ResultadoDTO::new);
     }
 
 }

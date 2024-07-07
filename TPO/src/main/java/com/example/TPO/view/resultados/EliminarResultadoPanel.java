@@ -1,5 +1,6 @@
 package com.example.TPO.view.resultados;
 
+import com.example.TPO.DTO.ResultadoDTO;
 import com.example.TPO.controller.ResultadoController;
 import com.example.TPO.model.Resultado;
 
@@ -73,7 +74,7 @@ public class EliminarResultadoPanel extends JPanel {
     private void buscarResultado() {
         String id = idBuscarField.getText();
 
-        Optional<Resultado> resultadoBuscado = resultadoController.buscarResultadoPorId(id);
+        Optional<ResultadoDTO> resultadoBuscado = resultadoController.getResultado(id);
 
         if(resultadoBuscado.isPresent()){
             idLabel.setText(id);

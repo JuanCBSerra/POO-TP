@@ -1,5 +1,6 @@
 package com.example.TPO.view.resultados;
 
+import com.example.TPO.DTO.ResultadoDTO;
 import com.example.TPO.model.Resultado;
 import com.example.TPO.controller.ResultadoController;
 
@@ -66,7 +67,7 @@ public class ModificarResultadoPanel extends JPanel {
 
         // Implementación simulada para buscar el paciente y cargar datos estáticos
 
-        Optional<Resultado> resultadoBusqueda = resultadoController.buscarResultadoPorId(id);
+        Optional<ResultadoDTO> resultadoBusqueda = resultadoController.getResultado(id);
 
 
         if (resultadoBusqueda.isPresent()) {
