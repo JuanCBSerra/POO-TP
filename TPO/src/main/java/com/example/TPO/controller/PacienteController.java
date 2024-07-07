@@ -1,5 +1,6 @@
 package com.example.TPO.controller;
 
+import com.example.TPO.DTO.PacienteDTO;
 import com.example.TPO.model.Paciente;
 
 import java.util.ArrayList;
@@ -35,15 +36,21 @@ public class PacienteController {
         pacientes.add(nuevoPaciente);
     }
 
-    public Optional<Paciente> buscarPacientePorDni(String dni) {
+    protected Optional<Paciente> buscarPacientePorDni(String dni) {
         return pacientes.stream()
                 .filter(p -> p.getDni().equals(dni))
                 .findFirst();
     }
 
-//    public boolean sePuedeEliminarPaciente(Paciente paciente) {
-//        return peticionController.obtenerPeticionesPorPaciente(paciente).isEmpty();
-//    }
+    public Optional<PacienteDTO> getPaciente(String dni) {
+        Optional<Paciente> paciente = buscarPacientePorDni(dni);
+        if(paciente.isPresent()) {
+            PacienteDTO pacienteDTO = new PacienteDTO(paciente.get());
+            return Optional.of(pacienteDTO);
+        }else {
+            return Optional.empty();
+        }
+    }
 
     public boolean eliminarPaciente(String dni) {
         Optional<Paciente> paciente = buscarPacientePorDni(dni);
@@ -55,7 +62,7 @@ public class PacienteController {
         }
     }
 
-    public boolean modificarPaciente(String dni, String nombre, String domicilio, String email, String sexo, int edad) {
+    public void modificarPaciente(String dni, String nombre, String domicilio, String email, String sexo, int edad) {
         Optional<Paciente> pacienteOpt = buscarPacientePorDni(dni);
         if (pacienteOpt.isPresent()) {
             Paciente paciente = pacienteOpt.get();
@@ -74,12 +81,7 @@ public class PacienteController {
             if (edad >= 0) {
                 paciente.setEdad(edad);
             }
-            return true;
         }
-        return false;
     }
 
-    public List<Paciente> obtenerTodosLosPacientes() {
-        return pacientes;
-    }
 }

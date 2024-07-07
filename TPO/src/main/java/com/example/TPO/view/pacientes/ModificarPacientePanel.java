@@ -1,5 +1,6 @@
 package com.example.TPO.view.pacientes;
 
+import com.example.TPO.DTO.PacienteDTO;
 import com.example.TPO.Utils;
 import com.example.TPO.controller.PacienteController;
 import com.example.TPO.model.Paciente;
@@ -84,10 +85,10 @@ public class ModificarPacientePanel extends JPanel {
 
     private void buscarPaciente() {
         String dni = dniBuscarField.getText();
-        Optional<Paciente> paciente = pacienteController.buscarPacientePorDni(dni);
+        Optional<PacienteDTO> paciente = pacienteController.getPaciente(dni);
 
         if (paciente.isPresent()) {
-            Paciente p = paciente.get();
+            PacienteDTO p = paciente.get();
             nombreField.setText(p.getNombre());
             domicilioField.setText(p.getDomicilio());
             emailField.setText(p.getEmail());
@@ -116,7 +117,6 @@ public class ModificarPacientePanel extends JPanel {
         }
 
         pacienteController.modificarPaciente(dni, nombre, domicilio, email, sexo, edad);
-
         JOptionPane.showMessageDialog(this, "Paciente modificado con éxito.");
         limpiarCampos();
         habilitarFormulario(false);

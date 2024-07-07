@@ -1,7 +1,8 @@
 package com.example.TPO.view.peticiones;
 
+import com.example.TPO.DTO.PeticionDTO;
+import com.example.TPO.DTO.PracticaDTO;
 import com.example.TPO.Utils;
-import com.example.TPO.controller.PacienteController;
 import com.example.TPO.controller.PeticionController;
 import com.example.TPO.controller.PracticaController;
 import com.example.TPO.model.*;
@@ -21,6 +22,8 @@ public class ModificarPeticionPanel extends JPanel {
     private final JTextField practicaAsociadaField;
     private final JTextField fechaEntregaField;
     private final JButton btnGuardar;
+
+    private static final PeticionController peticionController = PeticionController.getInstance();
 
     public ModificarPeticionPanel() {
         setLayout(new BorderLayout());
@@ -87,13 +90,13 @@ public class ModificarPeticionPanel extends JPanel {
 
     private void buscarPeticion() {
         try {
-            Optional<Peticion> peticionOptional = PeticionController.getInstance().buscarPeticionPorId(idPeticionField.getText());
+            Optional<PeticionDTO> peticionOptional = peticionController.getPeticion(idPeticionField.getText());
 
             if (peticionOptional.isPresent()) {
-                Peticion peticion = peticionOptional.get();
+                PeticionDTO peticion = peticionOptional.get();
                 obraSocialField.setText(peticion.getObraSocial());
 
-                List<Practica> practicas = peticion.getPracticas();
+                List<PracticaDTO> practicas = peticion.getPracticas();
                 StringBuilder practicasString = new StringBuilder();
                 for (int i = 0; i < practicas.size(); i++) {
                     practicasString.append(practicas.get(i));
@@ -126,32 +129,9 @@ public class ModificarPeticionPanel extends JPanel {
             JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos correctamente.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-
-        List<Practica> practicas = new ArrayList<>();
         String[] practicasArray = practicaAsociada.split(",");
-        for (String practicaCodigo : practicasArray) {
-            practicaCodigo = practicaCodigo.trim();
-            if (!practicaCodigo.isEmpty()) {
-                Optional<Practica> practicaOpt = PracticaController.getInstance().buscarPracticaPorCodigo(Integer.parseInt(practicaCodigo));
-                if (practicaOpt.isPresent()) {
-                    practicas.add(practicaOpt.get());
-                } else {
-                    JOptionPane.showMessageDialog(this, "Práctica con código " + practicaCodigo + " inexistente.", "Error", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-            }
-        }
 
-        Paciente paciente = PeticionController.getInstance().buscarPeticionPorId(id).get().getPaciente();
-        Date fechaCarga = PeticionController.getInstance().buscarPeticionPorId(id).get().getFechaCarga();
-
-        Resultado resultado = new Resultado();
-        ArrayList<Resultado> resultados = new ArrayList<>();
-        resultados.add(resultado);
-
-        Peticion peticion = new Peticion(id, paciente, obraSocial, fechaCarga, Utils.parseDate(fechaEntrega), practicas, resultados);
-
-        PeticionController.getInstance().modificarPeticion(id, peticion);
+        PeticionController.getInstance().modificarPeticion(id, obraSocial, Utils.parseDate(fechaEntrega), practicasArray);
 
         JOptionPane.showMessageDialog(this, "Petición modificada con éxito.");
         limpiarCampos();

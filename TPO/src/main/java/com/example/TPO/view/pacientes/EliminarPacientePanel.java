@@ -1,18 +1,15 @@
 package com.example.TPO.view.pacientes;
 
+import com.example.TPO.DTO.PacienteDTO;
 import com.example.TPO.controller.PacienteController;
-import com.example.TPO.model.Paciente;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Optional;
 
 public class EliminarPacientePanel extends JPanel {
-    private static final long serialVersionUID = 1L;
+
     private final JTextField dniBuscarField;
-    private JButton btnBuscar;
     private final JButton btnEliminar;
     private final JLabel nombreLabel;
 
@@ -29,7 +26,7 @@ public class EliminarPacientePanel extends JPanel {
         buscarPanel.add(new JLabel("DNI:"));
         dniBuscarField = new JTextField(20);
         buscarPanel.add(dniBuscarField);
-        btnBuscar = new JButton("Buscar");
+        JButton btnBuscar = new JButton("Buscar");
         btnBuscar.setBackground(new Color(144, 202, 249));
         buscarPanel.add(btnBuscar);
 
@@ -50,25 +47,15 @@ public class EliminarPacientePanel extends JPanel {
 
         btnEliminar.setEnabled(false);
 
-        btnBuscar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                buscarPaciente();
-            }
-        });
+        btnBuscar.addActionListener(e -> buscarPaciente());
 
-        btnEliminar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                eliminarPaciente();
-            }
-        });
+        btnEliminar.addActionListener(e -> eliminarPaciente());
     }
 
     private void buscarPaciente() {
         String dni = dniBuscarField.getText();
 
-        Optional<Paciente> paciente = pacienteController.buscarPacientePorDni(dni);
+        Optional<PacienteDTO> paciente = pacienteController.getPaciente(dni);
 
         if (paciente.isPresent()) {
             nombreLabel.setText(paciente.get().getNombre());

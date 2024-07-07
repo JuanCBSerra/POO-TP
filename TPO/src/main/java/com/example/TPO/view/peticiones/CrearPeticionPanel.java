@@ -1,13 +1,10 @@
 package com.example.TPO.view.peticiones;
 
+import com.example.TPO.DTO.PacienteDTO;
 import com.example.TPO.Utils;
 import com.example.TPO.controller.PacienteController;
 import com.example.TPO.controller.PeticionController;
 import com.example.TPO.controller.PracticaController;
-import com.example.TPO.model.Paciente;
-import com.example.TPO.model.Peticion;
-import com.example.TPO.model.Practica;
-import com.example.TPO.model.Resultado;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,7 +12,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 
 public class CrearPeticionPanel extends JPanel {
@@ -87,34 +83,15 @@ public class CrearPeticionPanel extends JPanel {
 
         Date fechaCarga = Utils.parseDate(fechaCargaString);
         Date fechaEntrega = Utils.parseDate(fechaEntregaString);
-        Optional<Paciente> pacienteOpt = PacienteController.getInstance().buscarPacientePorDni(pacienteString);
+        Optional<PacienteDTO> pacienteOpt = PacienteController.getInstance().getPaciente(pacienteString);
 
         if (pacienteOpt.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Paciente inexistente.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        Paciente paciente = pacienteOpt.get();
-        List<Practica> practicas = new ArrayList<>();
-        ArrayList<Resultado> resultados = new ArrayList<>();
-
-        String[] practicasArray = practicasAsociadasString.split(",");
-        for (String practicaCodigo : practicasArray) {
-            practicaCodigo = practicaCodigo.trim();
-            if (!practicaCodigo.isEmpty()) {
-                Optional<Practica> practicaOpt = PracticaController.getInstance().buscarPracticaPorCodigo(Integer.parseInt(practicaCodigo));
-                if (practicaOpt.isPresent()) {
-                    practicas.add(practicaOpt.get());
-                    resultados.add(new Resultado()); // Añadir un resultado vacío o predeterminado
-                } else {
-                    JOptionPane.showMessageDialog(this, "Práctica con código " + practicaCodigo + " inexistente.", "Error", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-            }
-        }
-
-        Peticion peticion = new Peticion(idPeticionString, paciente, obraSocialString, fechaCarga, fechaEntrega, practicas, resultados);
-        PeticionController.getInstance().agregarPeticion(peticion);
+        String[] codigosPracticas = practicasAsociadasString.split(",");
+        PeticionController.getInstance().agregarPeticion(idPeticionString, obraSocialString, fechaCarga, fechaEntrega, codigosPracticas);
 
         JOptionPane.showMessageDialog(this, "Peticion creada con exito.");
         clearFields();

@@ -1,19 +1,17 @@
 package com.example.TPO.controller;
 
-import com.example.TPO.model.Paciente;
+import com.example.TPO.DTO.PeticionDTO;
 import com.example.TPO.model.Peticion;
+import com.example.TPO.model.Practica;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.*;
 
 public class PeticionController {
     private static PeticionController instance;
     private final List<Peticion> peticiones = new ArrayList<>();
+    private static final PracticaController practicaController = PracticaController.getInstance();
 
-    private PeticionController() {
-    }
+    private PeticionController() {}
 
     public static PeticionController getInstance() {
         if (instance == null) {
@@ -22,42 +20,60 @@ public class PeticionController {
         return instance;
     }
 
-    public void agregarPeticion(Peticion peticion) {
-        peticiones.add(peticion);
+    public void agregarPeticion(String idPeticionString, String obraSocialString, Date fechaCarga, Date fechaEntrega, String[] codigosPracticas) {
+        List<Practica> practicas = obtenerPracticasPorCodigos(codigosPracticas);
+        Peticion nuevaPeticion = new Peticion(
+                idPeticionString,
+                obraSocialString,
+                fechaCarga,
+                fechaEntrega,
+                practicas,
+                new ArrayList<>()
+        );
+        this.peticiones.add(nuevaPeticion);
     }
 
-    public boolean modificarPeticion(String id, Peticion peticionActualizada) {
+    public void modificarPeticion(String id, String obraSocial, Date fechaCalculadaEntrega, String[] codigosPracticas) {
         Optional<Peticion> peticionExistente = buscarPeticionPorId(id);
         if (peticionExistente.isPresent()) {
             Peticion peticion = peticionExistente.get();
-            peticion.setPaciente(peticionActualizada.getPaciente());
-            peticion.setObraSocial(peticionActualizada.getObraSocial());
-            peticion.setFechaCarga(peticionActualizada.getFechaCarga());
-            peticion.setFechaCalculadaEntrega(peticionActualizada.getFechaCalculadaEntrega());
-            peticion.setPracticas(peticionActualizada.getPracticas());
-            return true;
+            if (obraSocial != null) {
+                peticion.setObraSocial(obraSocial);
+            }
+            if (fechaCalculadaEntrega != null) {
+                peticion.setFechaCalculadaEntrega(fechaCalculadaEntrega);
+            }
+            List<Practica> practicas = obtenerPracticasPorCodigos(codigosPracticas);
+            peticion.setPracticas(practicas);
+        } else {
+            throw new IllegalArgumentException("Petición no encontrada: " + id);
         }
-        return false;
     }
 
-    public boolean eliminarPeticion(String id) {
-        return peticiones.removeIf(peticion -> peticion.getId().equals(id));
+    public void eliminarPeticion(String id) {
+        peticiones.removeIf(peticion -> peticion.getId().equals(id));
     }
 
-    public List<Peticion> obtenerPeticionesPorPaciente(Paciente paciente) {
-        return peticiones.stream()
-                .filter(peticion -> peticion.getPaciente().equals(paciente))
-                .collect(Collectors.toList());
-    }
-
-    public Optional<Peticion> buscarPeticionPorId(String id) {
+    protected Optional<Peticion> buscarPeticionPorId(String id) {
         return peticiones.stream()
                 .filter(peticion -> peticion.getId().equals(id))
                 .findFirst();
     }
 
-    public List<Peticion> obtenerTodasLasPeticiones() {
-        return new ArrayList<>(peticiones);
+    public Optional<PeticionDTO> getPeticion(String id) {
+        Optional<Peticion> peticion = buscarPeticionPorId(id);
+        return peticion.map(PeticionDTO::new);
     }
 
+    private List<Practica> obtenerPracticasPorCodigos(String[] codigosPracticas) {
+        List<Practica> practicas = new ArrayList<>();
+        for (String practicaCodigo : codigosPracticas) {
+            practicaCodigo = practicaCodigo.trim();
+            if (!practicaCodigo.isEmpty()) {
+                Optional<Practica> practicaOpt = practicaController.buscarPracticaPorCodigo(Integer.parseInt(practicaCodigo));
+                practicaOpt.ifPresent(practicas::add);
+            }
+        }
+        return practicas;
+    }
 }

@@ -1,22 +1,19 @@
 package com.example.TPO.view.peticiones;
 
+import com.example.TPO.DTO.PeticionDTO;
 import com.example.TPO.controller.PeticionController;
-import com.example.TPO.model.Peticion;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
 import java.util.Optional;
 
 public class EliminarPeticionPanel extends JPanel {
-    private static final long serialVersionUID = 1L;
-    private JTextField idPeticionField;
-    private JButton btnBuscar;
-    private JButton btnEliminar;
-    private JLabel obraSocialLabel;
+    private final JTextField idPeticionField;
+    private final JButton btnEliminar;
+    private final JLabel obraSocialLabel;
+    private static final PeticionController peticionController = PeticionController.getInstance();
 
     public EliminarPeticionPanel() {
         setLayout(new BorderLayout());
@@ -29,7 +26,7 @@ public class EliminarPeticionPanel extends JPanel {
         buscarPanel.add(new JLabel("Ingrese ID Petición:"));
         idPeticionField = new JTextField(20);
         buscarPanel.add(idPeticionField);
-        btnBuscar = new JButton("Buscar");
+        JButton btnBuscar = new JButton("Buscar");
         btnBuscar.setBackground(new Color(144, 202, 249));
         buscarPanel.add(btnBuscar);
 
@@ -69,11 +66,11 @@ public class EliminarPeticionPanel extends JPanel {
     private void buscarPeticion() {
 
         try{
-            Optional<Peticion> peticionOptional = PeticionController.getInstance().buscarPeticionPorId(idPeticionField.getText());
+            Optional<PeticionDTO> peticionOptional = peticionController.getPeticion(idPeticionField.getText());
 
             if(peticionOptional.isPresent()) {
 
-                Peticion peticion = peticionOptional.get();
+                PeticionDTO peticion = peticionOptional.get();
                 obraSocialLabel.setText(peticion.getObraSocial());
                 btnEliminar.setEnabled(true);
             }

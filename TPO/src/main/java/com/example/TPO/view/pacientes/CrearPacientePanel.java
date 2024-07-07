@@ -73,7 +73,6 @@ public class CrearPacientePanel extends JPanel {
         String sexo = sexoField.getText();
         String edadText = edadField.getText();
 
-        // Validaciones básicas
         if (nombre.isEmpty() || domicilio.isEmpty() || dni.isEmpty() || email.isEmpty() || sexo.isEmpty() || edadText.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
             return;

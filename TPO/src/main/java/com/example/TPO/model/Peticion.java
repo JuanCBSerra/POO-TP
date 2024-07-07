@@ -14,7 +14,6 @@ import java.util.List;
 public class Peticion {
 
     private String id;
-    private Paciente paciente;
     private String obraSocial;
     private Date fechaCarga;
     private Date fechaCalculadaEntrega;
