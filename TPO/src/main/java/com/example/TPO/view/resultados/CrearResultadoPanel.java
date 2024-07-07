@@ -3,6 +3,7 @@ package com.example.TPO.view.resultados;
 import com.example.TPO.controller.ResultadoController;
 import com.example.TPO.model.Resultado;
 
+import java.time.LocalDate;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -62,12 +63,8 @@ public class CrearResultadoPanel extends JPanel {
             return;
         }
 
-        Resultado resultado = new Resultado();
-
-        resultado.setId(idString);
-        resultado.setResultado(valorString);
-
-        resultadoController.agregarResultado(resultado);
+        LocalDate fechaActual = LocalDate.now();
+        resultadoController.agregarResultado(idString,valorString,fechaActual);
 
 
         JOptionPane.showMessageDialog(this, "Resultado creado con éxito.");

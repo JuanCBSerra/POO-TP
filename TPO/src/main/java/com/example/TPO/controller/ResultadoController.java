@@ -3,6 +3,7 @@ package com.example.TPO.controller;
 import com.example.TPO.DTO.ResultadoDTO;
 import com.example.TPO.model.Resultado;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -22,21 +23,24 @@ public class ResultadoController {
         return instance;
     }
 
-    public void agregarResultado(Resultado resultado) {
-        resultados.add(resultado);
+    public void agregarResultado(String id,String resultado,LocalDate fecha) {
+        resultados.add(new Resultado(id,
+                resultado,
+                fecha)
+        );
     }
 
     public boolean eliminarResultado(String id) {
         return resultados.removeIf(resultado -> resultado.getId().equals(id));
     }
 
-    public boolean modificarResultado(String id, Resultado resultadoActualizado) {
+    public boolean modificarResultado(String id, String resultadoValue,LocalDate fecha) {
         Optional<Resultado> resultadoExistente = buscarResultadoPorId(id);
 
         if (resultadoExistente.isPresent()) {
             Resultado resultado = resultadoExistente.get();
-            resultado.setId(resultadoActualizado.getId());
-            resultado.setResultado(resultadoActualizado.getResultado());
+            resultado.setId(id);
+            resultado.setResultado(resultadoValue);
             return true;
         }
         return false;

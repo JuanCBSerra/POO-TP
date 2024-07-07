@@ -1,5 +1,6 @@
 package com.example.TPO.view.resultados;
 
+import java.time.LocalDate;
 import com.example.TPO.DTO.ResultadoDTO;
 import com.example.TPO.model.Resultado;
 import com.example.TPO.controller.ResultadoController;
@@ -89,13 +90,9 @@ public class ModificarResultadoPanel extends JPanel {
             return;
         }
 
-        Resultado resultadoActualizado = new Resultado();
+        LocalDate fechaActual = LocalDate.now();
 
-        resultadoActualizado.setId(id);
-        resultadoActualizado.setResultado(valor);
-
-
-        if (!resultadoController.modificarResultado(id, resultadoActualizado)) {
+        if (!resultadoController.modificarResultado(id, valor,fechaActual)) {
             JOptionPane.showMessageDialog(this, "Error actulizando.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
