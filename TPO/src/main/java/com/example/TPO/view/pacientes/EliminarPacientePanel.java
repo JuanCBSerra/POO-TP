@@ -70,13 +70,14 @@ public class EliminarPacientePanel extends JPanel {
     private void eliminarPaciente() {
         String dni = dniBuscarField.getText();
 
-        boolean pacienteEliminado = pacienteController.eliminarPaciente(dni);
-
-        if (pacienteEliminado) {
-            JOptionPane.showMessageDialog(this, "Paciente eliminado con éxito.");
-        } else {
-            JOptionPane.showMessageDialog(this, "No se pudo eliminar al paciente", "Error", JOptionPane.ERROR_MESSAGE);
+        try{
+            pacienteController.eliminarPaciente(dni);
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
+
+        JOptionPane.showMessageDialog(this, "Paciente eliminado con éxito.");
 
         nombreLabel.setText("");
         dniBuscarField.setText("");

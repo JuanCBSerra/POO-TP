@@ -4,13 +4,9 @@ import com.example.TPO.DTO.PeticionDTO;
 import com.example.TPO.DTO.PracticaDTO;
 import com.example.TPO.Utils;
 import com.example.TPO.controller.PeticionController;
-import com.example.TPO.controller.PracticaController;
-import com.example.TPO.model.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
@@ -66,19 +62,9 @@ public class ModificarPeticionPanel extends JPanel {
 
         habilitarFormulario(false);
 
-        btnBuscar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                buscarPeticion();
-            }
-        });
+        btnBuscar.addActionListener(e -> buscarPeticion());
 
-        btnGuardar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                guardarPeticion();
-            }
-        });
+        btnGuardar.addActionListener(e -> guardarPeticion());
     }
 
     private void habilitarFormulario(boolean habilitar) {
@@ -89,33 +75,29 @@ public class ModificarPeticionPanel extends JPanel {
     }
 
     private void buscarPeticion() {
-        try {
-            Optional<PeticionDTO> peticionOptional = peticionController.getPeticion(idPeticionField.getText());
+        Optional<PeticionDTO> peticionOptional = peticionController.getPeticion(idPeticionField.getText());
 
-            if (peticionOptional.isPresent()) {
-                PeticionDTO peticion = peticionOptional.get();
-                obraSocialField.setText(peticion.getObraSocial());
+        if (peticionOptional.isPresent()) {
+            PeticionDTO peticion = peticionOptional.get();
+            obraSocialField.setText(peticion.getObraSocial());
 
-                List<PracticaDTO> practicas = peticion.getPracticas();
-                StringBuilder practicasString = new StringBuilder();
-                for (int i = 0; i < practicas.size(); i++) {
-                    practicasString.append(practicas.get(i).getCodigo());
-                    if (i < practicas.size() - 1) {
-                        practicasString.append(", ");
-                    }
+            List<PracticaDTO> practicas = peticion.getPracticas();
+            StringBuilder practicasString = new StringBuilder();
+            for (int i = 0; i < practicas.size(); i++) {
+                practicasString.append(practicas.get(i).getCodigo());
+                if (i < practicas.size() - 1) {
+                    practicasString.append(", ");
                 }
-                practicaAsociadaField.setText(practicasString.toString());
-
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-                String formattedDate = dateFormat.format(peticion.getFechaCalculadaEntrega());
-                fechaEntregaField.setText(formattedDate);
-                habilitarFormulario(true);
-
-            } else {
-                JOptionPane.showMessageDialog(this, "Petición no encontrada.", "Error", JOptionPane.ERROR_MESSAGE);
             }
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Número de petición inválido.", "Error", JOptionPane.ERROR_MESSAGE);
+            practicaAsociadaField.setText(practicasString.toString());
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+            String formattedDate = dateFormat.format(peticion.getFechaCalculadaEntrega());
+            fechaEntregaField.setText(formattedDate);
+            habilitarFormulario(true);
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Petición no encontrada.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -131,7 +113,11 @@ public class ModificarPeticionPanel extends JPanel {
         }
         String[] practicasArray = practicaAsociada.split(",");
 
-        PeticionController.getInstance().modificarPeticion(id, obraSocial, Utils.parseDate(fechaEntrega), practicasArray);
+        try{
+            peticionController.modificarPeticion(id, obraSocial, Utils.parseDate(fechaEntrega), practicasArray);
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
 
         JOptionPane.showMessageDialog(this, "Petición modificada con éxito.");
         limpiarCampos();

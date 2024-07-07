@@ -5,8 +5,6 @@ import com.example.TPO.controller.PeticionController;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Optional;
 
 public class EliminarPeticionPanel extends JPanel {
@@ -45,52 +43,29 @@ public class EliminarPeticionPanel extends JPanel {
 
         add(infoPanel, BorderLayout.SOUTH);
 
-        // Deshabilitar botón Eliminar hasta que se busque un paciente
         btnEliminar.setEnabled(false);
 
-        btnBuscar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                buscarPeticion();
-            }
-        });
+        btnBuscar.addActionListener(e -> buscarPeticion());
 
-        btnEliminar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                eliminarPeticion();
-            }
-        });
+        btnEliminar.addActionListener(e -> eliminarPeticion());
     }
 
     private void buscarPeticion() {
-
-        try{
-            Optional<PeticionDTO> peticionOptional = peticionController.getPeticion(idPeticionField.getText());
-
-            if(peticionOptional.isPresent()) {
-
-                PeticionDTO peticion = peticionOptional.get();
-                obraSocialLabel.setText(peticion.getObraSocial());
-                btnEliminar.setEnabled(true);
-            }
-            else {
-                JOptionPane.showMessageDialog(this, "Petición no encontrada.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Número de petición inválido.", "Error", JOptionPane.ERROR_MESSAGE);
+        Optional<PeticionDTO> peticionOptional = peticionController.getPeticion(idPeticionField.getText());
+        if(peticionOptional.isPresent()) {
+            PeticionDTO peticion = peticionOptional.get();
+            obraSocialLabel.setText(peticion.getObraSocial());
+            btnEliminar.setEnabled(true);
+        }
+        else {
+            JOptionPane.showMessageDialog(this, "Petición no encontrada.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private void eliminarPeticion() {
-        try {
-            String idPeticion = idPeticionField.getText();
-            PeticionController.getInstance().eliminarPeticion(idPeticion);
-            JOptionPane.showMessageDialog(this, "Petición eliminada con éxito.");
-            btnEliminar.setEnabled(false);
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Número de petición inválido.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
+        String idPeticion = idPeticionField.getText();
+        peticionController.eliminarPeticion(idPeticion);
+        JOptionPane.showMessageDialog(this, "Petición eliminada con éxito.");
+        btnEliminar.setEnabled(false);
     }
 }

@@ -6,8 +6,6 @@ import com.example.TPO.controller.PracticaController;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Optional;
 
 public class EliminarPracticasPanel extends JPanel {
@@ -52,19 +50,9 @@ public class EliminarPracticasPanel extends JPanel {
 
         btnEliminar.setEnabled(false);
 
-        btnBuscar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                buscarPractica();
-            }
-        });
+        btnBuscar.addActionListener(e -> buscarPractica());
 
-        btnEliminar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                eliminarPractica();
-            }
-        });
+        btnEliminar.addActionListener(e -> eliminarPractica());
     }
 
     private void buscarPractica() {
@@ -84,15 +72,11 @@ public class EliminarPracticasPanel extends JPanel {
     }
 
     private void eliminarPractica() {
-        try {
-            int codigo = Integer.parseInt(codigoBuscarField.getText());
-            practicaController.deshabilitarPractica(codigo);
-            JOptionPane.showMessageDialog(this, "Práctica eliminada con éxito.");
-            nombreLabel.setText("");
-            codigoBuscarField.setValue(null);  // Limpiando el campo después de eliminar
-            btnEliminar.setEnabled(false);
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Número de Práctica inválido.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
+        int codigo = Integer.parseInt(codigoBuscarField.getText());
+        practicaController.deshabilitarPractica(codigo);
+        JOptionPane.showMessageDialog(this, "Práctica eliminada con éxito.");
+        nombreLabel.setText("");
+        codigoBuscarField.setValue(null);
+        btnEliminar.setEnabled(false);
     }
 }
