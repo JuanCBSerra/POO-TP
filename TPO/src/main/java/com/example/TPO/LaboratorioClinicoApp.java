@@ -4,6 +4,7 @@ import com.example.TPO.view.pacientes.EliminarPacientePanel;
 import com.example.TPO.view.pacientes.ModificarPacientePanel;
 import com.example.TPO.view.peticiones.CrearPeticionPanel;
 import com.example.TPO.view.peticiones.EliminarPeticionPanel;
+import com.example.TPO.view.peticiones.ListarPeticionPanel;
 import com.example.TPO.view.peticiones.ModificarPeticionPanel;
 import com.example.TPO.view.practicas.CrearPracticasPanel;
 import com.example.TPO.view.practicas.EliminarPracticasPanel;
@@ -151,6 +152,7 @@ public class LaboratorioClinicoApp extends JFrame {
                 JTabbedPane tabbedPane = new JTabbedPane();
                 tabbedPane.addTab("Crear", new CrearPeticionPanel());
                 tabbedPane.addTab("Modificar", new ModificarPeticionPanel());
+                tabbedPane.addTab("Listar", new ListarPeticionPanel());
                 tabbedPane.addTab("Eliminar", new EliminarPeticionPanel());
 
                 // Botón de Volver

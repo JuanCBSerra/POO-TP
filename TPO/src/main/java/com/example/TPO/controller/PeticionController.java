@@ -42,6 +42,10 @@ public class PeticionController {
         this.peticiones.add(nuevaPeticion);
     }
 
+    public List<Peticion> getPeticiones(){
+        return peticiones;
+    }
+
     public void agregarResultado(String idPeticion, String idResultado, String resultado, LocalDate fecha) {
         Resultado nuevoResultado = new Resultado(
                 idResultado,
