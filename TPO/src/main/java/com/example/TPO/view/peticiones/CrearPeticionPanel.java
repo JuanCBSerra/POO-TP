@@ -2,9 +2,11 @@ package com.example.TPO.view.peticiones;
 
 import com.example.TPO.Utils;
 import com.example.TPO.controller.PeticionController;
+import com.example.TPO.controller.PracticaController;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Arrays;
 import java.util.Date;
 
 public class CrearPeticionPanel extends JPanel {
@@ -76,6 +78,14 @@ public class CrearPeticionPanel extends JPanel {
         Date fechaCarga = Utils.parseDate(fechaCargaString);
         Date fechaEntrega = Utils.parseDate(fechaEntregaString);
         String[] codigosPracticas = practicasAsociadasString.split(",");
+
+        for (String codigo : codigosPracticas){
+            int codigoPractica = Integer.parseInt(codigo);
+            if(!PracticaController.getInstance().estaHabilitada(codigoPractica)){
+                JOptionPane.showMessageDialog(this, "La práctica " + codigoPractica + " no está habilitada", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+            }
+        }
 
         try{
             PeticionController.getInstance().agregarPeticion(pacienteString, numeroSucursal, idPeticionString, obraSocialString, fechaCarga, fechaEntrega, codigosPracticas);
