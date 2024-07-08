@@ -42,16 +42,9 @@ public class PeticionController {
         this.peticiones.add(nuevaPeticion);
     }
 
-<<<<<<< HEAD
-    public List<Peticion> getPeticiones(){
-        return peticiones;
-    }
 
-    public void agregarResultado(String idPeticion, String idResultado, String resultado, LocalDate fecha) {
-=======
     public void agregarResultado(String idPeticion, String idResultado, String resultado, LocalDate fecha, int idPractica) {
         Practica practica = practicaController.buscarPracticaPorCodigo(idPractica).orElseThrow(() -> new RuntimeException("Practica no encontrada"));
->>>>>>> 9e77b0db99766b12eff042a5a7bd126e43fa133e
         Resultado nuevoResultado = new Resultado(
                 idResultado,
                 resultado,

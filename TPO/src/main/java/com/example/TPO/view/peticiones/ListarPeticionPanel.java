@@ -34,7 +34,7 @@ public class ListarPeticionPanel extends JPanel {
 
         // Add the scroll pane to this panel
         add(scrollPane, BorderLayout.CENTER);
-        setPeticiones(peticionController.getPeticiones());
+        //setPeticiones(peticionController.getPeticiones());
     }
 
     // Method to add a request to the table

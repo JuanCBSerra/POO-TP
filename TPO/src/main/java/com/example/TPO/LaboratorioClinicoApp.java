@@ -131,18 +131,11 @@ public class LaboratorioClinicoApp extends JFrame {
             JPanel administrarPeticionesPanel = new JPanel();
             administrarPeticionesPanel.setLayout(new BorderLayout());
 
-<<<<<<< HEAD
                 JTabbedPane tabbedPane = new JTabbedPane();
                 tabbedPane.addTab("Crear", new CrearPeticionPanel());
                 tabbedPane.addTab("Modificar", new ModificarPeticionPanel());
                 tabbedPane.addTab("Listar", new ListarPeticionPanel());
                 tabbedPane.addTab("Eliminar", new EliminarPeticionPanel());
-=======
-            JTabbedPane tabbedPane = new JTabbedPane();
-            tabbedPane.addTab("Crear", new CrearPeticionPanel());
-            tabbedPane.addTab("Modificar", new ModificarPeticionPanel());
-            tabbedPane.addTab("Eliminar", new EliminarPeticionPanel());
->>>>>>> 9e77b0db99766b12eff042a5a7bd126e43fa133e
 
             JButton btnVolver = createButton("Volver");
             btnVolver.addActionListener(e1 -> {
