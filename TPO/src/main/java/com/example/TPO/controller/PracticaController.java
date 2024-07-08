@@ -62,11 +62,6 @@ public class PracticaController {
         }
     }
 
-    public boolean estaHabilitada(int codigo) {
-        Optional<Practica> practica = buscarPracticaPorCodigo(codigo);
-        return practica.map(Practica::isHabilitada).orElse(false);
-    }
-
     protected Optional<Practica> buscarPracticaPorCodigo(int codigo) {
         return practicas.stream()
                 .filter(practica -> practica.getCodigo() == codigo)

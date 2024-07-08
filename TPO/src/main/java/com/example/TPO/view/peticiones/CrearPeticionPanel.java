@@ -81,9 +81,9 @@ public class CrearPeticionPanel extends JPanel {
 
         for (String codigo : codigosPracticas){
             int codigoPractica = Integer.parseInt(codigo);
-            if(!PracticaController.getInstance().estaHabilitada(codigoPractica)){
+            if(!PracticaController.getInstance().getPractica(codigoPractica).get().isHabilitada()){
                 JOptionPane.showMessageDialog(this, "La práctica " + codigoPractica + " no está habilitada", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
+                return;
             }
         }
 
