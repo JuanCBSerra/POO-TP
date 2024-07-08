@@ -15,5 +15,16 @@ public class Resultado {
     private String id;
     private String resultado;
     private LocalDate fecha;
+    private Practica practica;
+
+    public String getResultado(){
+        boolean esValorReservado = practica.isValorReservado();
+        if(esValorReservado){
+            return "Retirar por sucursal";
+        }else{
+            return resultado;
+        }
+    }
+
 
 }

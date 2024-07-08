@@ -11,6 +11,7 @@ import com.example.TPO.view.practicas.EliminarPracticasPanel;
 import com.example.TPO.view.practicas.ModificarPracticasPanel;
 import com.example.TPO.view.resultados.CrearResultadoPanel;
 import com.example.TPO.view.resultados.EliminarResultadoPanel;
+import com.example.TPO.view.peticiones.ListarResultadosDePeticionPanel;
 import com.example.TPO.view.resultados.ModificarResultadoPanel;
 import com.example.TPO.view.sucursales.CrearSucursalPanel;
 import com.example.TPO.view.sucursales.EliminarSucursalPanel;
@@ -26,8 +27,6 @@ import java.awt.event.ActionListener;
 
 public class LaboratorioClinicoApp extends JFrame {
 
-    private static final long serialVersionUID = 1L;
-
     public LaboratorioClinicoApp() {
         setTitle("Administración del Laboratorio Clínico");
         setSize(800, 600);
@@ -35,7 +34,7 @@ public class LaboratorioClinicoApp extends JFrame {
         setLocationRelativeTo(null);
 
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(6, 1, 10, 10));
+        panel.setLayout(new GridLayout(7, 1, 10, 10));
 
         JButton btnAdministrarPacientes = createButton("Administrar Pacientes");
         JButton btnAdministrarSucursales = createButton("Administrar Sucursales");
@@ -43,6 +42,7 @@ public class LaboratorioClinicoApp extends JFrame {
         JButton btnAdministrarPeticiones = createButton("Administrar Peticiones");
         JButton btnAdministrarResultados = createButton("Administrar Resultados");
         JButton btnAdministrarUsuarios = createButton("Administrar Usuarios");
+        JButton btnListarPeticionConResulados = createButton("Listar resultados de Peticion");
 
         panel.add(btnAdministrarPacientes);
         panel.add(btnAdministrarSucursales);
@@ -50,188 +50,179 @@ public class LaboratorioClinicoApp extends JFrame {
         panel.add(btnAdministrarPeticiones);
         panel.add(btnAdministrarResultados);
         panel.add(btnAdministrarUsuarios);
+        panel.add(btnListarPeticionConResulados);
 
         add(panel);
 
-        btnAdministrarPacientes.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JPanel administrarPacientesPanel = new JPanel();
-                administrarPacientesPanel.setLayout(new BorderLayout());
+        btnAdministrarPacientes.addActionListener(e -> {
+            JPanel administrarPacientesPanel = new JPanel();
+            administrarPacientesPanel.setLayout(new BorderLayout());
 
-                JTabbedPane tabbedPane = new JTabbedPane();
-                tabbedPane.addTab("Crear", new CrearPacientePanel());
-                tabbedPane.addTab("Modificar", new ModificarPacientePanel());
-                tabbedPane.addTab("Eliminar", new EliminarPacientePanel());
+            JTabbedPane tabbedPane = new JTabbedPane();
+            tabbedPane.addTab("Crear", new CrearPacientePanel());
+            tabbedPane.addTab("Modificar", new ModificarPacientePanel());
+            tabbedPane.addTab("Eliminar", new EliminarPacientePanel());
 
-                // Botón de Volver
-                JButton btnVolver = createButton("Volver");
-                btnVolver.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        mostrarPanel(panel); // Vuelve al panel principal
-                    }
-                });
+            JButton btnVolver = createButton("Volver");
+            btnVolver.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    mostrarPanel(panel);
+                }
+            });
 
-                JPanel panelWithBackButton = new JPanel(new BorderLayout());
-                panelWithBackButton.add(tabbedPane, BorderLayout.CENTER);
-                panelWithBackButton.add(btnVolver, BorderLayout.SOUTH);
+            JPanel panelWithBackButton = new JPanel(new BorderLayout());
+            panelWithBackButton.add(tabbedPane, BorderLayout.CENTER);
+            panelWithBackButton.add(btnVolver, BorderLayout.SOUTH);
 
-                administrarPacientesPanel.add(panelWithBackButton, BorderLayout.CENTER);
+            administrarPacientesPanel.add(panelWithBackButton, BorderLayout.CENTER);
 
-                mostrarPanel(administrarPacientesPanel);
-            }
+            mostrarPanel(administrarPacientesPanel);
         });
 
-        btnAdministrarSucursales.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JPanel administrarSucursalesPanel = new JPanel();
-                administrarSucursalesPanel.setLayout(new BorderLayout());
+        btnAdministrarSucursales.addActionListener(e -> {
+            JPanel administrarSucursalesPanel = new JPanel();
+            administrarSucursalesPanel.setLayout(new BorderLayout());
 
-                JTabbedPane tabbedPane = new JTabbedPane();
-                tabbedPane.addTab("Crear", new CrearSucursalPanel());
-                tabbedPane.addTab("Modificar", new ModificarSucursalPanel());
-                tabbedPane.addTab("Eliminar", new EliminarSucursalPanel());
+            JTabbedPane tabbedPane = new JTabbedPane();
+            tabbedPane.addTab("Crear", new CrearSucursalPanel());
+            tabbedPane.addTab("Modificar", new ModificarSucursalPanel());
+            tabbedPane.addTab("Eliminar", new EliminarSucursalPanel());
 
-                // Botón de Volver
-                JButton btnVolver = createButton("Volver");
-                btnVolver.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        mostrarPanel(panel); // Vuelve al panel principal
-                    }
-                });
+            JButton btnVolver = createButton("Volver");
+            btnVolver.addActionListener(e14 -> {
+                mostrarPanel(panel);
+            });
 
-                JPanel panelWithBackButton = new JPanel(new BorderLayout());
-                panelWithBackButton.add(tabbedPane, BorderLayout.CENTER);
-                panelWithBackButton.add(btnVolver, BorderLayout.SOUTH);
+            JPanel panelWithBackButton = new JPanel(new BorderLayout());
+            panelWithBackButton.add(tabbedPane, BorderLayout.CENTER);
+            panelWithBackButton.add(btnVolver, BorderLayout.SOUTH);
 
-                administrarSucursalesPanel.add(panelWithBackButton, BorderLayout.CENTER);
+            administrarSucursalesPanel.add(panelWithBackButton, BorderLayout.CENTER);
 
-                mostrarPanel(administrarSucursalesPanel);
-            }
+            mostrarPanel(administrarSucursalesPanel);
         });
 
-        btnAdministrarPracticas.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JPanel administrarPracticasPanel = new JPanel();
-                administrarPracticasPanel.setLayout(new BorderLayout());
+        btnAdministrarPracticas.addActionListener(e -> {
+            JPanel administrarPracticasPanel = new JPanel();
+            administrarPracticasPanel.setLayout(new BorderLayout());
 
-                JTabbedPane tabbedPane = new JTabbedPane();
-                tabbedPane.addTab("Crear", new CrearPracticasPanel());
-                tabbedPane.addTab("Modificar", new ModificarPracticasPanel());
-                tabbedPane.addTab("Eliminar", new EliminarPracticasPanel());
+            JTabbedPane tabbedPane = new JTabbedPane();
+            tabbedPane.addTab("Crear", new CrearPracticasPanel());
+            tabbedPane.addTab("Modificar", new ModificarPracticasPanel());
+            tabbedPane.addTab("Eliminar", new EliminarPracticasPanel());
 
-                // Botón de Volver
-                JButton btnVolver = createButton("Volver");
-                btnVolver.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        mostrarPanel(panel); // Vuelve al panel principal
-                    }
-                });
+            // Botón de Volver
+            JButton btnVolver = createButton("Volver");
+            btnVolver.addActionListener(e15 -> {
+                mostrarPanel(panel);
+            });
 
-                JPanel panelWithBackButton = new JPanel(new BorderLayout());
-                panelWithBackButton.add(tabbedPane, BorderLayout.CENTER);
-                panelWithBackButton.add(btnVolver, BorderLayout.SOUTH);
+            JPanel panelWithBackButton = new JPanel(new BorderLayout());
+            panelWithBackButton.add(tabbedPane, BorderLayout.CENTER);
+            panelWithBackButton.add(btnVolver, BorderLayout.SOUTH);
 
-                administrarPracticasPanel.add(panelWithBackButton, BorderLayout.CENTER);
+            administrarPracticasPanel.add(panelWithBackButton, BorderLayout.CENTER);
 
-                mostrarPanel(administrarPracticasPanel);
-            }
+            mostrarPanel(administrarPracticasPanel);
         });
 
-        btnAdministrarPeticiones.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JPanel administrarPeticionesPanel = new JPanel();
-                administrarPeticionesPanel.setLayout(new BorderLayout());
+        btnAdministrarPeticiones.addActionListener(e -> {
+            JPanel administrarPeticionesPanel = new JPanel();
+            administrarPeticionesPanel.setLayout(new BorderLayout());
 
+<<<<<<< HEAD
                 JTabbedPane tabbedPane = new JTabbedPane();
                 tabbedPane.addTab("Crear", new CrearPeticionPanel());
                 tabbedPane.addTab("Modificar", new ModificarPeticionPanel());
                 tabbedPane.addTab("Listar", new ListarPeticionPanel());
                 tabbedPane.addTab("Eliminar", new EliminarPeticionPanel());
+=======
+            JTabbedPane tabbedPane = new JTabbedPane();
+            tabbedPane.addTab("Crear", new CrearPeticionPanel());
+            tabbedPane.addTab("Modificar", new ModificarPeticionPanel());
+            tabbedPane.addTab("Eliminar", new EliminarPeticionPanel());
+>>>>>>> 9e77b0db99766b12eff042a5a7bd126e43fa133e
 
-                // Botón de Volver
-                JButton btnVolver = createButton("Volver");
-                btnVolver.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        mostrarPanel(panel); // Vuelve al panel principal
-                    }
-                });
+            JButton btnVolver = createButton("Volver");
+            btnVolver.addActionListener(e1 -> {
+                mostrarPanel(panel);
+            });
 
-                JPanel panelWithBackButton = new JPanel(new BorderLayout());
-                panelWithBackButton.add(tabbedPane, BorderLayout.CENTER);
-                panelWithBackButton.add(btnVolver, BorderLayout.SOUTH);
+            JPanel panelWithBackButton = new JPanel(new BorderLayout());
+            panelWithBackButton.add(tabbedPane, BorderLayout.CENTER);
+            panelWithBackButton.add(btnVolver, BorderLayout.SOUTH);
 
-                administrarPeticionesPanel.add(panelWithBackButton, BorderLayout.CENTER);
+            administrarPeticionesPanel.add(panelWithBackButton, BorderLayout.CENTER);
 
-                mostrarPanel(administrarPeticionesPanel);
-            }
+            mostrarPanel(administrarPeticionesPanel);
         });
 
-        btnAdministrarResultados.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JPanel administrarResultadosPanel = new JPanel();
-                administrarResultadosPanel.setLayout(new BorderLayout());
+        btnAdministrarResultados.addActionListener(e -> {
+            JPanel administrarResultadosPanel = new JPanel();
+            administrarResultadosPanel.setLayout(new BorderLayout());
 
-                JTabbedPane tabbedPane = new JTabbedPane();
-                tabbedPane.addTab("Crear", new CrearResultadoPanel());
-                tabbedPane.addTab("Modificar", new ModificarResultadoPanel());
-                tabbedPane.addTab("Eliminar", new EliminarResultadoPanel());
+            JTabbedPane tabbedPane = new JTabbedPane();
+            tabbedPane.addTab("Crear", new CrearResultadoPanel());
+            tabbedPane.addTab("Modificar", new ModificarResultadoPanel());
+            tabbedPane.addTab("Eliminar", new EliminarResultadoPanel());
 
-                // Botón de Volver
-                JButton btnVolver = createButton("Volver");
-                btnVolver.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        mostrarPanel(panel); // Vuelve al panel principal
-                    }
-                });
+            JButton btnVolver = createButton("Volver");
+            btnVolver.addActionListener(e12 -> {
+                mostrarPanel(panel);
+            });
 
-                JPanel panelWithBackButton = new JPanel(new BorderLayout());
-                panelWithBackButton.add(tabbedPane, BorderLayout.CENTER);
-                panelWithBackButton.add(btnVolver, BorderLayout.SOUTH);
+            JPanel panelWithBackButton = new JPanel(new BorderLayout());
+            panelWithBackButton.add(tabbedPane, BorderLayout.CENTER);
+            panelWithBackButton.add(btnVolver, BorderLayout.SOUTH);
 
-                administrarResultadosPanel.add(panelWithBackButton, BorderLayout.CENTER);
+            administrarResultadosPanel.add(panelWithBackButton, BorderLayout.CENTER);
 
-                mostrarPanel(administrarResultadosPanel);
-            }
+            mostrarPanel(administrarResultadosPanel);
         });
 
-        btnAdministrarUsuarios.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JPanel administrarUsuariosPanel = new JPanel();
-                administrarUsuariosPanel.setLayout(new BorderLayout());
+        btnAdministrarUsuarios.addActionListener(e -> {
+            JPanel administrarUsuariosPanel = new JPanel();
+            administrarUsuariosPanel.setLayout(new BorderLayout());
 
-                JTabbedPane tabbedPane = new JTabbedPane();
-                tabbedPane.addTab("Crear", new CrearUsuarioPanel());
-                tabbedPane.addTab("Modificar", new ModificarUsuarioPanel());
-                tabbedPane.addTab("Eliminar", new EliminarUsuarioPanel());
+            JTabbedPane tabbedPane = new JTabbedPane();
+            tabbedPane.addTab("Crear", new CrearUsuarioPanel());
+            tabbedPane.addTab("Modificar", new ModificarUsuarioPanel());
+            tabbedPane.addTab("Eliminar", new EliminarUsuarioPanel());
 
-                // Botón de Volver
-                JButton btnVolver = createButton("Volver");
-                btnVolver.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        mostrarPanel(panel); // Vuelve al panel principal
-                    }
-                });
+            JButton btnVolver = createButton("Volver");
+            btnVolver.addActionListener(e13 -> {
+                mostrarPanel(panel); // Vuelve al panel principal
+            });
 
-                JPanel panelWithBackButton = new JPanel(new BorderLayout());
-                panelWithBackButton.add(tabbedPane, BorderLayout.CENTER);
-                panelWithBackButton.add(btnVolver, BorderLayout.SOUTH);
+            JPanel panelWithBackButton = new JPanel(new BorderLayout());
+            panelWithBackButton.add(tabbedPane, BorderLayout.CENTER);
+            panelWithBackButton.add(btnVolver, BorderLayout.SOUTH);
 
-                administrarUsuariosPanel.add(panelWithBackButton, BorderLayout.CENTER);
+            administrarUsuariosPanel.add(panelWithBackButton, BorderLayout.CENTER);
 
-                mostrarPanel(administrarUsuariosPanel);
-            }
+            mostrarPanel(administrarUsuariosPanel);
+        });
+
+        btnListarPeticionConResulados.addActionListener(e -> {
+            JPanel listarPeticionConResultadosPanel = new JPanel();
+            listarPeticionConResultadosPanel.setLayout(new BorderLayout());
+
+            JTabbedPane tabbedPane = new JTabbedPane();
+            tabbedPane.addTab("Listar Resultados", new ListarResultadosDePeticionPanel());
+
+            JButton btnVolver = createButton("Volver");
+            btnVolver.addActionListener(e13 -> {
+                mostrarPanel(panel);
+            });
+
+            JPanel panelWithBackButton = new JPanel(new BorderLayout());
+            panelWithBackButton.add(tabbedPane, BorderLayout.CENTER);
+            panelWithBackButton.add(btnVolver, BorderLayout.SOUTH);
+
+            listarPeticionConResultadosPanel.add(panelWithBackButton, BorderLayout.CENTER);
+
+            mostrarPanel(listarPeticionConResultadosPanel);
         });
     }
 
