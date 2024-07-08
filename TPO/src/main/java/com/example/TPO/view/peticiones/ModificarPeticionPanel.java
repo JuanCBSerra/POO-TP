@@ -4,6 +4,7 @@ import com.example.TPO.DTO.PeticionDTO;
 import com.example.TPO.DTO.PracticaDTO;
 import com.example.TPO.Utils;
 import com.example.TPO.controller.PeticionController;
+import com.toedter.calendar.JDateChooser;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,7 +17,7 @@ public class ModificarPeticionPanel extends JPanel {
     private final JTextField idPeticionField;
     private final JTextField obraSocialField;
     private final JTextField practicaAsociadaField;
-    private final JTextField fechaEntregaField;
+    private final JDateChooser fechaEntregaChooser;
     private final JButton btnGuardar;
 
     private static final PeticionController peticionController = PeticionController.getInstance();
@@ -51,8 +52,8 @@ public class ModificarPeticionPanel extends JPanel {
         formPanel.add(practicaAsociadaField);
 
         formPanel.add(new JLabel("Fecha Estimada de Entrega:"));
-        fechaEntregaField = new JTextField();
-        formPanel.add(fechaEntregaField);
+        fechaEntregaChooser = new JDateChooser();
+        formPanel.add(fechaEntregaChooser);
 
         btnGuardar = new JButton("Guardar");
         btnGuardar.setBackground(new Color(144, 238, 144));
@@ -70,7 +71,7 @@ public class ModificarPeticionPanel extends JPanel {
     private void habilitarFormulario(boolean habilitar) {
         obraSocialField.setEnabled(habilitar);
         practicaAsociadaField.setEnabled(habilitar);
-        fechaEntregaField.setEnabled(habilitar);
+        fechaEntregaChooser.setEnabled(habilitar);
         btnGuardar.setEnabled(habilitar);
     }
 
@@ -91,9 +92,7 @@ public class ModificarPeticionPanel extends JPanel {
             }
             practicaAsociadaField.setText(practicasString.toString());
 
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-            String formattedDate = dateFormat.format(peticion.getFechaCalculadaEntrega());
-            fechaEntregaField.setText(formattedDate);
+            fechaEntregaChooser.setDate(peticion.getFechaCalculadaEntrega());
             habilitarFormulario(true);
 
         } else {
@@ -105,16 +104,16 @@ public class ModificarPeticionPanel extends JPanel {
         String id = idPeticionField.getText();
         String obraSocial = obraSocialField.getText();
         String practicaAsociada = practicaAsociadaField.getText();
-        String fechaEntrega = fechaEntregaField.getText();
+        Date fechaEntrega = fechaEntregaChooser.getDate();
 
-        if (id.isEmpty() || obraSocial.isEmpty() || practicaAsociada.isEmpty() || fechaEntrega.isEmpty()) {
+        if (id.isEmpty() || obraSocial.isEmpty() || practicaAsociada.isEmpty() || fechaEntrega == null){
             JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos correctamente.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
         String[] practicasArray = practicaAsociada.split(",");
 
         try{
-            peticionController.modificarPeticion(id, obraSocial, Utils.parseDate(fechaEntrega), practicasArray);
+            peticionController.modificarPeticion(id, obraSocial, fechaEntrega, practicasArray);
         }catch(Exception e){
             JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -127,6 +126,6 @@ public class ModificarPeticionPanel extends JPanel {
     private void limpiarCampos() {
         obraSocialField.setText("");
         practicaAsociadaField.setText("");
-        fechaEntregaField.setText("");
+        fechaEntregaChooser.setDate(null);
     }
 }

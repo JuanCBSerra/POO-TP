@@ -3,12 +3,14 @@ package com.example.TPO.view.usuarios;
 import com.example.TPO.Utils;
 import com.example.TPO.controller.UsuarioController;
 import com.example.TPO.model.Rol;
+import com.toedter.calendar.JDateChooser;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.Serial;
+import java.util.Date;
 
 public class CrearUsuarioPanel extends JPanel {
     @Serial
@@ -19,7 +21,7 @@ public class CrearUsuarioPanel extends JPanel {
     private final JTextField nombreField;
     private final JTextField domicilioField;
     private final JTextField dniField;
-    private final JTextField fecNacField;
+    private final JDateChooser fechaNacimientoChooser;
     private final JComboBox<Rol> rolComboBox;
 
     private final UsuarioController usuarioController = UsuarioController.getInstance();
@@ -41,7 +43,7 @@ public class CrearUsuarioPanel extends JPanel {
         addFormRow(formPanel, "Contraseña:", passwordField = new JPasswordField(20));
         addFormRow(formPanel, "Domicilio:", domicilioField = new JTextField(20));
         addFormRow(formPanel, "DNI:", dniField = new JTextField(20));
-        addFormRow(formPanel, "Fecha Nacimiento (YYYY-MM-DD):", fecNacField = new JTextField(20));
+        addFormRow(formPanel, "Fecha de nacimiento: ", fechaNacimientoChooser = new JDateChooser());
 
         rolComboBox = new JComboBox<>(Rol.values());
         addFormRow(formPanel, "Rol:", rolComboBox);
@@ -79,7 +81,7 @@ public class CrearUsuarioPanel extends JPanel {
         String password = passwordField.getText();
         String domicilio = domicilioField.getText();
         String dni = dniField.getText();
-        String fecNac =fecNacField.getText();
+        Date fecNac =fechaNacimientoChooser.getDate();
 
         if (rolComboBox == null) {
             JOptionPane.showMessageDialog(this, "Error: el campo de rol no está inicializado correctamente.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -88,12 +90,12 @@ public class CrearUsuarioPanel extends JPanel {
 
         Rol rol = (Rol) rolComboBox.getSelectedItem();
 
-        if (nombre.isEmpty() || username.isEmpty() || dni.isEmpty() || password.isEmpty() || domicilio.isEmpty() || correo.isEmpty() || fecNac.isEmpty()) {
+        if (nombre.isEmpty() || username.isEmpty() || dni.isEmpty() || password.isEmpty() || domicilio.isEmpty() || correo.isEmpty() || fecNac == null) {
             JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        usuarioController.agregarUsuario(username, nombre, correo, password, domicilio, dni, Utils.parseDate(fecNac), rol);
+        usuarioController.agregarUsuario(username, nombre, correo, password, domicilio, dni, fecNac, rol);
 
         JOptionPane.showMessageDialog(this, "Usuario creado con éxito.");
     }

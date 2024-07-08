@@ -4,6 +4,7 @@ import com.example.TPO.DTO.UsuarioDTO;
 import com.example.TPO.Utils;
 import com.example.TPO.controller.UsuarioController;
 import com.example.TPO.model.Rol;
+import com.toedter.calendar.JDateChooser;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,7 +18,7 @@ public class ModificarUsuarioPanel extends JPanel {
     private final JTextField nombreField;
     private final JTextField emailField;
     private final JTextField domicilioField;
-    private final JTextField fecNacField;
+    private final JDateChooser fechaNacimientoChooser;
     private final JComboBox<Rol> rolComboBox;
     private final JButton btnGuardar;
 
@@ -60,8 +61,8 @@ public class ModificarUsuarioPanel extends JPanel {
         formPanel.add(domicilioField);
 
         formPanel.add(new JLabel("Fecha de Nacimiento:"));
-        fecNacField = Utils.createDateFormattedField();
-        formPanel.add(fecNacField);
+        fechaNacimientoChooser = new JDateChooser();
+        formPanel.add(fechaNacimientoChooser);
 
         formPanel.add(new JLabel("Rol:"));
         rolComboBox = new JComboBox<>(Rol.values());
@@ -82,7 +83,7 @@ public class ModificarUsuarioPanel extends JPanel {
     private void habilitarFormulario(boolean habilitar) {
         Component[] components = {
                 usernameField, nombreField, emailField,
-                domicilioField, fecNacField, rolComboBox, btnGuardar
+                domicilioField, fechaNacimientoChooser, rolComboBox, btnGuardar
         };
         for (Component component : components) {
             component.setEnabled(habilitar);
@@ -99,7 +100,7 @@ public class ModificarUsuarioPanel extends JPanel {
             nombreField.setText(u.getNombre());
             emailField.setText(u.getEmail());
             domicilioField.setText(u.getDomicilio());
-            fecNacField.setText(Utils.formatDate(u.getFechaNacimiento()));
+            fechaNacimientoChooser.setDate(u.getFechaNacimiento());
             rolComboBox.setSelectedItem(u.getRol());
 
             habilitarFormulario(true);
@@ -116,7 +117,7 @@ public class ModificarUsuarioPanel extends JPanel {
         String nombre = nombreField.getText();
         String email = emailField.getText();
         String domicilio = domicilioField.getText();
-        Date fecNac = Utils.parseDate(fecNacField.getText());
+        Date fecNac = fechaNacimientoChooser.getDate();
         Rol rol = (Rol) rolComboBox.getSelectedItem();
 
         if (username.isEmpty() || nombre.isEmpty() || email.isEmpty() || domicilio.isEmpty() || fecNac == null) {
@@ -137,7 +138,7 @@ public class ModificarUsuarioPanel extends JPanel {
         emailField.setText("");
         domicilioField.setText("");
         dniBuscarField.setText("");
-        fecNacField.setText("");
+        fechaNacimientoChooser.setDate(null);
         rolComboBox.setSelectedIndex(0);
     }
 }
