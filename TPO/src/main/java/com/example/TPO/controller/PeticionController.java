@@ -42,11 +42,13 @@ public class PeticionController {
         this.peticiones.add(nuevaPeticion);
     }
 
-    public void agregarResultado(String idPeticion, String idResultado, String resultado, LocalDate fecha) {
+    public void agregarResultado(String idPeticion, String idResultado, String resultado, LocalDate fecha, int idPractica) {
+        Practica practica = practicaController.buscarPracticaPorCodigo(idPractica).orElseThrow(() -> new RuntimeException("Practica no encontrada"));
         Resultado nuevoResultado = new Resultado(
                 idResultado,
                 resultado,
-                fecha
+                fecha,
+                practica
         );
         Peticion peticion = buscarPeticionPorId(idPeticion).orElseThrow(() -> new RuntimeException("No existe la peticion"));
         peticion.agregarResultado(nuevoResultado);

@@ -1,5 +1,6 @@
 package com.example.TPO.view.resultados;
 
+import com.example.TPO.Utils;
 import com.example.TPO.controller.PeticionController;
 
 import java.time.LocalDate;
@@ -11,6 +12,7 @@ public class CrearResultadoPanel extends JPanel {
     private final JTextField idField;
     private final JTextField valorField;
     private final JTextField numeroPeticionField;
+    private final JFormattedTextField idPracticaField;
 
     private final PeticionController peticionController = PeticionController.getInstance();
 
@@ -28,6 +30,7 @@ public class CrearResultadoPanel extends JPanel {
         addFormRow(formPanel, "ID:", idField = new JTextField(20));
         addFormRow(formPanel, "Valor:", valorField = new JTextField(20));
         addFormRow(formPanel, "Numero Peticion:", numeroPeticionField = new JTextField(20));
+        addFormRow(formPanel, "Id Practica asociada:", idPracticaField = Utils.createFormattedTextField());
 
         JButton btnGuardar = new JButton("Guardar");
         btnGuardar.setBackground(new Color(144, 238, 144)); // Verde claro
@@ -55,15 +58,16 @@ public class CrearResultadoPanel extends JPanel {
         String idString = idField.getText();
         String valorString = valorField.getText();
         String idPeticionString = numeroPeticionField.getText();
+        String idPracticaString = idPracticaField.getText();
 
-        if (idString.isEmpty() || valorString.isEmpty() || idPeticionString.isEmpty()) {
+        if (idString.isEmpty() || valorString.isEmpty() || idPeticionString.isEmpty() || idPracticaString.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-
+        int idPractica = Integer.parseInt(idPracticaString);
         LocalDate fechaActual = LocalDate.now();
         try{
-            peticionController.agregarResultado(idPeticionString,idString,valorString,fechaActual);
+            peticionController.agregarResultado(idPeticionString,idString,valorString,fechaActual, idPractica);
         }catch(Exception e){
             JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             return;

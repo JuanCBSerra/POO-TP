@@ -1,7 +1,6 @@
 package com.example.TPO.controller;
 
 import com.example.TPO.DTO.SucursalDTO;
-import com.example.TPO.model.Paciente;
 import com.example.TPO.model.Peticion;
 import com.example.TPO.model.Sucursal;
 import com.example.TPO.model.Usuario;

@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,7 +19,7 @@ public class PeticionDTO {
     private Date fechaCarga;
     private Date fechaCalculadaEntrega;
     private List<PracticaDTO> practicas;
-    private ArrayList<ResultadoDTO> resultados;
+    private List<ResultadoDTO> resultados;
 
     public PeticionDTO(Peticion peticion) {
         this.id = peticion.getId();
@@ -28,5 +27,6 @@ public class PeticionDTO {
         this.fechaCarga = peticion.getFechaCarga();
         this.fechaCalculadaEntrega = peticion.getFechaCalculadaEntrega();
         this.practicas = peticion.getPracticas().stream().map(PracticaDTO::new).collect(Collectors.toList());
+        this.resultados = peticion.getResultados().stream().map(ResultadoDTO::new).collect(Collectors.toList());
     }
 }
