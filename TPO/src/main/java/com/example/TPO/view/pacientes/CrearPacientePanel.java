@@ -78,7 +78,37 @@ public class CrearPacientePanel extends JPanel {
             return;
         }
 
-        int edad = Integer.parseInt(edadText);
+        // Validar que el DNI tenga una longitud de 8 o 9 caracteres
+
+        if (dni.length() < 8 || dni.length() > 9) {
+            JOptionPane.showMessageDialog(this, "El DNI debe tener una longitud de 8 o 9 caracteres.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Validar que el nombre solo contenga letras
+
+        if (!nombre.matches("[a-zA-Z\\s]+")) {
+            JOptionPane.showMessageDialog(this, "El nombre solo debe contener letras y espacios.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Validar que el sexo sea 'M' o 'F'
+
+        if (!sexo.equalsIgnoreCase("M") && !sexo.equalsIgnoreCase("F")) {
+            JOptionPane.showMessageDialog(this, "El sexo debe ser 'M' o 'F'.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Validar que la edad solo contenga números
+
+        int edad;
+
+        try {
+            edad = Integer.parseInt(edadText);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "La edad debe ser un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
         pacienteController.agregarPaciente(
                 dni,
