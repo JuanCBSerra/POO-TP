@@ -27,5 +27,6 @@ public class UsuarioDTO {
         this.domicilio = usuario.getDomicilio();
         this.dni = usuario.getDni();
         this.rol = usuario.getRol();
+        this.fechaNacimiento = usuario.getFechaNacimiento();
     }
 }

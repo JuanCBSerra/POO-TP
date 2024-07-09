@@ -114,6 +114,20 @@ public class ModificarPacientePanel extends JPanel {
             return;
         }
 
+        // Validar que el nombre solo contenga letras
+
+        if (!nombre.matches("[a-zA-Z\\s]+")) {
+            JOptionPane.showMessageDialog(this, "El nombre solo debe contener letras y espacios.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Validar que el sexo sea 'M' o 'F'
+
+        if (!sexo.equalsIgnoreCase("M") && !sexo.equalsIgnoreCase("F")) {
+            JOptionPane.showMessageDialog(this, "El sexo debe ser 'M' o 'F'.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         pacienteController.modificarPaciente(dni, nombre, domicilio, email, sexo, edad);
         JOptionPane.showMessageDialog(this, "Paciente modificado con éxito.");
         limpiarCampos();

@@ -3,6 +3,7 @@ package com.example.TPO.view.peticiones;
 import com.example.TPO.Utils;
 import com.example.TPO.controller.PeticionController;
 import com.example.TPO.controller.PracticaController;
+import com.toedter.calendar.JDateChooser;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,8 +15,8 @@ public class CrearPeticionPanel extends JPanel {
     private final JTextField idPeticionField;
     private final JTextField pacienteField;
     private final JTextField obraSocialField;
-    private final JTextField fechaCargaField;
-    private final JTextField fechaEntregaField;
+    private final JDateChooser fechaCargaChooser;
+    private final JDateChooser fechaEntregaChooser;
     private final JFormattedTextField numeroSucursalField;
     private final JTextArea practicasAsociadasArea;
 
@@ -34,8 +35,8 @@ public class CrearPeticionPanel extends JPanel {
         addFormRow(formPanel, "DNI paciente: ", pacienteField = new JTextField(20));
         addFormRow(formPanel, "Numero sucursal: ", numeroSucursalField = Utils.createFormattedTextField());
         addFormRow(formPanel, "Obra social:", obraSocialField = new JTextField(20));
-        addFormRow(formPanel, "Fecha de carga: (YYYY-MM-DD)", fechaCargaField = new JTextField(20));
-        addFormRow(formPanel, "Fecha estimada de entrega: (YYYY-MM-DD)", fechaEntregaField = new JTextField(20));
+        addFormRow(formPanel, "Fecha de carga: ", fechaCargaChooser = new JDateChooser());
+        addFormRow(formPanel, "Fecha de entrega: ", fechaEntregaChooser = new JDateChooser());
         addFormRow(formPanel, "IDs prácticas asociadas: (separadas por comas)", practicasAsociadasArea = new JTextArea(5, 20));
 
         JButton btnGuardar = new JButton("Guardar");
@@ -64,31 +65,29 @@ public class CrearPeticionPanel extends JPanel {
         String idPeticionString = idPeticionField.getText();
         String pacienteString = pacienteField.getText();
         String obraSocialString = obraSocialField.getText();
-        String fechaCargaString = fechaCargaField.getText();
-        String fechaEntregaString = fechaEntregaField.getText();
+        Date fechaCargaDate = fechaCargaChooser.getDate();
+        Date fechaEntregaDate = fechaEntregaChooser.getDate();
         String practicasAsociadasString = practicasAsociadasArea.getText();
         String numeroSucursalText = numeroSucursalField.getText();
 
-        if (idPeticionString.isEmpty() || pacienteString.isEmpty() || obraSocialString.isEmpty() || fechaCargaString.isEmpty() || fechaEntregaString.isEmpty() || practicasAsociadasString.isEmpty() || numeroSucursalText.isEmpty()) {
+        if (idPeticionString.isEmpty() || pacienteString.isEmpty() || obraSocialString.isEmpty() || fechaCargaDate == null || fechaEntregaDate == null || practicasAsociadasString.isEmpty() || numeroSucursalText.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         int numeroSucursal = Integer.parseInt(numeroSucursalText);
-        Date fechaCarga = Utils.parseDate(fechaCargaString);
-        Date fechaEntrega = Utils.parseDate(fechaEntregaString);
         String[] codigosPracticas = practicasAsociadasString.split(",");
 
         for (String codigo : codigosPracticas){
             int codigoPractica = Integer.parseInt(codigo);
-            if(!PracticaController.getInstance().estaHabilitada(codigoPractica)){
+            if(!PracticaController.getInstance().getPractica(codigoPractica).get().isHabilitada()){
                 JOptionPane.showMessageDialog(this, "La práctica " + codigoPractica + " no está habilitada", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
+                return;
             }
         }
 
         try{
-            PeticionController.getInstance().agregarPeticion(pacienteString, numeroSucursal, idPeticionString, obraSocialString, fechaCarga, fechaEntrega, codigosPracticas);
+            PeticionController.getInstance().agregarPeticion(pacienteString, numeroSucursal, idPeticionString, obraSocialString, fechaCargaDate, fechaEntregaDate, codigosPracticas);
         }catch(Exception e){
             JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             return;
@@ -102,8 +101,8 @@ public class CrearPeticionPanel extends JPanel {
         idPeticionField.setText("");
         pacienteField.setText("");
         obraSocialField.setText("");
-        fechaCargaField.setText("");
-        fechaEntregaField.setText("");
+        fechaCargaChooser.setDate(null);
+        fechaEntregaChooser.setDate(null);
         practicasAsociadasArea.setText("");
     }
 }
