@@ -1,10 +1,12 @@
 package com.example.TPO.controller;
 
 import com.example.TPO.DTO.PeticionDTO;
+import com.example.TPO.DTO.PracticaDTO;
 import com.example.TPO.DTO.ResultadoDTO;
 import com.example.TPO.model.Peticion;
 import com.example.TPO.model.Practica;
 import com.example.TPO.model.Resultado;
+import com.example.TPO.model.ValorCritico;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -140,5 +142,29 @@ public class PeticionController {
             }
         }
         throw new RuntimeException("La peticion no existe");
+    }
+
+    public List<Peticion> buscarPeticionesConValoresCriticos() {
+        List <Peticion> peticionesResultado = new ArrayList<Peticion>();
+
+
+        for (Peticion peticion: peticiones){
+            List <Resultado> resultadosPeticion = peticion.getResultados();
+            System.out.println(resultadosPeticion.size());
+
+            for(int i = 0; i < resultadosPeticion.size(); i++){
+
+                Practica practica = resultadosPeticion.get(i).getPractica();
+
+                String resultadoString = resultadosPeticion.get(i).getResultado();
+                ValorCritico valorCritico = practica.getValorCritico();
+
+                if(valorCritico.esCritico(resultadoString)){
+                    peticionesResultado.add(peticion);
+                }
+            }
+
+        }
+        return peticionesResultado;
     }
 }

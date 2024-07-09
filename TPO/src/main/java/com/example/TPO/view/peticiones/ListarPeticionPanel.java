@@ -7,6 +7,8 @@ import com.example.TPO.model.Peticion;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class ListarPeticionPanel extends JPanel {
@@ -21,7 +23,7 @@ public class ListarPeticionPanel extends JPanel {
 
 
         // Column names for the table
-        String[] columnNames = {"ID",  "Obra Social"};
+        String[] columnNames = {"ID", "Obra Social","Fecha de Carga","Fecha de entrega","Valor CRITICO"};
 
         // Initialize the table model
         tableModel = new DefaultTableModel(columnNames, 0);
@@ -34,22 +36,23 @@ public class ListarPeticionPanel extends JPanel {
 
         // Add the scroll pane to this panel
         add(scrollPane, BorderLayout.CENTER);
-        //setPeticiones(peticionController.getPeticiones());
+        setPeticiones(peticionController.buscarPeticionesConValoresCriticos());
     }
 
     // Method to add a request to the table
-    public void addPeticion(String id, String obraSocial) {
-        tableModel.addRow(new Object[]{id, obraSocial});
+    public void addPeticion(String id, String obraSocial, String fechaCarga, String fechaEntrega, String valorCritico) {
+        tableModel.addRow(new Object[]{id, obraSocial, fechaCarga, fechaEntrega, valorCritico});
     }
 
     // Method to set the list of requests
     public void setPeticiones(List<Peticion> peticiones) {
         tableModel.setRowCount(0); // Clear existing data
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
         if(peticiones.isEmpty()){
-            addPeticion("Sin registro", "--");
+            addPeticion("--", "--", "--", "--", "--");
         }
         for (Peticion peticion : peticiones) {
-            addPeticion(peticion.getId(), peticion.getObraSocial());
+            addPeticion(peticion.getId(), peticion.getObraSocial(),dateFormat.format(peticion.getFechaCarga()),dateFormat.format(peticion.getFechaCalculadaEntrega()),"SI");
         }
     }
 

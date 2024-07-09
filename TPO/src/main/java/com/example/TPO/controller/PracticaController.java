@@ -77,4 +77,5 @@ public class PracticaController {
         Optional<Practica> practica = buscarPracticaPorCodigo(codigo);
         return practica.map(PracticaDTO::new);
     }
+
 }
