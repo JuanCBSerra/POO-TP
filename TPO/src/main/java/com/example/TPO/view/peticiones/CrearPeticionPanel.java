@@ -5,6 +5,7 @@ import com.example.TPO.controller.PeticionController;
 import com.example.TPO.controller.PracticaController;
 import com.toedter.calendar.JDateChooser;
 
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.Arrays;
@@ -37,7 +38,7 @@ public class CrearPeticionPanel extends JPanel {
         addFormRow(formPanel, "Obra social:", obraSocialField = new JTextField(20));
         addFormRow(formPanel, "Fecha de carga: ", fechaCargaChooser = new JDateChooser());
         addFormRow(formPanel, "Fecha de entrega: ", fechaEntregaChooser = new JDateChooser());
-        addFormRow(formPanel, "IDs prácticas asociadas: (separadas por comas)", practicasAsociadasArea = new JTextArea(5, 20));
+        addFormRow(formPanel, "IDs prácticas asociadas: (separadas por comas)", practicasAsociadasArea = new JTextArea(1,20));
 
         JButton btnGuardar = new JButton("Guardar");
         btnGuardar.setBackground(new Color(144, 238, 144));

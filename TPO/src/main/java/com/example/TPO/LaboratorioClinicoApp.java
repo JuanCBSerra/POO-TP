@@ -1,4 +1,6 @@
 package com.example.TPO;
+
+import com.example.TPO.view.menuLogin;
 import com.example.TPO.view.pacientes.CrearPacientePanel;
 import com.example.TPO.view.pacientes.EliminarPacientePanel;
 import com.example.TPO.view.pacientes.ModificarPacientePanel;
@@ -22,8 +24,6 @@ import com.example.TPO.view.usuarios.ModificarUsuarioPanel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class LaboratorioClinicoApp extends JFrame {
 
@@ -33,16 +33,47 @@ public class LaboratorioClinicoApp extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(7, 1, 10, 10));
+        JPanel mainPanel = new JPanel(new BorderLayout());
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        JButton btnAdministrarPacientes = createButton("Administrar Pacientes");
-        JButton btnAdministrarSucursales = createButton("Administrar Sucursales");
-        JButton btnAdministrarPracticas = createButton("Administrar Prácticas");
-        JButton btnAdministrarPeticiones = createButton("Administrar Peticiones");
-        JButton btnAdministrarResultados = createButton("Administrar Resultados");
-        JButton btnAdministrarUsuarios = createButton("Administrar Usuarios");
-        JButton btnListarPeticionConResulados = createButton("Listar resultados de Peticion");
+        JPanel topPanel = new JPanel(new BorderLayout());
+        topPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        ImageIcon icon = new ImageIcon("src/resources/imagenAdministrador.jpg");
+        JLabel imageLabel = new JLabel(icon);
+        imageLabel.setHorizontalAlignment(JLabel.CENTER);
+        topPanel.add(imageLabel, BorderLayout.CENTER);
+
+        JLabel rolLabel = new JLabel("Rol: Administrador");
+        rolLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        rolLabel.setHorizontalAlignment(JLabel.CENTER);
+        topPanel.add(rolLabel, BorderLayout.SOUTH);
+
+        mainPanel.add(topPanel, BorderLayout.NORTH);
+
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(8, 1, 10, 10));
+
+        JButton btnAdministrarPacientes = new JButton("Administrar Pacientes");
+        JButton btnAdministrarSucursales = new JButton("Administrar Sucursales");
+        JButton btnAdministrarPracticas = new JButton("Administrar Prácticas");
+        JButton btnAdministrarPeticiones = new JButton("Administrar Peticiones");
+        JButton btnAdministrarResultados = new JButton("Administrar Resultados");
+        JButton btnAdministrarUsuarios = new JButton("Administrar Usuarios");
+        JButton btnListarPeticionConResulados = new JButton("Listar resultados de Peticion");
+        JButton btnCerrarSesion = new JButton("Cerrar Sesión");
+
+        // Cambiar el color de los botones a celeste
+        Color lightBlue = new Color(173, 216, 230);
+        btnAdministrarPacientes.setBackground(lightBlue);
+        btnAdministrarSucursales.setBackground(lightBlue);
+        btnAdministrarPracticas.setBackground(lightBlue);
+        btnAdministrarPeticiones.setBackground(lightBlue);
+        btnAdministrarResultados.setBackground(lightBlue);
+        btnAdministrarUsuarios.setBackground(lightBlue);
+        btnListarPeticionConResulados.setBackground(lightBlue);
+        btnCerrarSesion.setBackground(Color.RED);
+        btnCerrarSesion.setForeground(Color.WHITE);
 
         panel.add(btnAdministrarPacientes);
         panel.add(btnAdministrarSucursales);
@@ -51,8 +82,10 @@ public class LaboratorioClinicoApp extends JFrame {
         panel.add(btnAdministrarResultados);
         panel.add(btnAdministrarUsuarios);
         panel.add(btnListarPeticionConResulados);
+        panel.add(btnCerrarSesion);
 
-        add(panel);
+        mainPanel.add(panel, BorderLayout.CENTER);
+        add(mainPanel);
 
         btnAdministrarPacientes.addActionListener(e -> {
             JPanel administrarPacientesPanel = new JPanel();
@@ -63,13 +96,8 @@ public class LaboratorioClinicoApp extends JFrame {
             tabbedPane.addTab("Modificar", new ModificarPacientePanel());
             tabbedPane.addTab("Eliminar", new EliminarPacientePanel());
 
-            JButton btnVolver = createButton("Volver");
-            btnVolver.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    mostrarPanel(panel);
-                }
-            });
+            JButton btnVolver = new JButton("Volver");
+            btnVolver.addActionListener(e1 -> mostrarPanel(mainPanel));
 
             JPanel panelWithBackButton = new JPanel(new BorderLayout());
             panelWithBackButton.add(tabbedPane, BorderLayout.CENTER);
@@ -89,10 +117,8 @@ public class LaboratorioClinicoApp extends JFrame {
             tabbedPane.addTab("Modificar", new ModificarSucursalPanel());
             tabbedPane.addTab("Eliminar", new EliminarSucursalPanel());
 
-            JButton btnVolver = createButton("Volver");
-            btnVolver.addActionListener(e14 -> {
-                mostrarPanel(panel);
-            });
+            JButton btnVolver = new JButton("Volver");
+            btnVolver.addActionListener(e14 -> mostrarPanel(mainPanel));
 
             JPanel panelWithBackButton = new JPanel(new BorderLayout());
             panelWithBackButton.add(tabbedPane, BorderLayout.CENTER);
@@ -112,11 +138,8 @@ public class LaboratorioClinicoApp extends JFrame {
             tabbedPane.addTab("Modificar", new ModificarPracticasPanel());
             tabbedPane.addTab("Eliminar", new EliminarPracticasPanel());
 
-            // Botón de Volver
-            JButton btnVolver = createButton("Volver");
-            btnVolver.addActionListener(e15 -> {
-                mostrarPanel(panel);
-            });
+            JButton btnVolver = new JButton("Volver");
+            btnVolver.addActionListener(e15 -> mostrarPanel(mainPanel));
 
             JPanel panelWithBackButton = new JPanel(new BorderLayout());
             panelWithBackButton.add(tabbedPane, BorderLayout.CENTER);
@@ -131,16 +154,14 @@ public class LaboratorioClinicoApp extends JFrame {
             JPanel administrarPeticionesPanel = new JPanel();
             administrarPeticionesPanel.setLayout(new BorderLayout());
 
-                JTabbedPane tabbedPane = new JTabbedPane();
-                tabbedPane.addTab("Crear", new CrearPeticionPanel());
-                tabbedPane.addTab("Modificar", new ModificarPeticionPanel());
-                tabbedPane.addTab("Listar", new ListarPeticionPanel());
-                tabbedPane.addTab("Eliminar", new EliminarPeticionPanel());
+            JTabbedPane tabbedPane = new JTabbedPane();
+            tabbedPane.addTab("Crear", new CrearPeticionPanel());
+            tabbedPane.addTab("Modificar", new ModificarPeticionPanel());
+            tabbedPane.addTab("Listar", new ListarPeticionPanel());
+            tabbedPane.addTab("Eliminar", new EliminarPeticionPanel());
 
-            JButton btnVolver = createButton("Volver");
-            btnVolver.addActionListener(e1 -> {
-                mostrarPanel(panel);
-            });
+            JButton btnVolver = new JButton("Volver");
+            btnVolver.addActionListener(e1 -> mostrarPanel(mainPanel));
 
             JPanel panelWithBackButton = new JPanel(new BorderLayout());
             panelWithBackButton.add(tabbedPane, BorderLayout.CENTER);
@@ -160,10 +181,8 @@ public class LaboratorioClinicoApp extends JFrame {
             tabbedPane.addTab("Modificar", new ModificarResultadoPanel());
             tabbedPane.addTab("Eliminar", new EliminarResultadoPanel());
 
-            JButton btnVolver = createButton("Volver");
-            btnVolver.addActionListener(e12 -> {
-                mostrarPanel(panel);
-            });
+            JButton btnVolver = new JButton("Volver");
+            btnVolver.addActionListener(e12 -> mostrarPanel(mainPanel));
 
             JPanel panelWithBackButton = new JPanel(new BorderLayout());
             panelWithBackButton.add(tabbedPane, BorderLayout.CENTER);
@@ -183,10 +202,8 @@ public class LaboratorioClinicoApp extends JFrame {
             tabbedPane.addTab("Modificar", new ModificarUsuarioPanel());
             tabbedPane.addTab("Eliminar", new EliminarUsuarioPanel());
 
-            JButton btnVolver = createButton("Volver");
-            btnVolver.addActionListener(e13 -> {
-                mostrarPanel(panel); // Vuelve al panel principal
-            });
+            JButton btnVolver = new JButton("Volver");
+            btnVolver.addActionListener(e13 -> mostrarPanel(mainPanel));
 
             JPanel panelWithBackButton = new JPanel(new BorderLayout());
             panelWithBackButton.add(tabbedPane, BorderLayout.CENTER);
@@ -204,10 +221,8 @@ public class LaboratorioClinicoApp extends JFrame {
             JTabbedPane tabbedPane = new JTabbedPane();
             tabbedPane.addTab("Listar Resultados", new ListarResultadosDePeticionPanel());
 
-            JButton btnVolver = createButton("Volver");
-            btnVolver.addActionListener(e13 -> {
-                mostrarPanel(panel);
-            });
+            JButton btnVolver = new JButton("Volver");
+            btnVolver.addActionListener(e12 -> mostrarPanel(mainPanel));
 
             JPanel panelWithBackButton = new JPanel(new BorderLayout());
             panelWithBackButton.add(tabbedPane, BorderLayout.CENTER);
@@ -217,18 +232,16 @@ public class LaboratorioClinicoApp extends JFrame {
 
             mostrarPanel(listarPeticionConResultadosPanel);
         });
+
+        btnCerrarSesion.addActionListener(e -> {
+            dispose();
+            menuLogin menu = new menuLogin("Sistema de Gestión de Laboratorio");
+            menu.setVisible(true);
+        });
     }
 
-    private JButton createButton(String text) {
-        JButton button = new JButton(text);
-        button.setFont(new Font("Arial", Font.BOLD, 16));
-        button.setBackground(new Color(173, 216, 230)); // Light blue background
-        button.setFocusPainted(false);
-        return button;
-    }
-
-    public void mostrarPanel(JPanel nuevoPanel) {
-        setContentPane(nuevoPanel);
+    private void mostrarPanel(JPanel panel) {
+        setContentPane(panel);
         revalidate();
         repaint();
     }

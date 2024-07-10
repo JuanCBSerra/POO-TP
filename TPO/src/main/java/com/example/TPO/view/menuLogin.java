@@ -1,6 +1,7 @@
 package com.example.TPO.view;
 
 import com.example.TPO.LaboratorioClinicoApp;
+
 import com.example.TPO.controller.UsuarioController;
 import com.example.TPO.model.Usuario;
 import com.example.TPO.model.Rol;
@@ -68,10 +69,10 @@ public class menuLogin extends JFrame {
                 new LaboratorioClinicoApp().setVisible(true);
                 break;
             case LABORATORISTA:
-                JOptionPane.showMessageDialog(null, "Bienvenido Laboratorista", "Login", JOptionPane.INFORMATION_MESSAGE);
+                new VistaLab().setVisible(true);
                 break;
             case RECEPCION:
-                JOptionPane.showMessageDialog(null, "Bienvenido Recepcionista", "Login", JOptionPane.INFORMATION_MESSAGE);
+                new VistaRec().setVisible(true);
                 break;
             default:
                 JOptionPane.showMessageDialog(null, "Rango desconocido", "Error", JOptionPane.ERROR_MESSAGE);
