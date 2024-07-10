@@ -98,5 +98,19 @@ public class CrearUsuarioPanel extends JPanel {
         usuarioController.agregarUsuario(username, nombre, correo, password, domicilio, dni, fecNac, rol);
 
         JOptionPane.showMessageDialog(this, "Usuario creado con éxito.");
+
+        clearFields();
+
+    }
+
+    private void clearFields() {
+        usuarioField.setText("");
+        nombreField.setText("");
+        correoField.setText("");
+        passwordField.setText("");
+        domicilioField.setText("");
+        dniField.setText("");
+        fechaNacimientoChooser.setDate(null);
+        rolComboBox.setSelectedIndex(0);
     }
 }

@@ -102,6 +102,7 @@ public class CrearPeticionPanel extends JPanel {
         idPeticionField.setText("");
         pacienteField.setText("");
         obraSocialField.setText("");
+        numeroSucursalField.setText("");
         fechaCargaChooser.setDate(null);
         fechaEntregaChooser.setDate(null);
         practicasAsociadasArea.setText("");

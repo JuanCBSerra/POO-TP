@@ -80,5 +80,7 @@ public class CrearResultadoPanel extends JPanel {
     private void clearFields() {
         idField.setText("");
         valorField.setText("");
+        numeroPeticionField.setText("");
+        idPracticaField.setText("");
     }
 }
