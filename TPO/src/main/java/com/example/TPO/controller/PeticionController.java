@@ -47,6 +47,15 @@ public class PeticionController {
 
     public void agregarResultado(String idPeticion, String idResultado, String resultado, LocalDate fecha, int idPractica) {
         Practica practica = practicaController.buscarPracticaPorCodigo(idPractica).orElseThrow(() -> new RuntimeException("Practica no encontrada"));
+
+        try {
+            ValorCritico funcionValorCritico = practica.getValorCritico();
+            funcionValorCritico.esCritico(resultado);
+        }
+        catch(Exception e){
+            throw new RuntimeException("Tipo de dato incorrecto para el resultado");
+        }
+
         Resultado nuevoResultado = new Resultado(
                 idResultado,
                 resultado,
