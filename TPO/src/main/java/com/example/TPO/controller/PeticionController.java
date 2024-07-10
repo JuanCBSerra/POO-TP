@@ -144,8 +144,8 @@ public class PeticionController {
         throw new RuntimeException("La peticion no existe");
     }
 
-    public List<Peticion> buscarPeticionesConValoresCriticos() {
-        List <Peticion> peticionesResultado = new ArrayList<Peticion>();
+    public List<PeticionDTO> buscarPeticionesConValoresCriticos() {
+        List <PeticionDTO> peticionesResultado = new ArrayList<PeticionDTO>();
 
 
         for (Peticion peticion: peticiones){
@@ -160,7 +160,17 @@ public class PeticionController {
                 ValorCritico valorCritico = practica.getValorCritico();
 
                 if(valorCritico.esCritico(resultadoString)){
-                    peticionesResultado.add(peticion);
+                    peticionesResultado.add(
+                            new PeticionDTO(
+                            peticion.getId(),
+                            peticion.getObraSocial(),
+                            peticion.getFechaCarga(),
+                            peticion.getFechaCalculadaEntrega(),
+                                    new ArrayList<PracticaDTO>(),
+                                    new ArrayList<ResultadoDTO>()
+                            )
+
+                    );
                 }
             }
 

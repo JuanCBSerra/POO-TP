@@ -1,6 +1,7 @@
 package com.example.TPO.view.peticiones;
 
 
+import com.example.TPO.DTO.PeticionDTO;
 import com.example.TPO.controller.PeticionController;
 import com.example.TPO.model.Peticion;
 
@@ -45,13 +46,13 @@ public class ListarPeticionPanel extends JPanel {
     }
 
     // Method to set the list of requests
-    public void setPeticiones(List<Peticion> peticiones) {
+    public void setPeticiones(List<PeticionDTO> peticiones) {
         tableModel.setRowCount(0); // Clear existing data
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
         if(peticiones.isEmpty()){
             addPeticion("--", "--", "--", "--", "--");
         }
-        for (Peticion peticion : peticiones) {
+        for (PeticionDTO peticion : peticiones) {
             addPeticion(peticion.getId(), peticion.getObraSocial(),dateFormat.format(peticion.getFechaCarga()),dateFormat.format(peticion.getFechaCalculadaEntrega()),"SI");
         }
     }
