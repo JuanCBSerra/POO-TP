@@ -202,8 +202,9 @@ public class ModificarPracticasPanel extends JPanel {
         grupoField.setText("");
         valoresCriticosField.setText("");
         valoresReservadosCheckBox.setSelected(false);
-        horasResultadoField.setText(null);
+        horasResultadoField.setValue(null);
         valorCriticoStringRadio.setSelected(false);
         valorCriticoNumericoRadio.setSelected(false);
+        habilitadaCheckbox.setSelected(false);
     }
 }

@@ -88,5 +88,11 @@ public class ModificarResultadoPanel extends JPanel {
         }
 
         JOptionPane.showMessageDialog(this, "Resultado modificado con éxito.");
+
+        limpiarCampos();
+    }
+
+    private void limpiarCampos() {
+        valorField.setText("");
     }
 }

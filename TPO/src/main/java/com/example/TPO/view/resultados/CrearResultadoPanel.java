@@ -81,6 +81,6 @@ public class CrearResultadoPanel extends JPanel {
         idField.setText("");
         valorField.setText("");
         numeroPeticionField.setText("");
-        idPracticaField.setText("");
+        idPracticaField.setValue(null);
     }
 }

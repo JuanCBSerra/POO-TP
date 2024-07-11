@@ -132,12 +132,12 @@ public class CrearPracticasPanel extends JPanel {
     }
 
     private void clearFields() {
-        codigoField.setText("");
+        codigoField.setValue(null);
         nombreField.setText("");
         grupoField.setText("");
         valoresCriticosField.setText("");
         valoresReservadosCheckBox.setSelected(false);
-        horasResultadoField.setText("");
+        horasResultadoField.setValue(null);
         habilitadaCheckbox.setSelected(false);
         valorCriticoStringRadio.setSelected(false);
         valorCriticoNumericoRadio.setSelected(false);
