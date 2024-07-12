@@ -113,6 +113,7 @@ public class ModificarUsuarioPanel extends JPanel {
     }
 
     private void guardarUsuario() {
+        String dni = dniBuscarField.getText();
         String username = usernameField.getText();
         String nombre = nombreField.getText();
         String email = emailField.getText();
@@ -125,7 +126,7 @@ public class ModificarUsuarioPanel extends JPanel {
             return;
         }
 
-        usuarioController.modificarUsuario(username, nombre, email, domicilio, null, fecNac, String.valueOf(rol));
+        usuarioController.modificarUsuario(username, nombre, email, domicilio, dni, fecNac, String.valueOf(rol));
 
         JOptionPane.showMessageDialog(this, "Usuario modificado con éxito.");
         limpiarCampos();
