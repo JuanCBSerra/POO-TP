@@ -1,6 +1,5 @@
 package com.example.TPO.model;
 
-import com.example.TPO.model.Peticion;
 import lombok.Data;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -17,13 +16,17 @@ public class Resultado {
     private LocalDate fecha;
     private Practica practica;
 
-    public String getResultado(){
+    public String getResultadoSiNoEsReservado(){
         boolean esValorReservado = practica.isValorReservado();
         if(esValorReservado){
             return "Retirar por sucursal";
         }else{
             return resultado;
         }
+    }
+
+    public String getActualResultado(){
+        return resultado;
     }
 
 

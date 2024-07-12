@@ -165,7 +165,7 @@ public class PeticionController {
 
                 Practica practica = resultadosPeticion.get(i).getPractica();
 
-                String resultadoString = resultadosPeticion.get(i).getResultado();
+                String resultadoString = resultadosPeticion.get(i).getActualResultado();
                 ValorCritico valorCritico = practica.getValorCritico();
 
                 if(valorCritico.esCritico(resultadoString)){

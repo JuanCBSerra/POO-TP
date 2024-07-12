@@ -18,7 +18,7 @@ public class ResultadoDTO {
 
     public ResultadoDTO(Resultado resultado){
         this.id = resultado.getId();
-        this.resultado = resultado.getResultado();
+        this.resultado = resultado.getResultadoSiNoEsReservado();
         this.fecha = resultado.getFecha();
     }
 
